@@ -1,0 +1,15 @@
+package com.kalvatn.aoc.year2018
+
+import com.kalvatn.aoc.common.IDay
+
+
+fun main(args: Array<String>) {
+    val days: Set<IDay> = setOf(
+            Day01(),
+            Day02()
+    )
+    days.forEach {
+        println("$it")
+        it.run()
+    }
+}
