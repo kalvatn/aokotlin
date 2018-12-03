@@ -1,4 +1,4 @@
-package com.kalvatn.extensions
+package com.kalvatn.aoc.extensions
 
 import org.hamcrest.CoreMatchers.*
 import org.junit.Test

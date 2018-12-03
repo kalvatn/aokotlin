@@ -1,19 +1,19 @@
 package com.kalvatn.aoc.common
 
-import com.kalvatn.extensions.benchmark
-import com.kalvatn.extensions.timeit
+import com.kalvatn.aoc.utils.benchmark
+import com.kalvatn.aoc.utils.timeit
 
-abstract class Day(override val year: Int, override val day: Int) : IDay {
+abstract class Day(
+        override val year: Int,
+        override val day: Int,
+        override val input: PuzzleInput = PuzzleInput.forDay(year, day)
+) : IDay {
 
-    override fun input(): PuzzleInput {
-        return PuzzleInput.forDay(this)
-    }
-
-    override fun run(benchmark: Boolean) {
+    override fun run(runBenchmark: Boolean) {
         timeit {
             println("  part one : ${partOne()}")
         }
-        if (benchmark) {
+        if (runBenchmark) {
             benchmark {
                 partOne()
             }
@@ -21,7 +21,7 @@ abstract class Day(override val year: Int, override val day: Int) : IDay {
         timeit {
             println("  part two : ${partTwo()}")
         }
-        if (benchmark) {
+        if (runBenchmark) {
             benchmark {
                 partTwo()
             }
@@ -31,5 +31,10 @@ abstract class Day(override val year: Int, override val day: Int) : IDay {
 
     override fun toString(): String {
         return "$year-${day.toString().padStart(2, '0')}"
+    }
+
+    operator fun invoke(i: Int, i1: Int, input: PuzzleInput) {
+        this(i, i1, input)
+
     }
 }

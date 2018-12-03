@@ -1,0 +1,54 @@
+package com.kalvatn.aoc.year2015
+
+import com.kalvatn.aoc.common.Day
+import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.extensions.extractIntegers
+
+class Day02 : Day {
+
+    constructor() : super(2015, 2)
+    constructor(input: PuzzleInput) : super(2015, 2, input)
+
+    data class Present(val l: Int, val w: Int, val h: Int) {
+        private fun sides():List<Int> {
+            return listOf(l*w, w*h, h*l)
+        }
+        private fun surface():Int {
+            return sides().map { it * 2 }.sum()
+        }
+        private fun smallestSide():Int {
+            return sides().min()!!
+        }
+        fun paper(): Int {
+            return surface() + smallestSide()
+        }
+        fun ribbon(): Int {
+            val wrap = listOf(l, w, h).sorted().take(2).map { it * 2 }.sum()
+            val bow = l * w * h
+            return wrap + bow
+        }
+        companion object {
+            fun fromString(string: String): Present {
+                val (l, w, h) = string.extractIntegers()
+                return Present(l, w, h)
+            }
+        }
+    }
+
+
+    private val dimensions = input.map { Present.fromString(it) }
+
+
+    override fun partOne(): String {
+        return dimensions.map { it.paper() }.sum().toString()
+    }
+
+
+    override fun partTwo(): String {
+        return dimensions.map { it.ribbon() }.sum().toString()
+    }
+
+
+}
+
+

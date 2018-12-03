@@ -1,10 +1,14 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.common.Day
+import com.kalvatn.aoc.common.PuzzleInput
 
-class Day02 : Day(2018, 2) {
+class Day02 : Day {
 
-    private val boxIds = input().lines
+    constructor() : super(2018, 2)
+    constructor(input: PuzzleInput) : super(2018, 2, input)
+
+    private val boxIds = input.lines
 
     override fun partOne(): String {
         val charCounts = boxIds.map { line -> line.groupingBy { it }.eachCount().values }
@@ -24,7 +28,7 @@ class Day02 : Day(2018, 2) {
                 }
             }
         }
-        return ""
+        throw Exception("no result")
     }
 }
 

@@ -2,25 +2,22 @@ package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.extensions.extractIntegers
+import com.kalvatn.aoc.utils.intArray2D
 
-data class Claim(val id: Int, val x: Int, val y: Int, val width: Int, val height: Int) {
-    companion object {
-        fun fromString(line: String): Claim {
-            val (id, rect) = line.slice(1 until line.length).split('@').map { it.trim() }
-            val (pos, size) = rect.split(":").map { it.trim() }
-            val (x, y) = pos.split(",").map { it.trim().toInt() }
-            val (width, height) = size.split("x").map { it.trim().toInt() }
-            return Claim(id.toInt(), x, y, width, height)
+
+class Day03 : Day {
+    constructor() : super(2018, 3)
+    constructor(input: PuzzleInput) : super(2018, 3, input)
+
+    data class Claim(val id: Int, val x: Int, val y: Int, val width: Int, val height: Int) {
+        companion object {
+            fun fromString(line: String): Claim {
+                val (id, x, y, width, height) = line.extractIntegers()
+                return Claim(id, x, y, width, height)
+            }
+
         }
-    }
-}
-
-class Day03 : Day(2018, 3) {
-
-    @Suppress("RedundantOverride")
-    override fun input(): PuzzleInput {
-//        return PuzzleInput.forDay(this, "test1")
-        return super.input()
     }
 
     private fun createFabric(claims: List<Claim>): Array<Array<Int>> {
@@ -28,14 +25,7 @@ class Day03 : Day(2018, 3) {
             claims.size < 5 -> 8
             else -> 1000
         }
-        var fabric = arrayOf<Array<Int>>()
-        for (i in 0 until size) {
-            var array = arrayOf<Int>()
-            for (j in 0 until size) {
-                array += 0
-            }
-            fabric += array
-        }
+        val fabric = intArray2D(size)
         for (claim in claims) {
             for (i in claim.x until claim.width + claim.x) {
                 for (j in claim.y until claim.height + claim.y) {
@@ -51,7 +41,7 @@ class Day03 : Day(2018, 3) {
         return fabric
     }
 
-    private val claims = input().lines.map { Claim.fromString(it) }
+    private val claims = input.map { Claim.fromString(it) }
     private val fabric = createFabric(claims)
 
     override fun partOne(): String {
