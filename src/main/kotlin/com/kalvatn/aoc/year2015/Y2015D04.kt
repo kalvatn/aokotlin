@@ -5,7 +5,7 @@ import com.kalvatn.aoc.common.PuzzleInput
 import java.math.BigInteger
 import java.security.MessageDigest
 
-class Y2015D04(input:PuzzleInput? = null) : APuzzle2015(Day.D04, input) {
+class Y2015D04(input: PuzzleInput? = null) : APuzzle2015(Day.D04, input) {
 
 
     private val key = this.input.singleLine()

@@ -4,7 +4,7 @@ import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.extensions.cycle
 
-class Y2018D01(input:PuzzleInput? = null) : APuzzle2018(Day.D01, input) {
+class Y2018D01(input: PuzzleInput? = null) : APuzzle2018(Day.D01, input) {
 
     private val changes: List<Int> = this.input.asIntegers()
 

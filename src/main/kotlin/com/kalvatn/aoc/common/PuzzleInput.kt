@@ -25,7 +25,7 @@ class PuzzleInput(val lines: List<String>) {
 
 
     companion object {
-        private fun downloadInput(year:Year, day:Day, inputFile:File) {
+        private fun downloadInput(year: Year, day: Day, inputFile: File) {
             val sessionCookieFile = File("src/main/resources/session.cookie")
             if (!sessionCookieFile.exists()) {
                 throw CookieMissing()
@@ -47,6 +47,7 @@ class PuzzleInput(val lines: List<String>) {
             inputFile.writeBytes(content)
 
         }
+
         @JvmStatic
         fun forDay(puzzle: IPuzzle, suffix: String = ""): PuzzleInput {
             return forDay(puzzle.year, puzzle.day, suffix)

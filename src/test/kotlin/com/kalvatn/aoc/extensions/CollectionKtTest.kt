@@ -14,6 +14,6 @@ class CollectionKtTest {
 
     @Test
     fun cycle() {
-        assertThat(listOf(1, 2, 3).cycle().take(10).toList(), equalTo(listOf(1,2,3,1,2,3,1,2,3,1)))
+        assertThat(listOf(1, 2, 3).cycle().take(10).toList(), equalTo(listOf(1, 2, 3, 1, 2, 3, 1, 2, 3, 1)))
     }
 }

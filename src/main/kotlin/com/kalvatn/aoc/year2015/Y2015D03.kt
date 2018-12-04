@@ -5,7 +5,7 @@ import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.exceptions.Impossiburu
 import java.awt.Point
 
-class Y2015D03(input:PuzzleInput? = null) : APuzzle2015(Day.D03, input) {
+class Y2015D03(input: PuzzleInput? = null) : APuzzle2015(Day.D03, input) {
 
     enum class Direction {
         NORTH, EAST, SOUTH, WEST;

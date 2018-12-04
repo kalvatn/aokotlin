@@ -16,7 +16,6 @@ class Y2015D01(input: PuzzleInput? = null) : APuzzle2015(Day.D01, input) {
     }
 
 
-
     override fun partOne(): String {
         return changes.sum().toString()
     }
