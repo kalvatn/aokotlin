@@ -1,11 +1,23 @@
 package com.kalvatn.aoc.extensions
 
-fun <E> Collection<E>.cycle(): Iterator<E> {
-    return generateSequence { this }.flatten().iterator()
+fun <E> Collection<E>.cycle(): Sequence<E> {
+    return sequence {
+        while (true) {
+            for (i in this@cycle) {
+                yield(i)
+            }
+        }
+    }
 }
 
-fun <E> Collection<E>.cycle(n: Int): Iterator<E> {
-    return generateSequence { this }.take(n).flatten().iterator()
+fun <E> Collection<E>.cycle(n: Int): Sequence<E> {
+    return sequence {
+        repeat(n) {
+            for (i in this@cycle) {
+                yield(i)
+            }
+        }
+    }
 }
 
 fun <T, R> Iterable<T>.reductions(initial: R, operation: (acc: R, T) -> R): Sequence<R> = sequence {

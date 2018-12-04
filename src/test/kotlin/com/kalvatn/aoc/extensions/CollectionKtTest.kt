@@ -1,18 +1,19 @@
 package com.kalvatn.aoc.extensions
 
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.equalTo
+import org.junit.Assert.assertThat
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class CollectionKtTest {
     @Test
-    fun cycle() {
-        val collect = mutableListOf<Int>()
-        listOf(1,2,3).cycle(3).forEach {
-            collect.add(it)
-        }
-        assertThat(collect, equalTo(listOf(1,2,3,1,2,3,1,2,3)))
+    fun cycleN() {
+        assertThat(listOf(1, 2, 3).cycle(3).toList(), equalTo(listOf(1, 2, 3, 1, 2, 3, 1, 2, 3)))
+        assertThat(listOf("ab", "lol", "foo").cycle(1).toList(), equalTo(listOf("ab", "lol", "foo")))
+        assertThat(listOf("ab", "lol", "foo").cycle(2).toList(), equalTo(listOf("ab", "lol", "foo", "ab", "lol", "foo")))
     }
 
+    @Test
+    fun cycle() {
+        assertThat(listOf(1, 2, 3).cycle().take(10).toList(), equalTo(listOf(1,2,3,1,2,3,1,2,3,1)))
+    }
 }

@@ -47,9 +47,9 @@ class Day03 : Day {
     override fun partOne(): String {
         val count = fabric.map { array ->
             array
-                .asSequence()
-                .filter { it == -1 }
-                .count()
+                    .asSequence()
+                    .filter { it == -1 }
+                    .count()
         }.sum()
         return count.toString()
     }

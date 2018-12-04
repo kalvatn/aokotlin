@@ -3,7 +3,6 @@ package com.kalvatn.aoc.year2015
 import com.kalvatn.aoc.common.PuzzleInput
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
-import org.junit.Ignore
 import org.junit.Test
 
 class Day03Test {

@@ -15,13 +15,13 @@ class Day04 : Day {
     }
 
     data class Event(
-        val yyyy: Int,
-        val mm: Int,
-        val dd: Int,
-        val HH: Int,
-        val MM: Int,
-        val guard: Int,
-        val action: Action
+            val yyyy: Int,
+            val mm: Int,
+            val dd: Int,
+            val HH: Int,
+            val MM: Int,
+            val guard: Int,
+            val action: Action
     )
 
     fun parseLine(line: String): Event {
@@ -51,7 +51,7 @@ class Day04 : Day {
     }
 
     private val events =
-        input.map { parseLine(it) }.sortedWith(compareBy(Event::yyyy, Event::mm, Event::dd, Event::HH, Event::MM))
+            input.map { parseLine(it) }.sortedWith(compareBy(Event::yyyy, Event::mm, Event::dd, Event::HH, Event::MM))
     private val guardSleepMinutes = mutableMapOf<Int, Int>()
     private val guardSleepMinuteFrequency = mutableMapOf<Int, MutableMap<Int, Int>>()
 

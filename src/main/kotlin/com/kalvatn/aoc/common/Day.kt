@@ -4,9 +4,9 @@ import com.kalvatn.aoc.utils.benchmark
 import com.kalvatn.aoc.utils.timeit
 
 abstract class Day(
-    override val year: Int,
-    override val day: Int,
-    override val input: PuzzleInput = PuzzleInput.forDay(year, day)
+        override val year: Int,
+        override val day: Int,
+        override val input: PuzzleInput = PuzzleInput.forDay(year, day)
 ) : IDay {
 
     override fun run(runBenchmark: Boolean) {

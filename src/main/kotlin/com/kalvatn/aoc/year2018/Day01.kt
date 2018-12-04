@@ -12,9 +12,9 @@ class Day01 : Day {
     private val changes: List<Int> = input.asIntegers()
 
     private tailrec fun calibrate(
-        changes: Iterator<Int>,
-        seen: MutableSet<Int> = mutableSetOf(),
-        current: Int = 0
+            changes: Iterator<Int>,
+            seen: MutableSet<Int> = mutableSetOf(),
+            current: Int = 0
     ): Int {
         return if (!seen.add(current)) current else calibrate(changes, seen, current + changes.next())
     }
@@ -24,7 +24,7 @@ class Day01 : Day {
     }
 
     override fun partTwo(): String {
-        return calibrate(changes.cycle()).toString()
+        return calibrate(changes.cycle().iterator()).toString()
     }
 
 

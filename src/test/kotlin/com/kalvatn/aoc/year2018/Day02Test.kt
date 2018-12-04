@@ -16,7 +16,6 @@ class Day02Test {
         Assert.assertThat(test2.partTwo(), equalTo("fgij"))
 
 
-
     }
 
     @Test
