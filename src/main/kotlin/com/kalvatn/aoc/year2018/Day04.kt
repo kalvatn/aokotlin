@@ -2,7 +2,8 @@ package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.extensions.extractIntegers
+import com.kalvatn.aoc.exceptions.Impossiburu
+import com.kalvatn.aoc.year2018.Day04.GuardRecord.Companion.fromString
 
 
 class Day04 : Day {
@@ -11,102 +12,101 @@ class Day04 : Day {
     constructor(input: PuzzleInput) : super(2018, 4, input)
 
     enum class Action {
-        BEGINS, SLEEPS, WAKES_UP
-    }
+        BEGINS, SLEEPS, WAKES;
 
-    data class Event(
-            val yyyy: Int,
-            val mm: Int,
-            val dd: Int,
-            val HH: Int,
-            val MM: Int,
-            val guard: Int,
-            val action: Action
-    )
-
-    fun parseLine(line: String): Event {
-        //[1518-11-01 00:00] Guard #10 begins shift
-        //[1518-11-01 00:05] falls asleep
-        //[1518-11-01 00:25] wakes up
-        val split = line.split(" ")
-        val date = split[0].slice(1 until 11)
-        val time = split[1].slice(0 until 5)
-        val guardNumberList = split[3].extractIntegers()
-        var guardNumber = -1
-        val action: Action
-        if (!guardNumberList.isEmpty()) {
-            action = Action.BEGINS
-            guardNumber = guardNumberList.first()
-        } else {
-            action = if (split[3].contains("asleep"))
-                Action.SLEEPS
-            else {
-                Action.WAKES_UP
-            }
-        }
-        val (yyyy, mm, dd) = date.split("-").map { it.toInt() }
-        val (HH, MM) = time.split(":").map { it.toInt() }
-        return Event(yyyy, mm, dd, HH, MM, guardNumber, action)
-
-    }
-
-    private val events =
-            input.map { parseLine(it) }.sortedWith(compareBy(Event::yyyy, Event::mm, Event::dd, Event::HH, Event::MM))
-    private val guardSleepMinutes = mutableMapOf<Int, Int>()
-    private val guardSleepMinuteFrequency = mutableMapOf<Int, MutableMap<Int, Int>>()
-
-    init {
-        processEvents()
-    }
-
-    fun processEvents() {
-        var guard = 0
-        var sleepStart = 0
-        for (event in events) {
-            when (event.action) {
-                Action.BEGINS -> {
-                    guard = event.guard
-                    guardSleepMinutes.putIfAbsent(guard, 0)
-                    guardSleepMinuteFrequency.putIfAbsent(guard, mutableMapOf())
-                }
-                Action.SLEEPS -> {
-                    sleepStart = event.MM
-                }
-                Action.WAKES_UP -> {
-                    val slept = (event.MM - sleepStart)
-                    guardSleepMinutes[guard] = guardSleepMinutes[guard]!! + slept
-                    for (i in sleepStart..event.MM) {
-                        guardSleepMinuteFrequency[guard]!!.putIfAbsent(i, 0)
-                        guardSleepMinuteFrequency[guard]!![i] = guardSleepMinuteFrequency[guard]!![i]!!.inc()
+        companion object {
+            fun fromString(string: String): Action {
+                return when (string) {
+                    "begins shift" -> BEGINS
+                    "falls asleep" -> SLEEPS
+                    "wakes up" -> WAKES
+                    else -> {
+                        throw Impossiburu()
                     }
                 }
             }
         }
     }
 
-    override fun partOne(): String {
-        val guardMaxTotalSleep = guardSleepMinutes.maxBy { it.value }
-        val guardMaxMinute = guardSleepMinuteFrequency[guardMaxTotalSleep!!.key]!!.maxBy { it.value }
-        return (guardMaxTotalSleep.key * guardMaxMinute!!.key).toString()
+    data class GuardRecord(
+            val y: Int,
+            val m: Int,
+            val d: Int,
+            val hh: Int,
+            val mm: Int,
+            val guardId: Int,
+            val action: Action
+    ) {
 
+        companion object {
+            fun fromString(string: String): GuardRecord {
+                val regex = "^\\[(\\d+)-(\\d+)-(\\d+) (\\d+):(\\d+)\\] (?:Guard #(\\d+) )?([\\w\\s]+)".toRegex()
+                regex.matchEntire(string)
+                        ?.destructured
+                        ?.let { (y, m, d, hh, mm, guardId, action) ->
+                            return GuardRecord(y.toInt(), m.toInt(), d.toInt(), hh.toInt(), mm.toInt(), when (guardId) {
+                                "" -> -1
+                                else -> guardId.toInt()
+                            }, Action.fromString(action))
+
+                        }
+            }
+        }
+    }
+
+    data class Guard(val id: Int, val sleepTime: Int = 0, val sleepMinuteFrequency: MutableMap<Int, Int> = mutableMapOf()) {
+        fun sleep(start: Int, stop: Int): Guard {
+            for (i in start..stop) {
+                sleepMinuteFrequency[i] = sleepMinuteFrequency[i]?.inc() ?: 1
+            }
+            return Guard(id, sleepTime + (stop - start), sleepMinuteFrequency)
+        }
+    }
+
+    private val records =
+            input.map { fromString(it) }
+                    .sortedWith(compareBy(GuardRecord::y, GuardRecord::m, GuardRecord::d, GuardRecord::hh, GuardRecord::mm))
+    private val guards = processRecords(records.iterator(), mapOf(), Guard(-1), 0)
+
+    private tailrec fun processRecords(
+            records: Iterator<GuardRecord>,
+            guards: Map<Int, Guard>,
+            currentGuard: Guard,
+            sleepStart: Int
+    ): Map<Int, Guard> {
+        if (!records.hasNext()) {
+            return guards
+        }
+        val event = records.next()
+        return when (event.action) {
+            Action.BEGINS -> {
+                val guardId = event.guardId
+                val guard = guards.getOrDefault(guardId, Guard(guardId))
+                processRecords(records, guards.plus(Pair(guardId, guard)), guard, 0)
+            }
+            Action.SLEEPS -> {
+                processRecords(records, guards, currentGuard, event.mm)
+            }
+            Action.WAKES -> {
+                val guard = currentGuard.sleep(sleepStart, event.mm)
+                processRecords(records, guards.plus(Pair(guard.id, guard)), guard, sleepStart)
+            }
+        }
+    }
+
+    override fun partOne(): String {
+        val guard = guards.maxBy { it.value.sleepTime }!!.value
+        val maxMinute = guard.sleepMinuteFrequency.maxBy { it.value }!!.key
+        return (guard.id * maxMinute).toString()
     }
 
     override fun partTwo(): String {
-        var guard = 0
-        var max = 0
-        var maxMinute = 0
-        for (i in guardSleepMinutes.keys) {
-            val guardMaxMinute = guardSleepMinuteFrequency[i]!!.maxBy { it.value }
-            if (guardMaxMinute != null) {
-                if (guardMaxMinute.value > max) {
-                    max = guardMaxMinute.value
-                    maxMinute = guardMaxMinute.key
-                    guard = i
-                }
-            }
+        val guard = guards.maxBy {
+            it.value.sleepMinuteFrequency.maxBy { mf -> mf.value }?.value ?: 0
+        }!!.value
+        val maxMinute = guard.sleepMinuteFrequency.maxBy { it.value }!!.key
+        return (guard.id * maxMinute).toString()
 
-        }
-        return (maxMinute * guard).toString()
     }
 }
 

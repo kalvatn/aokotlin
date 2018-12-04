@@ -2,6 +2,7 @@ package com.kalvatn.aoc.year2015
 
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.exceptions.Impossiburu
 import java.awt.Point
 
 class Day03 : Day {
@@ -20,7 +21,7 @@ class Day03 : Day {
                     'v' -> SOUTH
                     '<' -> WEST
                     else -> {
-                        throw Exception("unknown direction")
+                        throw Impossiburu()
                     }
                 }
             }
