@@ -2,59 +2,99 @@ package com.kalvatn.aoc.year2015
 
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.exceptions.Impossiburu
 
 class Y2015D07(input: PuzzleInput? = null) : APuzzle2015(Day.D07, input) {
-    private val reg = mutableMapOf<String, String>()
-    private val results = mutableMapOf<String, Int>()
+    private val wires = mutableMapOf<String, String>()
+
+    abstract class OP(val left: Int, val right: Int) {
+        abstract fun apply(): Int
+    }
+
+    class VALUE(left: Int) : OP(left, 0) {
+        override fun apply(): Int {
+            return left
+        }
+    }
+
+    class AND(left: Int, right: Int) : OP(left, right) {
+        override fun apply(): Int {
+            return left.and(right)
+        }
+    }
+
+    class OR(left: Int, right: Int) : OP(left, right) {
+        override fun apply(): Int {
+            return left.or(right)
+        }
+    }
+
+    class LSHIFT(left: Int, right: Int) : OP(left, right) {
+        override fun apply(): Int {
+            return left.shl(right)
+        }
+    }
+
+    class RSHIFT(left: Int, right: Int) : OP(left, right) {
+        override fun apply(): Int {
+            return left.shr(right)
+        }
+    }
+
+    class NOT(left: Int, right: Int = 0xffff) : OP(left, right) {
+        override fun apply(): Int {
+            return left.inv().and(right)
+        }
+    }
 
     private fun getWire(key: String): Int {
         if (key.toIntOrNull() != null) {
             return key.toInt()
         }
-        if (!results.containsKey(key)) {
-            val operation = reg[key]!!.split(" ")
-            val result = if (operation.size == 1) {
-                getWire(operation[0])
-            } else {
-                val op = operation[operation.size - 2]
-                when (op) {
-                    "AND" -> getWire(operation[0]).and(getWire(operation[2]))
-                    "OR" -> getWire(operation[0]).or(getWire(operation[2]))
-                    "LSHIFT" -> getWire(operation[0]).shl(getWire(operation[2]))
-                    "RSHIFT" -> getWire(operation[0]).shr(getWire(operation[2]))
-                    "NOT" -> getWire(operation[1]).inv().and(0xffff)
-                    else -> 0
-                }
+
+        val instruction = wires[key]!!.split(" ")
+
+        val first = instruction.first()
+        val last = instruction.last()
+        val operation: OP = when (instruction.size) {
+            1 -> VALUE(getWire(first))
+            2 -> NOT(getWire(last), 0xffff)
+            3 -> when (instruction[1]) {
+                "AND" -> AND(getWire(first), getWire(last))
+                "OR" -> OR(getWire(first), getWire(last))
+                "LSHIFT" -> LSHIFT(getWire(first), getWire(last))
+                "RSHIFT" -> RSHIFT(getWire(first), getWire(last))
+                else -> throw Impossiburu()
             }
-            results[key] = result
+            else -> throw Impossiburu()
         }
-        return results[key]!!
+        val result = operation.apply()
+        wires[key] = result.toString()
+        return result
 
     }
 
-    private fun initWires(overrides: Map<String, String> = mapOf()) {
-        this.reg.clear()
-        this.results.clear()
+    private fun initialize(overrides: Map<String, String> = mapOf()) {
         this.input.lines.forEach {
             val (inputs, output) = it.split(" -> ")
-            reg[output.trim()] = inputs.trim()
+            wires[output.trim()] = inputs.trim()
         }
 
         for (override in overrides) {
-            reg[override.key] = override.value
+            wires[override.key] = override.value
         }
 
     }
 
     override fun partOne(): String {
-        initWires()
+        initialize()
         return getWire("a").toString()
     }
 
 
     override fun partTwo(): String {
         val b = partOne()
-        initWires(mapOf("b" to b))
+        initialize(mapOf("b" to b))
         return getWire("a").toString()
     }
 
