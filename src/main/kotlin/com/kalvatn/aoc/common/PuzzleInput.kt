@@ -1,5 +1,7 @@
 package com.kalvatn.aoc.common
 
+import com.kalvatn.aoc.exceptions.CookieMissing
+import khttp.responses.Response
 import java.io.File
 
 @Suppress("unused")
@@ -23,6 +25,28 @@ class PuzzleInput(val lines: List<String>) {
 
 
     companion object {
+        private fun downloadInput(year:Year, day:Day, inputFile:File) {
+            val sessionCookieFile = File("src/main/resources/session.cookie")
+            if (!sessionCookieFile.exists()) {
+                throw CookieMissing()
+            }
+            val sessionCookie = sessionCookieFile.readText()
+            if (sessionCookie.isBlank()) {
+                throw CookieMissing()
+            }
+
+            val url = "https://adventofcode.com/${year.intValue()}/day/${day.intValue()}/input"
+            println("downloading $url to ${inputFile.absolutePath} ...")
+            val get: Response = khttp.get(
+                    url = url,
+                    cookies = mapOf("session" to sessionCookie)
+            )
+
+            val content = get.content
+            inputFile.createNewFile()
+            inputFile.writeBytes(content)
+
+        }
         @JvmStatic
         fun forDay(puzzle: IPuzzle, suffix: String = ""): PuzzleInput {
             return forDay(puzzle.year, puzzle.day, suffix)
@@ -31,13 +55,15 @@ class PuzzleInput(val lines: List<String>) {
         @JvmStatic
         fun forDay(year: Year, day: Day, suffix: String = ""): PuzzleInput {
 
-            val dayStr = day.toString().substring(1)
-            val yearStr = year.toString().substring(1)
             val extra = if (!suffix.isBlank()) "_$suffix" else ""
-            val filename = "src/main/resources/inputs/$yearStr/$dayStr$extra"
+            val filename = "src/main/resources/inputs/${year.intString()}/${day.intString()}$extra"
 
-            val file = File(filename)
-            return PuzzleInput(file.readLines().filter { !it.isBlank() })
+            val inputFile = File(filename)
+            if (suffix.isBlank() && !inputFile.exists()) {
+                println("${inputFile.absolutePath} does not exist")
+                downloadInput(year, day, inputFile)
+            }
+            return PuzzleInput(inputFile.readLines().filter { !it.isBlank() })
         }
 
         @JvmStatic

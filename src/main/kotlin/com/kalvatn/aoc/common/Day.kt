@@ -25,5 +25,12 @@ enum class Day {
     D22,
     D23,
     D24,
-    D25
+    D25;
+
+    fun intValue():Int {
+        return intString().toInt()
+    }
+    fun intString():String {
+        return this.toString().substring(1)
+    }
 }
