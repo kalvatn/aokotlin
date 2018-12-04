@@ -24,18 +24,20 @@ class PuzzleInput(val lines: List<String>) {
 
     companion object {
         @JvmStatic
-        fun forDay(day: IDay, suffix: String = ""): PuzzleInput {
-            return forDay(day.year, day.day, suffix)
+        fun forDay(puzzle: IPuzzle, suffix: String = ""): PuzzleInput {
+            return forDay(puzzle.year, puzzle.day, suffix)
         }
 
         @JvmStatic
-        fun forDay(year: Int, day: Int, suffix: String = ""): PuzzleInput {
+        fun forDay(year: Year, day: Day, suffix: String = ""): PuzzleInput {
 
-            val dayZeroPad = day.toString().padStart(2, '0')
+            val dayStr = day.toString().substring(1)
+            val yearStr = year.toString().substring(1)
             val extra = if (!suffix.isBlank()) "_$suffix" else ""
-            val filename = "src/main/resources/inputs/$year/$dayZeroPad$extra"
+            val filename = "src/main/resources/inputs/$yearStr/$dayStr$extra"
 
-            return PuzzleInput(File(filename).readLines().filter { !it.isBlank() })
+            val file = File(filename)
+            return PuzzleInput(file.readLines().filter { !it.isBlank() })
         }
 
         @JvmStatic

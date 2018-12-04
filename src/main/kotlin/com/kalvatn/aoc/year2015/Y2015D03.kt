@@ -5,10 +5,7 @@ import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.exceptions.Impossiburu
 import java.awt.Point
 
-class Day03 : Day {
-
-    constructor() : super(2015, 3)
-    constructor(input: PuzzleInput) : super(2015, 3, input)
+class Y2015D03(input:PuzzleInput? = null) : APuzzle2015(Day.D03, input) {
 
     enum class Direction {
         NORTH, EAST, SOUTH, WEST;
@@ -28,9 +25,9 @@ class Day03 : Day {
         }
     }
 
-    private val directions = input.singleLine().map { Direction.fromChar(it) }
+    private val directions = this.input.singleLine().map { Direction.fromChar(it) }
 
-    fun visit(current: Point, direction: Direction): Point {
+    private fun visit(current: Point, direction: Direction): Point {
         return when (direction) {
             Direction.NORTH -> Point(current.x, current.y - 1)
             Direction.EAST -> Point(current.x + 1, current.y)

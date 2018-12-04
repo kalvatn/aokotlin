@@ -1,16 +1,16 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.IDay
+import com.kalvatn.aoc.common.IPuzzle
 
 
 fun main(args: Array<String>) {
-    val days: Set<IDay> = setOf(
-            Day01(),
-            Day02(),
-            Day03(),
-            Day04()
+    val puzzles: Set<IPuzzle> = setOf(
+            Y2018D01(),
+            Y2018D02(),
+            Y2018D03(),
+            Y2018D04()
     )
-    days.forEach {
+    puzzles.forEach {
         println("$it")
         it.run(true)
     }

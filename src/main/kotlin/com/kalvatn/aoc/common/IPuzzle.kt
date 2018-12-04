@@ -1,8 +1,8 @@
 package com.kalvatn.aoc.common
 
-interface IDay {
-    val year: Int
-    val day: Int
+interface IPuzzle {
+    val year: Year
+    val day: Day
     val input: PuzzleInput
 
     fun partOne(): String

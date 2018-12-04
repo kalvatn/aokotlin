@@ -4,11 +4,9 @@ import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.extensions.reductions
 
-class Day01 : Day {
+class Y2015D01(input: PuzzleInput? = null) : APuzzle2015(Day.D01, input) {
 
-    constructor() : super(2015, 1)
-    constructor(input: PuzzleInput) : super(2018, 1, input)
-
+    private val changes: List<Int> = this.input.singleLine().map { parenToInt(it) }
 
     private fun parenToInt(paren: Char): Int {
         return when (paren) {
@@ -17,7 +15,6 @@ class Day01 : Day {
         }
     }
 
-    private val changes = input.singleLine().map { parenToInt(it) }
 
 
     override fun partOne(): String {

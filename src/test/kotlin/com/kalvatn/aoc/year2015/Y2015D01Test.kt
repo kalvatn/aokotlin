@@ -5,17 +5,17 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
 import org.junit.Test
 
-class Day01Test {
+class Y2015D01Test {
     @Test
     fun testExamples() {
-        val test1 = Day01(PuzzleInput.ofSingleLine(")"))
+        val test1 = Y2015D01(PuzzleInput.ofSingleLine(")"))
         Assert.assertThat(test1.partOne().toInt(), equalTo(-1))
         Assert.assertThat(test1.partTwo().toInt(), equalTo(1))
     }
 
     @Test
     fun testSolution() {
-        val day01 = Day01()
+        val day01 = Y2015D01()
         Assert.assertThat(day01.partOne().toInt(), equalTo(138))
         Assert.assertThat(day01.partTwo().toInt(), equalTo(1771))
 

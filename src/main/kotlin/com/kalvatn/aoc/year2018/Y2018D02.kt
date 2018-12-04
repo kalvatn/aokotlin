@@ -1,15 +1,14 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.common.Day
+import com.kalvatn.aoc.common.APuzzle
 import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.common.Year
 import com.kalvatn.aoc.exceptions.Impossiburu
 
-class Day02 : Day {
+class Y2018D02(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D02, input) {
 
-    constructor() : super(2018, 2)
-    constructor(input: PuzzleInput) : super(2018, 2, input)
-
-    private val boxIds = input.lines
+    private val boxIds = this.input.lines
 
     override fun partOne(): String {
         val charCounts = boxIds.map { line -> line.groupingBy { it }.eachCount().values }

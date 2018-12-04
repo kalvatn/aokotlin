@@ -3,11 +3,7 @@ package com.kalvatn.aoc.year2015
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.extensions.extractIntegers
-
-class Day02 : Day {
-
-    constructor() : super(2015, 2)
-    constructor(input: PuzzleInput) : super(2015, 2, input)
+class Y2015D02(input:PuzzleInput? = null) : APuzzle2015(Day.D02, input) {
 
     data class Present(val l: Int, val w: Int, val h: Int) {
         private fun sides(): List<Int> {
@@ -41,7 +37,7 @@ class Day02 : Day {
     }
 
 
-    private val dimensions = input.map { Present.fromString(it) }
+    private val dimensions = this.input.map { Present.fromString(it) }
 
 
     override fun partOne(): String {

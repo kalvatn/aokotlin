@@ -1,15 +1,14 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.common.Day
+import com.kalvatn.aoc.common.APuzzle
 import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.common.Year
 import com.kalvatn.aoc.exceptions.Impossiburu
-import com.kalvatn.aoc.year2018.Day04.GuardRecord.Companion.fromString
+import com.kalvatn.aoc.year2018.Y2018D04.GuardRecord.Companion.fromString
 
 
-class Day04 : Day {
-
-    constructor() : super(2018, 4)
-    constructor(input: PuzzleInput) : super(2018, 4, input)
+class Y2018D04(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D04, input) {
 
     enum class Action {
         BEGINS, SLEEPS, WAKES;
@@ -64,7 +63,7 @@ class Day04 : Day {
     }
 
     private val records =
-            input.map { fromString(it) }
+            this.input.map { fromString(it) }
                     .sortedWith(compareBy(GuardRecord::y, GuardRecord::m, GuardRecord::d, GuardRecord::hh, GuardRecord::mm))
     private val guards = processRecords(records.iterator(), mapOf(), Guard(-1), 0)
 
