@@ -11,7 +11,11 @@ class Day01 : Day {
 
     private val changes: List<Int> = input.asIntegers()
 
-    private tailrec fun calibrate(changes: Iterator<Int>, seen: MutableSet<Int> = mutableSetOf(), current: Int = 0): Int {
+    private tailrec fun calibrate(
+        changes: Iterator<Int>,
+        seen: MutableSet<Int> = mutableSetOf(),
+        current: Int = 0
+    ): Int {
         return if (!seen.add(current)) current else calibrate(changes, seen, current + changes.next())
     }
 

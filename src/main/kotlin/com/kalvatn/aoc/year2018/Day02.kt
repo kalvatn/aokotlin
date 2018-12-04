@@ -19,10 +19,10 @@ class Day02 : Day {
         for (s1 in boxIds) {
             for (s2 in boxIds) {
                 val equalChars = (0 until s2.length)
-                        .asSequence()
-                        .filter { s1[it] == s2[it] }
-                        .map { s1[it] }
-                        .toList()
+                    .asSequence()
+                    .filter { s1[it] == s2[it] }
+                    .map { s1[it] }
+                    .toList()
                 if (equalChars.size == (s1.length - 1)) {
                     return equalChars.joinToString("")
                 }

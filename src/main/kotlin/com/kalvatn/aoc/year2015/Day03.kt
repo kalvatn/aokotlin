@@ -13,29 +13,29 @@ class Day03 : Day {
         NORTH, EAST, SOUTH, WEST;
 
         companion object {
-            fun fromChar(char:Char):Direction {
-               return when(char) {
-                   '^' -> NORTH
-                   '>' -> EAST
-                   'v' -> SOUTH
-                   '<' -> WEST
-                   else -> {
-                       throw Exception("unknown direction")
-                   }
-               }
+            fun fromChar(char: Char): Direction {
+                return when (char) {
+                    '^' -> NORTH
+                    '>' -> EAST
+                    'v' -> SOUTH
+                    '<' -> WEST
+                    else -> {
+                        throw Exception("unknown direction")
+                    }
+                }
             }
         }
     }
 
     private val directions = input.singleLine().map { Direction.fromChar(it) }
 
-    fun visit(current: Point, direction: Direction):Point {
-       return when(direction) {
-           Direction.NORTH -> Point(current.x, current.y-1)
-           Direction.EAST -> Point(current.x+1, current.y)
-           Direction.SOUTH -> Point(current.x, current.y+1)
-           Direction.WEST -> Point(current.x-1, current.y)
-       }
+    fun visit(current: Point, direction: Direction): Point {
+        return when (direction) {
+            Direction.NORTH -> Point(current.x, current.y - 1)
+            Direction.EAST -> Point(current.x + 1, current.y)
+            Direction.SOUTH -> Point(current.x, current.y + 1)
+            Direction.WEST -> Point(current.x - 1, current.y)
+        }
     }
 
     override fun partOne(): String {
@@ -67,7 +67,6 @@ class Day03 : Day {
         }
         return houses.filter { it.value >= 1 }.count().toString()
     }
-
 
 
 }

@@ -13,17 +13,17 @@ class Day04 : Day {
     private val key = input.singleLine()
     private val md5 = MessageDigest.getInstance("MD5")
 
-    fun generateHash(i:Int): String {
+    fun generateHash(i: Int): String {
         return BigInteger(1, md5.digest("$key$i".toByteArray())).toString(16).padStart(32, '0')
     }
 
-    fun hasLeadingZeroes(hex: String, n: Int):Boolean {
+    fun hasLeadingZeroes(hex: String, n: Int): Boolean {
         return hex.startsWith("0".repeat(n))
     }
 
-    fun findSecret(n:Int): Int {
+    fun findSecret(n: Int): Int {
         var i = 0
-        while(true) {
+        while (true) {
             val hash = generateHash(i)
             if (hasLeadingZeroes(hash, n)) {
                 return i
@@ -40,7 +40,6 @@ class Day04 : Day {
     override fun partTwo(): String {
         return findSecret(6).toString()
     }
-
 
 
 }

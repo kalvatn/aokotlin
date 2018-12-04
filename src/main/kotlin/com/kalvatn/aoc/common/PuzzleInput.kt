@@ -47,6 +47,7 @@ class PuzzleInput(val lines: List<String>) {
         fun ofSingleLine(string: String, splitOn: String = ""): PuzzleInput {
             return PuzzleInput(string.split(splitOn).filter { !it.isBlank() }.map { it.trim() })
         }
+
         @JvmStatic
         fun ofSingleLine(string: String): PuzzleInput {
             return PuzzleInput(listOf(string))
