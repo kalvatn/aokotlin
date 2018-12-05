@@ -13,6 +13,6 @@ fun main(args: Array<String>) {
     )
     puzzles.forEach {
         println("$it")
-        it.run()
+        it.run(true)
     }
 }

@@ -1,6 +1,6 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.IPuzzleTest
+import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.common.Year
@@ -11,7 +11,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert.assertThat
 import org.junit.Test
 
-class Y2015D07Test : IPuzzleTest {
+class Y2015D07Test : BaseDayTest() {
     @Test
     fun commandParse() {
         assertThat(fromString("turn on 0,0 through 999,999"), equalTo(Command(ON, Pair(0, 0), Pair(999, 999))))

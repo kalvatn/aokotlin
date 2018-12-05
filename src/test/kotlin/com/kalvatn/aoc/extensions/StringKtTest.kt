@@ -16,7 +16,9 @@ class StringKtTest {
 
     @Test
     fun hasNVowels() {
-        assertThat("aaa".hasNVowels(3), equalTo(true))
+        assertThat("aaa".hasNVowels(), equalTo(true))
+        assertThat("aeiouaeiouaeiou".hasNVowels(3), equalTo(true))
+        assertThat("aaa".hasNVowels(), equalTo(true))
         assertThat("aeiouaeiouaeiou".hasNVowels(3), equalTo(true))
     }
 
@@ -25,6 +27,9 @@ class StringKtTest {
         assertThat("abcdde".hasConsecutiveLetters(1), equalTo(true))
         assertThat("aaa".hasConsecutiveLetters(1), equalTo(true))
         assertThat("jchzalrnumimnmhp".hasConsecutiveLetters(1), equalTo(false))
+        assertThat("abcdde".hasConsecutiveLetters(), equalTo(true))
+        assertThat("aaa".hasConsecutiveLetters(), equalTo(true))
+        assertThat("jchzalrnumimnmhp".hasConsecutiveLetters(), equalTo(false))
     }
 
     @Test

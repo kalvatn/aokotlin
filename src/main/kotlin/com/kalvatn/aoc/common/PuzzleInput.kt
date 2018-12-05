@@ -69,11 +69,11 @@ class PuzzleInput(val lines: List<String>) {
 
         @JvmStatic
         fun ofCommaDelimited(string: String): PuzzleInput {
-            return ofSingleLine(string, splitOn = ",")
+            return ofSingleLineSplit(string, splitOn = ",")
         }
 
         @JvmStatic
-        fun ofSingleLine(string: String, splitOn: String = ""): PuzzleInput {
+        fun ofSingleLineSplit(string: String, splitOn: String = ""): PuzzleInput {
             return PuzzleInput(string.split(splitOn).filter { !it.isBlank() }.map { it.trim() })
         }
 

@@ -1,6 +1,7 @@
 package com.kalvatn.aoc.extensions
 
 import org.hamcrest.CoreMatchers.equalTo
+import org.junit.Assert
 import org.junit.Assert.assertThat
 import org.junit.Test
 
@@ -15,5 +16,13 @@ class CollectionKtTest {
     @Test
     fun cycle() {
         assertThat(listOf(1, 2, 3).cycle().take(10).toList(), equalTo(listOf(1, 2, 3, 1, 2, 3, 1, 2, 3, 1)))
+    }
+
+    @Test
+    fun reductions() {
+        val r = listOf(1, 2, 3).reductions(0) { acc, i ->
+            acc + i
+        }.toList()
+        Assert.assertThat(r, equalTo(listOf(0, 1, 3, 6)))
     }
 }

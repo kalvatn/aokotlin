@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.utils
 
 
-private inline fun <reified E> buildArray2D(size: Int, defaultValue: E): Array<Array<E>> {
+inline fun <reified E> buildArray2D(size: Int, defaultValue: E): Array<Array<E>> {
     var rows = arrayOf<Array<E>>()
     for (i in 0 until size) {
         var cols = arrayOf<E>()

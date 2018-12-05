@@ -36,6 +36,6 @@ abstract class APuzzle(final override val year: Year, final override val day: Da
     }
 
     override fun toString(): String {
-        return "$year-${day.toString().padStart(2, '0')}"
+        return "${year.intString()}-${day.intString()}"
     }
 }

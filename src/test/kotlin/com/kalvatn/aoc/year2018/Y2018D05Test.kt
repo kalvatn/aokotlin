@@ -1,12 +1,12 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.IPuzzleTest
+import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.common.PuzzleInput
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
 import org.junit.Test
 
-class Y2018D05Test : IPuzzleTest {
+class Y2018D05Test : BaseDayTest() {
     @Test
     override fun examplePartOne() {
         val test1 = Y2018D05(PuzzleInput.ofSingleLine("dabAcCaCBAcCcaDA"))
