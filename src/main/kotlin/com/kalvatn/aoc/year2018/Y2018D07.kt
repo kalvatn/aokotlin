@@ -2,8 +2,6 @@ package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
-import com.kalvatn.aoc.exceptions.Impossiburu
 import java.util.*
 
 class Y2018D07(input: PuzzleInput? = null) : APuzzle2018(Day.D07, input) {
@@ -36,45 +34,61 @@ class Y2018D07(input: PuzzleInput? = null) : APuzzle2018(Day.D07, input) {
         }
         return steps
     }
-    val steps = parseInput()
 
-    override fun partOne(): String {
-
-
+    fun processSteps(teamWork:Boolean = false): Pair<String, Int> {
+        val steps = parseInput()
+        var numberOfWorkers = 1
+        val stepCosts: MutableMap<Char, Int>
+        if (teamWork) {
+            numberOfWorkers = if (steps.size > 6) 5 else 2
+            stepCosts = steps.keys.sorted().map { it to it.toInt() - 64 + if (steps.size > 6) 60 else 0 }.toMap().toMutableMap()
+        } else {
+            stepCosts = steps.keys.sorted().map { it to 0 }.toMap().toMutableMap()
+        }
         val done = mutableSetOf<Char>()
 
         val queue = ArrayDeque<Step>()
         steps.filter { it.value.prereq.isEmpty() }.keys.sorted().map { queue.add(steps[it]) }
-        println(queue)
 
-        while (queue.size > 0) {
-            val step = queue.sortedWith(compareBy(Step::name)).first()
-            queue.remove(step)
-            if (step.prereq.isEmpty()) {
-                done.add(step.name)
-                steps.map { it.value.prereq.remove(step.name) }
-                steps.filter { it.value.prereq.isEmpty() }.keys.sorted().map { it ->
-                    if (!done.contains(it))
-                        queue.add(steps[it]) }
-            } else {
-                throw Impossiburu()
+        var secondsElapsed = 0
+        val processing = mutableSetOf<Step>()
+        while (queue.size > 0 || processing.size > 0) {
+            if (processing.size < numberOfWorkers) {
+                processing.addAll(queue.sortedWith(compareBy(Step::name)).take(numberOfWorkers - processing.size))
+                queue.removeAll(processing)
             }
+            for (step in processing) {
+                stepCosts[step.name] = stepCosts[step.name]!!.dec()
+                if (stepCosts[step.name]!! <= 0) {
+                    queue.remove(step)
+                    done.add(step.name)
+                    steps.map { it.value.prereq.remove(step.name) }
+                    steps.filter { it.value.prereq.isEmpty() }.keys.sorted().map { it ->
+                        if (!done.contains(it))
+                            queue.add(steps[it])
+                    }
+                }
+
+            }
+            processing.removeAll(processing.filter { done.contains(it.name) })
+            secondsElapsed += 1
         }
-        return done.joinToString("")
+        return Pair(done.joinToString(""), secondsElapsed)
+    }
+
+    override fun partOne(): String {
+        return processSteps().first
     }
 
     override fun partTwo(): String {
-        for (key in steps.keys.sorted()) {
-            println("$key : ${key.toInt()-64}")
-        }
-        return ""
+        return processSteps(true).second.toString()
     }
 
 }
 
 
 fun main(args: Array<String>) {
-    val day = Y2018D07(PuzzleInput.forDay(Year.Y2018, Day.D07, "test"))
-//    val day = Y2018D07()
+//    val day = Y2018D07(PuzzleInput.forDay(Year.Y2018, Day.D07, "test"))
+    val day = Y2018D07()
     day.run()
 }
