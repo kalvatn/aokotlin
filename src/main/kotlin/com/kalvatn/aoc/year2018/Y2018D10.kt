@@ -3,12 +3,12 @@ package com.kalvatn.aoc.year2018
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.extensions.extractIntegers
 import kotlin.math.max
 
 class Y2018D10(input: PuzzleInput? = null) : APuzzle2018(Day.D10, input) {
 
-    data class Point(var x: Int, var y: Int)
 
     data class Star(var position: Point, var velocity: Point) {
         companion object {
