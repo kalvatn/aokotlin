@@ -86,6 +86,11 @@ class PointTest {
         printGrid(Point(4, 4).gridFrom(5))
     }
 
+    @Test
+    fun plus() {
+        Assert.assertThat(Point(0, 0).plus(Point(1,1)), equalTo(Point(1,1)))
+    }
+
     private fun printGrid(grid:Set<Point>) {
         (0 until (grid.size * 0.75).toInt()).forEach { y ->
             (0 until (grid.size * 0.75).toInt()).forEach { x ->
@@ -94,4 +99,6 @@ class PointTest {
             println()
         }
     }
+
+
 }

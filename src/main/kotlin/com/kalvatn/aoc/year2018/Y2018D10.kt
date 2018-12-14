@@ -2,7 +2,6 @@ package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.extensions.extractIntegers
 import kotlin.math.max

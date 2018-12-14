@@ -2,28 +2,12 @@ package com.kalvatn.aoc.year2015
 
 import com.kalvatn.aoc.common.Day
 import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.exceptions.Impossiburu
 import java.awt.Point
 
 class Y2015D03(input: PuzzleInput? = null) : APuzzle2015(Day.D03, input) {
 
-    enum class Direction {
-        NORTH, EAST, SOUTH, WEST;
-
-        companion object {
-            fun fromChar(char: Char): Direction {
-                return when (char) {
-                    '^' -> NORTH
-                    '>' -> EAST
-                    'v' -> SOUTH
-                    '<' -> WEST
-                    else -> {
-                        throw Impossiburu()
-                    }
-                }
-            }
-        }
-    }
 
     private val directions = this.input.singleLine().map { Direction.fromChar(it) }
 

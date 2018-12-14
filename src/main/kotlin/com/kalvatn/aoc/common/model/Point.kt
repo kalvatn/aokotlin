@@ -1,7 +1,14 @@
 package com.kalvatn.aoc.common.model
 
 
-data class Point(var x: Int, var y: Int) {
+data class Point(var x: Int, var y: Int):Comparable<Point> {
+    override fun compareTo(other: Point): Int {
+        if (this.y == other.y) {
+            return this.x.compareTo(other.x)
+        }
+        return this.y.compareTo(other.y)
+    }
+
     fun surrounding(): Set<Point> {
         return setOf(
                 Point(x.dec(), y),
@@ -15,6 +22,10 @@ data class Point(var x: Int, var y: Int) {
                 Point(x, y.inc()),
                 Point(x, y.dec())
         )
+    }
+
+    fun plus(other: Point):Point {
+       return Point(this.x + other.x, this.y + other.y)
     }
 
     fun gridFrom(size: Int): Set<Point> {
