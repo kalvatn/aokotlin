@@ -21,9 +21,8 @@ class Y2018D16Test : BaseDayTest() {
     }
 
     override fun solutionPartOne() {
-        TODO("not implemented")
         val day = Y2018D16()
-        Assert.assertThat(day.partOne().toInt(), equalTo(0))
+        Assert.assertThat(day.partOne().toInt(), equalTo(640))
     }
 
     override fun solutionPartTwo() {
