@@ -5,7 +5,7 @@ import com.kalvatn.aoc.exceptions.Impossiburu
 enum class Direction {
     NORTH, EAST, SOUTH, WEST;
 
-    fun toPointDiff():Point {
+    fun toPointDiff(): Point {
         return when(this) {
             NORTH -> Point(0, -1)
             EAST -> Point(1, 0)
@@ -23,7 +23,7 @@ enum class Direction {
         }
     }
 
-    fun turn(turn:Turn):Direction {
+    fun turn(turn: Turn): Direction {
         return when(turn) {
             Turn.LEFT -> when(this) {
                 NORTH -> WEST

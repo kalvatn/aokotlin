@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import java.lang.Math.abs
 
-class Y2018D06(input: PuzzleInput? = null) : APuzzle2018(Day.D06, input) {
+class Y2018D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D06, input) {
 
     private val lol = this.input.lines.map { it.split(",").map { it.trim().toInt() } }.map { Point(it.first(), it[1]) }
 
@@ -32,7 +33,7 @@ class Y2018D06(input: PuzzleInput? = null) : APuzzle2018(Day.D06, input) {
         }
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val xMax = lol.map { it.x }.max()!!
         val yMax = lol.map { it.y }.max()!!
 
@@ -83,7 +84,7 @@ class Y2018D06(input: PuzzleInput? = null) : APuzzle2018(Day.D06, input) {
         return maxArea.toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
 
         val xMax = lol.maxBy { it.x }!!.x
         val yMax = lol.maxBy { it.y }!!.y
@@ -146,9 +147,9 @@ class Y2018D06(input: PuzzleInput? = null) : APuzzle2018(Day.D06, input) {
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
 //    val day = Y2018D06(PuzzleInput.forDay(Year.Y2018, Day.D06, "test"))
     val day = Y2018D06()
-    day.run()
+//    day.run()
 //    println(day.partTwo())
 }

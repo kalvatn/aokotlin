@@ -1,15 +1,12 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.BaseDayTest
-import com.kalvatn.aoc.common.APuzzleTest
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
 
-import org.junit.Assert.*
-
 class Y2018D09Test : BaseDayTest() {
-    override fun examplePartOne() {
+    override suspend fun examplePartOne() {
         val test1 = Y2018D09(PuzzleInput.ofSingleLine("9 players; last marble is worth 23 points"))
         Assert.assertThat(test1.partOne().toInt(), equalTo(32))
         val test2 = Y2018D09(PuzzleInput.ofSingleLine("10 players; last marble is worth 1618 points"))
@@ -24,15 +21,15 @@ class Y2018D09Test : BaseDayTest() {
         Assert.assertThat(test6.partOne().toInt(), equalTo(37305))
     }
 
-    override fun examplePartTwo() {
+    override suspend fun examplePartTwo() {
     }
 
-    override fun solutionPartOne() {
+    override suspend fun solutionPartOne() {
         val day = Y2018D09()
         Assert.assertThat(day.partOne().toInt(), equalTo(370210))
     }
 
-    override fun solutionPartTwo() {
+    override suspend fun solutionPartTwo() {
         val day = Y2018D09()
         Assert.assertThat(day.partTwo().toLong(), equalTo(3101176548))
     }

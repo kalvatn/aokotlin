@@ -1,10 +1,10 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 
-class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
+class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D08, input) {
 
     private val numbers = this.input.singleLine().split(" ").map { it.toInt() }
 
@@ -61,12 +61,12 @@ class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
         return nodes
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val nodes = processNodes()
         return nodes.values.map { it.meta.sum() }.sum().toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         val nodes = processNodes()
         val nodeValues = mutableMapOf<Int, Int>()
         nodes.keys.forEach {
@@ -103,8 +103,8 @@ class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
 //    val day = Y2018D08(PuzzleInput.forDay(Year.Y2018, Day.D08, "test"))
     val day = Y2018D08()
-    day.run()
+//    day.run()
 }

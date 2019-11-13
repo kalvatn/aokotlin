@@ -1,14 +1,15 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.common.model.Turn
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.utils.buildArray2D
 import kotlin.math.max
 
-class Y2018D13(input: PuzzleInput? = null) : APuzzle2018(Day.D13, input) {
+class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D13, input) {
 
     val grid: Grid = Grid(this.input.lines)
 
@@ -121,11 +122,11 @@ class Y2018D13(input: PuzzleInput? = null) : APuzzle2018(Day.D13, input) {
 
     private val crashes = simulate()
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return "${crashes.first.x},${crashes.first.y}"
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return "${crashes.second.x},${crashes.second.y}"
     }
 
@@ -138,5 +139,4 @@ class Y2018D13(input: PuzzleInput? = null) : APuzzle2018(Day.D13, input) {
 fun main(args: Array<String>) {
 //    val day = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
     val day = Y2018D13()
-    day.run()
 }

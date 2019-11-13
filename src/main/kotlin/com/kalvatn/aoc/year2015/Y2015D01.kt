@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.extensions.reductions
 
-class Y2015D01(input: PuzzleInput? = null) : APuzzle2015(Day.D01, input) {
+class Y2015D01(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D01, input) {
 
     private val changes: List<Int> = this.input.singleLine().map { parenToInt(it) }
 
@@ -16,16 +17,20 @@ class Y2015D01(input: PuzzleInput? = null) : APuzzle2015(Day.D01, input) {
     }
 
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return changes.sum().toString()
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return changes.reductions(0) { acc, i -> acc + i }.takeWhile { it != -1 }.count().toString()
     }
 
 
+}
+
+fun main() {
+//    Y2015D01().run()
 }
 
 

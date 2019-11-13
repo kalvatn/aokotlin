@@ -28,7 +28,7 @@ class Y2015D05Test {
 
 
     @Test
-    fun testSolution() {
+    suspend fun testSolution() {
         val day = Y2015D05()
         Assert.assertThat(day.partOne().toInt(), equalTo(255))
         Assert.assertThat(day.partTwo().toInt(), equalTo(55))

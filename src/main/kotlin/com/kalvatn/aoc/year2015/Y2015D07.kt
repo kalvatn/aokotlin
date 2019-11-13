@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.exceptions.Impossiburu
 
-class Y2015D07(input: PuzzleInput? = null) : APuzzle2015(Day.D07, input) {
+class Y2015D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D07, input) {
     private val wires = mutableMapOf<String, String>()
 
     abstract class OP(val left: Int, val right: Int) {
@@ -86,13 +87,13 @@ class Y2015D07(input: PuzzleInput? = null) : APuzzle2015(Day.D07, input) {
 
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         initialize()
         return getWire("a").toString()
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         val b = partOne()
         initialize(mapOf("b" to b))
         return getWire("a").toString()

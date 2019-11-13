@@ -1,9 +1,9 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.BaseDayTest
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.common.model.Point
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
@@ -36,18 +36,18 @@ class Y2018D10Test : BaseDayTest() {
         Assert.assertThat(star.position.x, equalTo(12))
         Assert.assertThat(star.position.y, equalTo(0))
     }
-    override fun examplePartOne() {
+    override suspend fun examplePartOne() {
     }
 
-    override fun examplePartTwo() {
+    override suspend fun examplePartTwo() {
     }
 
-    override fun solutionPartOne() {
+    override suspend fun solutionPartOne() {
         val day = Y2018D10()
         Assert.assertThat(day.partOne(), equalTo("AHFGRKEE"))
     }
 
-    override fun solutionPartTwo() {
+    override suspend fun solutionPartTwo() {
         val day = Y2018D10()
         Assert.assertThat(day.partTwo().toInt(), equalTo(10243))
     }

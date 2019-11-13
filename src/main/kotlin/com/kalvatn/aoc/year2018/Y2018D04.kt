@@ -1,14 +1,14 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.APuzzle
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.model.GenericPuzzleYearDay
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.exceptions.Impossiburu
 import com.kalvatn.aoc.year2018.Y2018D04.GuardRecord.Companion.fromString
 
 
-class Y2018D04(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D04, input) {
+class Y2018D04(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzleYearDay(Year.Y2018, Day.D04, input) {
 
     enum class Action {
         BEGINS, SLEEPS, WAKES;
@@ -40,15 +40,15 @@ class Y2018D04(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D04, input)
         companion object {
             fun fromString(string: String): GuardRecord {
                 val regex = "^\\[(\\d+)-(\\d+)-(\\d+) (\\d+):(\\d+)\\] (?:Guard #(\\d+) )?([\\w\\s]+)".toRegex()
-                regex.matchEntire(string)
+                return regex.matchEntire(string)
                         ?.destructured
                         ?.let { (y, m, d, hh, mm, guardId, action) ->
-                            return GuardRecord(y.toInt(), m.toInt(), d.toInt(), hh.toInt(), mm.toInt(), when (guardId) {
+                            GuardRecord(y.toInt(), m.toInt(), d.toInt(), hh.toInt(), mm.toInt(), when (guardId) {
                                 "" -> -1
                                 else -> guardId.toInt()
                             }, Action.fromString(action))
 
-                        }
+                        }!!
             }
         }
     }
@@ -93,13 +93,13 @@ class Y2018D04(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D04, input)
         }
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val guard = guards.maxBy { it.value.sleepTime }!!.value
         val maxMinute = guard.sleepMinuteFrequency.maxBy { it.value }!!.key
         return (guard.id * maxMinute).toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         val guard = guards.maxBy {
             it.value.sleepMinuteFrequency.maxBy { mf -> mf.value }?.value ?: 0
         }!!.value

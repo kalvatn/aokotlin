@@ -1,9 +1,10 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 
-class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
+class Y2018D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D09, input) {
 
     class Marble {
         val value: Int
@@ -73,12 +74,12 @@ class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         val (numberOfPlayers:Int, numberOfMarbles:Int) = "(\\d+) players; last marble is worth (\\d+) points".toRegex().matchEntire(this.input.singleLine())!!.destructured.toList().map { it.toInt() }
         return getHighScore(numberOfPlayers, numberOfMarbles*100).toString()
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val (numberOfPlayers:Int, numberOfMarbles:Int) = "(\\d+) players; last marble is worth (\\d+) points".toRegex().matchEntire(this.input.singleLine())!!.destructured.toList().map { it.toInt() }
         return getHighScore(numberOfPlayers, numberOfMarbles).toString()
     }
@@ -87,7 +88,7 @@ class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
     val day = Y2018D09()
-    day.run()
+//    day.run()
 }

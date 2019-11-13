@@ -6,14 +6,14 @@ import org.junit.Test
 abstract class BaseDayTest {
 
     @Test
-    abstract fun examplePartOne()
+    abstract suspend fun examplePartOne()
 
     @Test
-    abstract fun examplePartTwo()
+    abstract suspend fun examplePartTwo()
 
     @Test
-    abstract fun solutionPartOne()
+    abstract suspend fun solutionPartOne()
 
     @Test
-    abstract fun solutionPartTwo()
+    abstract suspend fun solutionPartTwo()
 }

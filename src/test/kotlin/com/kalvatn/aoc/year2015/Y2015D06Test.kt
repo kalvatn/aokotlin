@@ -1,8 +1,8 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.year2015.Y2015D06.Action.*
 import com.kalvatn.aoc.year2015.Y2015D06.Command
 import com.kalvatn.aoc.year2015.Y2015D06.Command.Companion.fromString
@@ -19,7 +19,7 @@ class Y2015D06Test {
     }
 
     @Test
-    fun testExamples() {
+    suspend fun testExamples() {
         val day = Y2015D06(PuzzleInput.forDay(Year.Y2015, Day.D06, "test"))
 
         assertThat(day.partOne().toInt(), equalTo((1000 * 1000) - 1))
@@ -29,7 +29,7 @@ class Y2015D06Test {
 
 
     @Test
-    fun testSolution() {
+    suspend fun testSolution() {
         val day = Y2015D06()
         assertThat(day.partOne().toInt(), equalTo(543903))
         assertThat(day.partTwo().toInt(), equalTo(14687245))

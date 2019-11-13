@@ -1,11 +1,11 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.exceptions.Impossiburu
 
-class Y2018D12(input: PuzzleInput? = null) : APuzzle2018(Day.D12, input) {
+class Y2018D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D12, input) {
 
 
     private val initialState = this.input.lines.first().split(":")[1].trim()
@@ -26,7 +26,7 @@ class Y2018D12(input: PuzzleInput? = null) : APuzzle2018(Day.D12, input) {
         return nextPlantIndexes
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
 
         var plantIndexes = mutableMapOf<Int, Boolean>()
         initialState.forEachIndexed { index, c ->
@@ -44,7 +44,7 @@ class Y2018D12(input: PuzzleInput? = null) : APuzzle2018(Day.D12, input) {
         return plantIndexes.filter { it.value }.keys.sum().toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         var plantIndexes = mutableMapOf<Int, Boolean>()
         initialState.forEachIndexed { index, c ->
             plantIndexes[index] = (c == '#')
@@ -75,5 +75,4 @@ class Y2018D12(input: PuzzleInput? = null) : APuzzle2018(Day.D12, input) {
 fun main(args: Array<String>) {
 //    val day = Y2018D12(PuzzleInput.forDay(Year.Y2018, Day.D12, "test"))
     val day = Y2018D12()
-    day.run()
 }

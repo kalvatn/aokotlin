@@ -24,7 +24,7 @@ data class Point(var x: Int, var y: Int):Comparable<Point> {
         )
     }
 
-    fun plus(other: Point):Point {
+    fun plus(other: Point): Point {
        return Point(this.x + other.x, this.y + other.y)
     }
 

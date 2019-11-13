@@ -1,9 +1,9 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.BaseDayTest
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.common.model.Point
 import org.hamcrest.CoreMatchers.equalTo
@@ -75,22 +75,22 @@ class Y2018D13Test : BaseDayTest() {
         Assert.assertThat(train2.direction, equalTo(Direction.EAST))
     }
 
-    override fun examplePartOne() {
+    override suspend fun examplePartOne() {
         val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
         Assert.assertThat(test1.partOne(), equalTo("7,3"))
     }
 
-    override fun examplePartTwo() {
+    override suspend fun examplePartTwo() {
         val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
         Assert.assertThat(test1.partTwo().toInt(), equalTo(0))
     }
 
-    override fun solutionPartOne() {
+    override suspend fun solutionPartOne() {
         val day = Y2018D13()
         Assert.assertThat(day.partOne(), equalTo("40,90"))
     }
 
-    override fun solutionPartTwo() {
+    override suspend fun solutionPartTwo() {
         val day = Y2018D13()
         Assert.assertThat(day.partTwo(), equalTo("65,81"))
     }

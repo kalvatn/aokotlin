@@ -1,9 +1,9 @@
 package com.kalvatn.aoc.year2015
 
 import com.kalvatn.aoc.BaseDayTest
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.year2015.Y2015D06.Action.*
 import com.kalvatn.aoc.year2015.Y2015D06.Command
 import com.kalvatn.aoc.year2015.Y2015D06.Command.Companion.fromString
@@ -20,25 +20,25 @@ class Y2015D07Test : BaseDayTest() {
     }
 
     @Test
-    override fun examplePartOne() {
+    override suspend fun examplePartOne() {
         val day = Y2015D07(PuzzleInput.forDay(Year.Y2015, Day.D07, "test"))
         assertThat(day.partOne().toInt(), equalTo(65412))
 
     }
 
     @Test
-    override fun examplePartTwo() {
+    override suspend fun examplePartTwo() {
         return
     }
 
     @Test
-    override fun solutionPartOne() {
+    override suspend fun solutionPartOne() {
         val day = Y2015D07()
         assertThat(day.partOne().toInt(), equalTo(16076))
     }
 
     @Test
-    override fun solutionPartTwo() {
+    override suspend fun solutionPartTwo() {
         val day = Y2015D07()
         assertThat(day.partTwo().toInt(), equalTo(2797))
     }

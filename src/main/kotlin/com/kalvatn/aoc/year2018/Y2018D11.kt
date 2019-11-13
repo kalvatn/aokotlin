@@ -1,10 +1,12 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.common.model.Point
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
+import kotlinx.coroutines.runBlocking
 
-class Y2018D11(input: PuzzleInput? = null) : APuzzle2018(Day.D11, input) {
+class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D11, input) {
 
 
     private val serialNumber: Int = this.input.singleLine().toInt()
@@ -37,7 +39,7 @@ class Y2018D11(input: PuzzleInput? = null) : APuzzle2018(Day.D11, input) {
         return powerLevels
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val totalPower = mutableMapOf<Point, Int>()
         for (entry in powerLevels.keys) {
             if (entry.x + 3 > 300) {
@@ -59,7 +61,12 @@ class Y2018D11(input: PuzzleInput? = null) : APuzzle2018(Day.D11, input) {
     data class PowerGrid(val topleft: Point, val size: Int, val power: Int)
 
 
-    override fun partTwo(): String {
+    suspend fun createGrid(entry:Point, size:Int):PowerGrid {
+        val grid = entry.gridFrom(size)
+        return PowerGrid(entry, size, grid.map { powerLevels[it]!! }.sum())
+    }
+
+    override suspend fun partTwo(): String {
         val maxSize = 300
         val powerGrid = mutableSetOf<PowerGrid>()
         for (entry in powerLevels.keys) {
@@ -75,14 +82,34 @@ class Y2018D11(input: PuzzleInput? = null) : APuzzle2018(Day.D11, input) {
                 powerGrid.add(PowerGrid(entry, size, grid.map { powerLevels[it]!! }.sum()))
             }
         }
+
+        val sizes = powerLevels.keys.map {
+            it to (maxSize downTo 1).mapNotNull { size ->
+                if (it.x + size > 300 || it.y + size > 300) {
+                    null
+                } else {
+                    size
+                }
+            }
+        }.toMap()
+        for (size in sizes) {
+            for (i in size.value) {
+                val gridFrom = size.key.gridFrom(i)
+            }
+        }
+
+
+
         val maxPower = powerGrid.maxBy { it.power }!!
         println(maxPower)
         return "${maxPower.topleft.x},${maxPower.topleft.y},${maxPower.size}"
     }
 }
 
-fun main(args: Array<String>) {
-//    val day = Y2018D11(PuzzleInput.ofSingleLine("42"))
-    val day = Y2018D11()
-    day.run()
+fun main() = runBlocking{
+    val day = Y2018D11(PuzzleInput.ofSingleLine("42"))
+//    val day = Y2018D11()
+    println(day.partOne())
+    println(day.partTwo())
+    Unit
 }

@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.BaseDayTest
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.common.model.Point
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
@@ -18,24 +18,24 @@ class Y2018D11Test : BaseDayTest() {
         Assert.assertThat(Y2018D11.FuelCell(Point(101, 153), 71).powerLevel(), equalTo(4))
     }
 
-    override fun examplePartOne() {
+    override suspend fun examplePartOne() {
         val test1 = Y2018D11(PuzzleInput.ofSingleLine("18"))
         Assert.assertThat(test1.partOne(), equalTo("33,45"))
         val test2 = Y2018D11(PuzzleInput.ofSingleLine("42"))
         Assert.assertThat(test2.partOne(), equalTo("21,61"))
     }
 
-    override fun examplePartTwo() {
+    override suspend fun examplePartTwo() {
         val test1 = Y2018D11(PuzzleInput.ofSingleLine(""))
         Assert.assertThat(test1.partTwo().toInt(), equalTo(0))
     }
 
-    override fun solutionPartOne() {
+    override suspend fun solutionPartOne() {
         val day = Y2018D11()
         Assert.assertThat(day.partOne(), equalTo("33,54"))
     }
 
-    override fun solutionPartTwo() {
+    override suspend fun solutionPartTwo() {
         val day = Y2018D11()
         Assert.assertThat(day.partTwo(), equalTo("232,289,8"))
     }

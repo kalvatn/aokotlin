@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.extensions.*
 
-class Y2015D05(input: PuzzleInput? = null) : APuzzle2015(Day.D05, input) {
+class Y2015D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D05, input) {
 
 
     fun nicePartOne(string: String): Boolean {
@@ -18,12 +19,12 @@ class Y2015D05(input: PuzzleInput? = null) : APuzzle2015(Day.D05, input) {
                 && string.hasXYX()
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return input.lines.filter { nicePartOne(it) }.count().toString()
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return input.lines.filter { nicePartTwo(it) }.count().toString()
     }
 

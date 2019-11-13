@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import java.util.*
 
-class Y2018D07(input: PuzzleInput? = null) : APuzzle2018(Day.D07, input) {
+class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D07, input) {
 
 
     data class Step(val name: Char, val prereq: MutableSet<Char> = sortedSetOf())
@@ -76,19 +77,19 @@ class Y2018D07(input: PuzzleInput? = null) : APuzzle2018(Day.D07, input) {
         return Pair(done.joinToString(""), secondsElapsed)
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return processSteps().first
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return processSteps(true).second.toString()
     }
 
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
 //    val day = Y2018D07(PuzzleInput.forDay(Year.Y2018, Day.D07, "test"))
     val day = Y2018D07()
-    day.run()
+//    day.run()
 }

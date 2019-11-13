@@ -1,13 +1,13 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
 import org.junit.Test
 
 class Y2015D03Test {
     @Test
-    fun testExamples() {
+    suspend fun testExamples() {
         val test1 = Y2015D03(PuzzleInput.ofSingleLine(">"))
         Assert.assertThat(test1.partOne().toInt(), equalTo(2))
         val test2 = Y2015D03(PuzzleInput.ofSingleLine("^>v<"))
@@ -19,7 +19,7 @@ class Y2015D03Test {
     }
 
     @Test
-    fun testSolution() {
+    suspend fun testSolution() {
         val day = Y2015D03()
         Assert.assertThat(day.partOne().toInt(), equalTo(2572))
         Assert.assertThat(day.partTwo().toInt(), equalTo(2631))
