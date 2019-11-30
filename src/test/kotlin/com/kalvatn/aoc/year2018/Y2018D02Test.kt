@@ -7,7 +7,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
 import org.junit.Test
 
-class Y2015D02Test {
+class Y2018D02Test {
     @Test
     suspend fun testExamples() {
         val test1 = Y2018D02(PuzzleInput.forDay(Year.Y2018, Day.D02, "test1"))

@@ -6,7 +6,7 @@ import org.junit.Assert
 import org.junit.Ignore
 import org.junit.Test
 
-class Y2015D01Test {
+class Y2018D01Test {
 
     @Test
     suspend fun testExamples() {
