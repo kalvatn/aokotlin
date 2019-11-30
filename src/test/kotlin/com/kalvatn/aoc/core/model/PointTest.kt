@@ -1,14 +1,12 @@
 package com.kalvatn.aoc.core.model
 
 import com.kalvatn.aoc.common.model.Point
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class PointTest {
+class PointTest : StringSpec({
 
-    @Test
-    fun surrounding() {
+    "test surrounding" {
         val point = Point(2, 2)
         val surrounding = point.surrounding()
         val expected = setOf(
@@ -24,7 +22,7 @@ class PointTest {
                 Point(3, 2),
                 Point(3, 3)
         )
-        Assert.assertThat(surrounding, equalTo(expected))
+        surrounding shouldBe expected
 
 //        val points = surrounding + point
 //        (0..4).forEach {y ->
@@ -36,8 +34,7 @@ class PointTest {
 
     }
 
-    @Test
-    fun gridFrom() {
+    "grid from" {
         val topleft3x3 = Point(0, 0)
         val grid3x3 = topleft3x3.gridFrom(size = 3)
         val expected3x3 = setOf(
@@ -54,7 +51,7 @@ class PointTest {
                 Point(2, 1),
                 Point(2, 2)
         )
-        Assert.assertThat(grid3x3, equalTo(expected3x3))
+        grid3x3 shouldBe expected3x3
         val topleft4x4 = Point(0, 0)
         val grid4x4 = topleft4x4.gridFrom(size = 4)
         val expected4x4 = setOf(
@@ -78,7 +75,7 @@ class PointTest {
                 Point(3, 2),
                 Point(3, 3)
         )
-        Assert.assertThat(grid4x4, equalTo(expected4x4))
+        grid4x4 shouldBe expected4x4
 
         printGrid(grid3x3)
         printGrid(grid4x4)
@@ -87,19 +84,18 @@ class PointTest {
         printGrid(Point(4, 4).gridFrom(5))
     }
 
-    @Test
-    fun plus() {
-        Assert.assertThat(Point(0, 0).plus(Point(1, 1)), equalTo(Point(1, 1)))
+    "point addition should work as expected" {
+        Point(0, 0).plus(Point(1, 1)) shouldBe Point(1, 1)
     }
 
-    private fun printGrid(grid:Set<Point>) {
-        (0 until (grid.size * 0.75).toInt()).forEach { y ->
-            (0 until (grid.size * 0.75).toInt()).forEach { x ->
-                print(if (grid.contains(Point(x, y))) " # " else " . ")
-            }
-            println()
+
+})
+
+fun printGrid(grid: Set<Point>) {
+    (0 until (grid.size * 0.75).toInt()).forEach { y ->
+        (0 until (grid.size * 0.75).toInt()).forEach { x ->
+            print(if (grid.contains(Point(x, y))) " # " else " . ")
         }
+        println()
     }
-
-
 }

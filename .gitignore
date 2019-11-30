@@ -6,3 +6,4 @@ target/
 session.cookie
 build/
 .gradle
+.kotlintest/

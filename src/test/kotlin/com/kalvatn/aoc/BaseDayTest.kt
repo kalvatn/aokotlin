@@ -1,9 +1,8 @@
 package com.kalvatn.aoc
 
-import org.junit.Test
+import io.kotlintest.specs.AnnotationSpec
 
-
-abstract class BaseDayTest {
+abstract class BaseDayTest : AnnotationSpec(){
 
     @Test
     abstract suspend fun examplePartOne()

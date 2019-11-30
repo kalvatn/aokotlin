@@ -1,19 +1,16 @@
 package com.kalvatn.aoc.exceptions
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class ExceptionsTest {
-    @Test
-    fun testImpossiburu() {
+class ExceptionsTest : StringSpec({
+    "impossiburu exception message" {
         val e = Impossiburu()
-        Assert.assertThat(e.message, equalTo("impossiburu"))
+        e.message shouldBe "impossiburu"
     }
 
-    @Test
-    fun testCookieMissing() {
+    "cookie missing exception message" {
         val e = CookieMissing()
-        Assert.assertThat(e.message, equalTo("src/main/resources/session.cookie is missing or empty"))
+        e.message shouldBe "src/main/resources/session.cookie is missing or empty"
     }
-}
+})

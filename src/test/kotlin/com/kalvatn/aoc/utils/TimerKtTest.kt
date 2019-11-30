@@ -1,11 +1,9 @@
 package com.kalvatn.aoc.utils
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class TimerKtTest {
-
+class TimerKtTest : StringSpec({
 
     fun lol() {
         (1..1000).forEach {
@@ -13,18 +11,17 @@ class TimerKtTest {
         }
     }
 
-    @Test
-    fun timeit() {
+    "test timeit" {
         timeit {
             lol()
         }
     }
 
-    @Test
-    fun benchmark() {
+
+    "test benchmark output" {
         val benchmark = benchmark(10) {
             lol()
         }
-        Assert.assertThat(benchmark.contains("ms avg over 10 executions"), equalTo(true))
+        benchmark.contains("ms avg over 10 executions") shouldBe true
     }
-}
+})

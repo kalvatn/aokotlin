@@ -3,57 +3,49 @@ package com.kalvatn.aoc.core
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.year2015.Y2015D04
 import com.kalvatn.aoc.year2015.Y2015D06
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class PuzzleInputTest {
-    @Test
-    fun ofSingleLine() {
+class PuzzleInputTest : StringSpec({
+    "single line" {
         val i = PuzzleInput.ofSingleLine("2x3x4")
-        Assert.assertThat(i.singleLine(), equalTo("2x3x4"))
+        i.singleLine() shouldBe "2x3x4"
+
         val j = PuzzleInput.ofSingleLineSplit("2x3x4", "x")
-        Assert.assertThat(j.lines, equalTo(listOf("2", "3", "4")))
+        j.lines shouldBe listOf("2", "3", "4")
     }
 
-    @Test
-    fun ofSingleLineSplit() {
+    "single line split" {
         val i = PuzzleInput.ofSingleLineSplit("2x3x4", "x")
-        Assert.assertThat(i.lines, equalTo(listOf("2", "3", "4")))
+        i.lines shouldBe listOf("2", "3", "4")
         val j = PuzzleInput.ofSingleLineSplit("2x3x4")
-        Assert.assertThat(j.lines, equalTo(listOf("2", "x", "3", "x", "4")))
+        j.lines shouldBe listOf("2", "x", "3", "x", "4")
     }
 
-    @Test
-    fun ofCommaDelimited() {
+    "comma delimited" {
         val i = PuzzleInput.ofCommaDelimited("2,3,4")
-        Assert.assertThat(i.lines, equalTo(listOf("2", "3", "4")))
+        i.lines shouldBe listOf("2", "3", "4")
     }
 
-    @Test
-    fun asIntegers() {
+    "as integers" {
         val i = PuzzleInput.ofCommaDelimited("2,3,4")
-        Assert.assertThat(i.asIntegers(), equalTo(listOf(2, 3, 4)))
+        i.asIntegers() shouldBe listOf(2, 3, 4)
     }
 
-    @Test
-    fun asInteger() {
+    "as single integer" {
         val i = PuzzleInput.ofSingleLine("234")
-        Assert.assertThat(i.asInteger(), equalTo(234))
+        i.asInteger() shouldBe 234
     }
 
-    @Test
-    fun forDay() {
+    "for day" {
         val puzzle = Y2015D04()
         val i = PuzzleInput.forDay(puzzle)
-        Assert.assertThat(i.singleLine(), equalTo("bgvyzdsv"))
+        i.singleLine() shouldBe "bgvyzdsv"
     }
 
-    @Test
-    fun forDayWithSuffix() {
+    "for day with suffix" {
         val puzzle = Y2015D06()
         val i = PuzzleInput.forDay(puzzle, suffix = "test")
-        Assert.assertThat(i.lines, equalTo(listOf("turn on 0,0 through 0,0",
-                "toggle 0,0 through 999,999")))
+        i.lines shouldBe listOf("turn on 0,0 through 0,0", "toggle 0,0 through 999,999")
     }
-}
+})

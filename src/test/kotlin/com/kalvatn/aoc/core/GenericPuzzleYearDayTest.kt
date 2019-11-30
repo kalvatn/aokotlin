@@ -4,48 +4,26 @@ import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.year2015.Y2015D04
-import com.kalvatn.aoc.year2015.Y2015D05
-import kotlinx.coroutines.runBlocking
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class GenericPuzzleYearDayTest {
+class GenericPuzzleYearDayTest : StringSpec({
 
-    val DAY = Y2015D04()
-
-    @Test
-    fun getInput() {
-        Assert.assertThat(DAY.input.singleLine(), equalTo("bgvyzdsv"))
-
+    "test input as single line" {
         val withCustomInput = Y2015D04(PuzzleInput.ofSingleLine("asdf"))
-        Assert.assertThat(withCustomInput.input.singleLine(), equalTo("asdf"))
-
+        Y2015D04().input.singleLine() shouldBe "bgvyzdsv"
+        withCustomInput.input.singleLine() shouldBe "asdf"
     }
 
-    @Test
-    fun run() {
-        val day = Y2015D05()
-
-        runBlocking {
-            day.run(true)
-            day.run()
-        }
+    "test day toString" {
+        Y2015D04().toString() shouldBe "2015-04"
     }
 
-    @Test
-    fun toStringMethod() {
-        Assert.assertThat(DAY.toString(), equalTo("2015-04"))
-
+    "test day getYear" {
+        Y2015D04().year shouldBe Year.Y2015
     }
 
-    @Test
-    fun getYear() {
-        Assert.assertThat(DAY.year, equalTo(Year.Y2015))
+    "test day getDay" {
+        Y2015D04().day shouldBe Day.D04
     }
-
-    @Test
-    fun getDay() {
-        Assert.assertThat(DAY.day, equalTo(Day.D04))
-    }
-}
+})

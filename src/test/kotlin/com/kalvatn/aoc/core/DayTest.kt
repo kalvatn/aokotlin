@@ -1,19 +1,16 @@
 package com.kalvatn.aoc.core
 
 import com.kalvatn.aoc.core.model.Day
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class DayTest {
+class DayTest : StringSpec({
 
-    @Test
-    fun intValue() {
-        Assert.assertThat(Day.D01.intValue(), equalTo(1))
+    "integer value of day should be as expected" {
+        Day.D01.intValue() shouldBe 1
     }
 
-    @Test
-    fun intString() {
-        Assert.assertThat(Day.D01.intString(), equalTo("01"))
+    "string value of day should be as expected" {
+        Day.D01.intString() shouldBe "01"
     }
-}
+})

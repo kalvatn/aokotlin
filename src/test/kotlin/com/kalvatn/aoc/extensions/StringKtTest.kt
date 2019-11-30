@@ -1,67 +1,60 @@
 package com.kalvatn.aoc.extensions
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class StringKtTest {
 
-    @Test
-    fun extractInts() {
-        Assert.assertThat("1#,adf 23,!¤!#$ @ 4 , 5678, asmb ,,, øl 9".extractIntegers(), equalTo(listOf(1, 23, 4, 5678, 9)))
-        Assert.assertThat("-1#,adf 23,!¤!#$ @ -4 , 5678, asmb ,,, øl -9".extractIntegers(), equalTo(listOf(-1, 23, -4, 5678, -9)))
-        Assert.assertThat("2x3x4".extractIntegers(), equalTo(listOf(2, 3, 4)))
+class StringKtTest : StringSpec({
+
+    "extract integers" {
+        "1#,adf 23,!¤!#$ @ 4 , 5678, asmb ,,, øl 9".extractIntegers() shouldBe listOf(1, 23, 4, 5678, 9)
+        "-1#,adf 23,!¤!#$ @ -4 , 5678, asmb ,,, øl -9".extractIntegers() shouldBe listOf(-1, 23, -4, 5678, -9)
+        "2x3x4".extractIntegers() shouldBe listOf(2, 3, 4)
     }
 
-    @Test
-    fun hasNVowels() {
-        assertThat("aaa".hasNVowels(), equalTo(true))
-        assertThat("aeiouaeiouaeiou".hasNVowels(3), equalTo(true))
-        assertThat("aaa".hasNVowels(), equalTo(true))
-        assertThat("aeiouaeiouaeiou".hasNVowels(3), equalTo(true))
+    "has n wovels" {
+        "aaa".hasNVowels() shouldBe true
+        "aeiouaeiouaeiou".hasNVowels(3) shouldBe true
+        "aaa".hasNVowels() shouldBe true
+        "aeiouaeiouaeiou".hasNVowels(3) shouldBe true
     }
 
-    @Test
-    fun hasConsecutiveLetters() {
-        assertThat("abcdde".hasConsecutiveLetters(1), equalTo(true))
-        assertThat("aaa".hasConsecutiveLetters(1), equalTo(true))
-        assertThat("jchzalrnumimnmhp".hasConsecutiveLetters(1), equalTo(false))
-        assertThat("abcdde".hasConsecutiveLetters(), equalTo(true))
-        assertThat("aaa".hasConsecutiveLetters(), equalTo(true))
-        assertThat("jchzalrnumimnmhp".hasConsecutiveLetters(), equalTo(false))
+    "has consecutive letters" {
+        "abcdde".hasConsecutiveLetters(1) shouldBe true
+        "aaa".hasConsecutiveLetters(1) shouldBe true
+        "jchzalrnumimnmhp".hasConsecutiveLetters(1) shouldBe false
+        "abcdde".hasConsecutiveLetters() shouldBe true
+        "aaa".hasConsecutiveLetters() shouldBe true
+        "jchzalrnumimnmhp".hasConsecutiveLetters() shouldBe false
     }
 
-    @Test
-    fun doesNotContain() {
-        assertThat("ugknbfddgicrmopn".doesNotContain("ab", "cd", "pq", "xy"), equalTo(true))
-        assertThat("aaa".doesNotContain("ab", "cd", "pq", "xy"), equalTo(true))
-        assertThat("abcdde".doesNotContain("ab", "cd", "pq", "xy"), equalTo(false))
-        assertThat("ab".doesNotContain("ab", "cd", "pq", "xy"), equalTo(false))
-        assertThat("cd".doesNotContain("ab", "cd", "pq", "xy"), equalTo(false))
-        assertThat("pq".doesNotContain("ab", "cd", "pq", "xy"), equalTo(false))
-        assertThat("xy".doesNotContain("ab", "cd", "pq", "xy"), equalTo(false))
-        assertThat("haegwjzuvuyypxyu".doesNotContain("ab", "cd", "pq", "xy"), equalTo(false))
+    "does not contain" {
+        "ugknbfddgicrmopn".doesNotContain("ab", "cd", "pq", "xy") shouldBe true
+        "aaa".doesNotContain("ab", "cd", "pq", "xy") shouldBe true
+        "abcdde".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
+        "ab".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
+        "cd".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
+        "pq".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
+        "xy".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
+        "haegwjzuvuyypxyu".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
     }
 
-    @Test
-    fun hasXYX() {
-        Assert.assertThat("xyx".hasXYX(), equalTo(true))
-        Assert.assertThat("xxx".hasXYX(), equalTo(true))
-        Assert.assertThat("aaa".hasXYX(), equalTo(true))
-        Assert.assertThat("qjhvhtzxzqqjkmpb".hasXYX(), equalTo(true))
-        Assert.assertThat("abcdefeghi".hasXYX(), equalTo(true))
+    "has xyx" {
+        "xyx".hasXYX() shouldBe true
+        "xxx".hasXYX() shouldBe true
+        "aaa".hasXYX() shouldBe true
+        "qjhvhtzxzqqjkmpb".hasXYX() shouldBe true
+        "abcdefeghi".hasXYX() shouldBe true
     }
 
-    @Test
-    fun hasNonOverlappingPair() {
-        Assert.assertThat("qjhvhtzxzqqjkmpb".hasNonOverlappingPair(), equalTo(true))
-        Assert.assertThat("uurcxstgmygtbstg".hasNonOverlappingPair(), equalTo(true))
-        Assert.assertThat("xxyxx".hasNonOverlappingPair(), equalTo(true))
-        Assert.assertThat("xxx".hasNonOverlappingPair(), equalTo(false))
-        Assert.assertThat("aaabbb".hasNonOverlappingPair(), equalTo(false))
-        Assert.assertThat("aaabbbb".hasNonOverlappingPair(), equalTo(true))
-        Assert.assertThat("aaaa".hasNonOverlappingPair(), equalTo(true))
-        Assert.assertThat("aaaaa".hasNonOverlappingPair(), equalTo(true))
+    "has non overlapping pair" {
+        "qjhvhtzxzqqjkmpb".hasNonOverlappingPair() shouldBe true
+        "uurcxstgmygtbstg".hasNonOverlappingPair() shouldBe true
+        "xxyxx".hasNonOverlappingPair() shouldBe true
+        "xxx".hasNonOverlappingPair() shouldBe false
+        "aaabbb".hasNonOverlappingPair() shouldBe false
+        "aaabbbb".hasNonOverlappingPair() shouldBe true
+        "aaaa".hasNonOverlappingPair() shouldBe true
+        "aaaaa".hasNonOverlappingPair() shouldBe true
     }
-}
+})

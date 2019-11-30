@@ -1,29 +1,38 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Year
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
 
-class Y2018D02Test {
+class Y2018D02Test : BaseDayTest() {
+
     @Test
-    suspend fun testExamples() {
+    override suspend fun examplePartOne() {
         val test1 = Y2018D02(PuzzleInput.forDay(Year.Y2018, Day.D02, "test1"))
         val test2 = Y2018D02(PuzzleInput.forDay(Year.Y2018, Day.D02, "test2"))
-        Assert.assertThat(test1.partOne().toInt(), equalTo(12))
-        Assert.assertThat(test1.partTwo(), equalTo("abcde"))
-        Assert.assertThat(test2.partOne().toInt(), equalTo(0))
-        Assert.assertThat(test2.partTwo(), equalTo("fgij"))
-
-
+        test1.partOne().toInt() shouldBe 12
+        test2.partOne().toInt() shouldBe 0
     }
 
     @Test
-    suspend fun testSolution() {
+    override suspend fun examplePartTwo() {
+        val test1 = Y2018D02(PuzzleInput.forDay(Year.Y2018, Day.D02, "test1"))
+        val test2 = Y2018D02(PuzzleInput.forDay(Year.Y2018, Day.D02, "test2"))
+        test1.partTwo() shouldBe "abcde"
+        test2.partTwo() shouldBe "fgij"
+    }
+
+    @Test
+    override suspend fun solutionPartOne() {
         val day02 = Y2018D02()
-        Assert.assertThat(day02.partOne().toInt(), equalTo(5727))
-        Assert.assertThat(day02.partTwo(), equalTo("uwfmdjxyxlbgnrotcfpvswaqh"))
+        day02.partOne().toInt() shouldBe 5727
+    }
+
+    @Test
+    override suspend fun solutionPartTwo() {
+        val day02 = Y2018D02()
+        day02.partTwo() shouldBe "uwfmdjxyxlbgnrotcfpvswaqh"
     }
 }

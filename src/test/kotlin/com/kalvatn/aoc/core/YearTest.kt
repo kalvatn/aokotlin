@@ -1,19 +1,16 @@
 package com.kalvatn.aoc.core
 
 import com.kalvatn.aoc.core.model.Year
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class YearTest {
+class YearTest : StringSpec({
 
-    @Test
     fun intValue() {
-        Assert.assertThat(Year.Y2015.intValue(), equalTo(2015))
+        Year.Y2015.intValue() shouldBe 2015
     }
 
-    @Test
     fun intString() {
-        Assert.assertThat(Year.Y2015.intString(), equalTo("2015"))
+        Year.Y2015.intString() shouldBe "2015"
     }
-}
+})
