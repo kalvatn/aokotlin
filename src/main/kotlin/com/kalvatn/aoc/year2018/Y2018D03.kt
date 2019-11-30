@@ -1,14 +1,14 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.APuzzle
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzleYearDay
+import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.extensions.extractIntegers
 import com.kalvatn.aoc.utils.intArray2D
 
 
-class Y2018D03(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D03, input) {
+class Y2018D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzleYearDay(Year.Y2018, Day.D03, input) {
 
     data class Claim(val id: Int, val x: Int, val y: Int, val width: Int, val height: Int) {
         companion object {
@@ -44,7 +44,7 @@ class Y2018D03(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D03, input)
     private val claims = this.input.map { Claim.fromString(it) }
     private val fabric = createFabric(claims)
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val count = fabric.map { array ->
             array
                     .asSequence()
@@ -54,7 +54,7 @@ class Y2018D03(input: PuzzleInput? = null) : APuzzle(Year.Y2018, Day.D03, input)
         return count.toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         val overlaps = mutableMapOf<Int, Boolean>()
         for (claim in claims) {
             overlaps[claim.id] = false

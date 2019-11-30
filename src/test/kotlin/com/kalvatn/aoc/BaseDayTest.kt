@@ -1,19 +1,18 @@
 package com.kalvatn.aoc
 
-import org.junit.Test
+import io.kotlintest.specs.AnnotationSpec
 
-
-abstract class BaseDayTest {
-
-    @Test
-    abstract fun examplePartOne()
+abstract class BaseDayTest : AnnotationSpec(){
 
     @Test
-    abstract fun examplePartTwo()
+    abstract suspend fun examplePartOne()
 
     @Test
-    abstract fun solutionPartOne()
+    abstract suspend fun examplePartTwo()
 
     @Test
-    abstract fun solutionPartTwo()
+    abstract suspend fun solutionPartOne()
+
+    @Test
+    abstract suspend fun solutionPartTwo()
 }

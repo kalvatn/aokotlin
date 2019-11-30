@@ -1,58 +1,52 @@
 package com.kalvatn.aoc.utils
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import io.kotlintest.shouldBe
+import io.kotlintest.specs.StringSpec
 
-class ArrayKtTest {
+private const val SIZE = 10
 
-    @Test
-    fun intArray2D() {
+class ArrayKtTest : StringSpec({
+
+
+    "2d integer array" {
         val a = intArray2D(SIZE)
-        Assert.assertThat(a.size, equalTo(SIZE))
-        Assert.assertThat(a[0][0], equalTo(0))
+        a.size shouldBe SIZE
+        a[0][0] shouldBe 0
     }
 
-    @Test
-    fun intArray2DWithDefault() {
+
+    "2d integer array with default value" {
         val a = intArray2D(SIZE, 1)
-        Assert.assertThat(a[0][0], equalTo(1))
+        a[0][0] shouldBe 1
     }
 
-    @Test
-    fun boolArray2D() {
+
+    "2d boolean array" {
         val a = boolArray2D(SIZE)
-        Assert.assertThat(a.size, equalTo(SIZE))
-        Assert.assertThat(a[0][0], equalTo(false))
+        a.size shouldBe SIZE
+        a[0][0] shouldBe false
     }
 
-    @Test
-    fun boolArray2DWithDefault() {
+    "2d boolean array with default value" {
         val a = boolArray2D(SIZE, true)
-        Assert.assertThat(a[0][0], equalTo(true))
+        a[0][0] shouldBe true
     }
 
-    @Test
-    fun stringArray2D() {
+    "2d string array" {
         val a = stringArray2D(SIZE)
-        Assert.assertThat(a.size, equalTo(SIZE))
-        Assert.assertThat(a[0][0], equalTo(""))
+        a.size shouldBe SIZE
+        a[0][0] shouldBe ""
     }
 
-    @Test
-    fun stringArray2DWithDefault() {
+    "2d string array with default value" {
         val a = stringArray2D(SIZE, "lol")
-        Assert.assertThat(a[0][0], equalTo("lol"))
+        a[0][0] shouldBe "lol"
     }
 
-    @Test
-    fun buildArray2D() {
+    "2d object array with default value" {
         val a = buildArray2D(SIZE, Pair(0, 1))
-        Assert.assertThat(a.size, equalTo(SIZE))
-        Assert.assertThat(a[0][0], equalTo(Pair(0, 1)))
+        a.size shouldBe SIZE
+        a[0][0] shouldBe Pair(0, 1)
     }
 
-    companion object {
-        private const val SIZE = 10
-    }
-}
+})

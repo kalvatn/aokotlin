@@ -1,11 +1,12 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.exceptions.Impossiburu
 import com.kalvatn.aoc.extensions.md5
 
-class Y2015D04(input: PuzzleInput? = null) : APuzzle2015(Day.D04, input) {
+class Y2015D04(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D04, input) {
 
 
     private val key = this.input.singleLine()
@@ -17,12 +18,12 @@ class Y2015D04(input: PuzzleInput? = null) : APuzzle2015(Day.D04, input) {
         throw Impossiburu()
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return findSecret("0".repeat(5)).toString()
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return findSecret("0".repeat(6)).toString()
     }
 

@@ -1,21 +1,21 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
-import com.kalvatn.aoc.common.Year
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 
-class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
+class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D08, input) {
 
     private val numbers = this.input.singleLine().split(" ").map { it.toInt() }
 
 
     data class Node(
-        val index: Int,
-        val parent:Node? = null,
-        val countChildren: Int,
-        val countMeta: Int,
-        val children:MutableList<Node> = mutableListOf(),
-        val meta:MutableList<Int> = mutableListOf()
+            val index: Int,
+            val parent: Node? = null,
+            val countChildren: Int,
+            val countMeta: Int,
+            val children: MutableList<Node> = mutableListOf(),
+            val meta: MutableList<Int> = mutableListOf()
 
     ) {
         override fun toString(): String {
@@ -23,17 +23,17 @@ class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
         }
     }
 
-    fun processNodes():MutableMap<Int, Node> {
+    fun processNodes(): MutableMap<Int, Node> {
 
-        val nodes:MutableMap<Int, Node> = mutableMapOf()
-        var currentParent:Node? = null
+        val nodes: MutableMap<Int, Node> = mutableMapOf()
+        var currentParent: Node? = null
         var i = 0
-        while (i < numbers.size-1) {
-            if(currentParent != null && (currentParent.children.size == currentParent.countChildren) ) {
-                val startMeta:Int = i
-                val meta = numbers.slice(startMeta until startMeta+currentParent.countMeta)
+        while (i < numbers.size - 1) {
+            if (currentParent != null && (currentParent.children.size == currentParent.countChildren)) {
+                val startMeta: Int = i
+                val meta = numbers.slice(startMeta until startMeta + currentParent.countMeta)
                 currentParent.meta.addAll(meta)
-                i = startMeta+currentParent.countMeta
+                i = startMeta + currentParent.countMeta
                 currentParent = currentParent.parent
             } else {
                 val countChildren = numbers[i]
@@ -61,12 +61,12 @@ class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
         return nodes
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val nodes = processNodes()
         return nodes.values.map { it.meta.sum() }.sum().toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         val nodes = processNodes()
         val nodeValues = mutableMapOf<Int, Int>()
         nodes.keys.forEach {
@@ -81,7 +81,7 @@ class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
                     var missing = false
                     for (childIndex in node.meta) {
                         if (childIndex <= node.children.size) {
-                            val child = node.children[childIndex-1]
+                            val child = node.children[childIndex - 1]
                             if (nodeValues.containsKey(child.index)) {
                                 val childValue = nodeValues[child.index]!!
                                 if (childValue < 0) {
@@ -103,8 +103,8 @@ class Y2018D08(input: PuzzleInput? = null) : APuzzle2018(Day.D08, input) {
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
 //    val day = Y2018D08(PuzzleInput.forDay(Year.Y2018, Day.D08, "test"))
     val day = Y2018D08()
-    day.run()
+//    day.run()
 }

@@ -1,17 +1,18 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.common.model.Point
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.extensions.extractIntegers
 import kotlin.math.max
 
-class Y2018D10(input: PuzzleInput? = null) : APuzzle2018(Day.D10, input) {
+class Y2018D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D10, input) {
 
 
     data class Star(var position: Point, var velocity: Point) {
         companion object {
-            fun fromString(string: String):Star {
+            fun fromString(string: String): Star {
                 val (ix, iy, vx, vy) = string.extractIntegers()
                 return Star(Point(ix, iy), Point(vx, vy))
             }
@@ -21,17 +22,17 @@ class Y2018D10(input: PuzzleInput? = null) : APuzzle2018(Day.D10, input) {
             position = Point(position.x + velocity.x, position.y + velocity.y)
         }
 
-        fun toArrayCoordinates(translateX:Int, translateY:Int):Point {
+        fun toArrayCoordinates(translateX: Int, translateY: Int): Point {
             return Point(position.x + translateX, position.y + translateY)
         }
     }
 
-    fun stars():List<Star> {
+    fun stars(): List<Star> {
         return this.input.lines.map { Star.fromString(it) }
     }
 
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val stars = stars()
         val starCoords = mutableMapOf<Point, Star>()
         var minSize = 70
@@ -54,24 +55,24 @@ class Y2018D10(input: PuzzleInput? = null) : APuzzle2018(Day.D10, input) {
             }
             if (size < minSize) {
                 minSize = size
-                println("second : $second")
-                (0..maxY).forEach { y ->
-                    (0..maxX).forEach { x ->
-                        if (starCoords.containsKey(Point(x, y))) {
-                            print("#")
-                        } else {
-                            print(" ")
-                        }
-                    }
-                    println()
-                }
+//                println("second : $second")
+//                (0..maxY).forEach { y ->
+//                    (0..maxX).forEach { x ->
+//                        if (starCoords.containsKey(Point(x, y))) {
+//                            print("#")
+//                        } else {
+//                            print(" ")
+//                        }
+//                    }
+//                    println()
+//                }
             }
             starCoords.clear()
         }
         return "AHFGRKEE"
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return 10243.toString()
     }
 
@@ -82,5 +83,5 @@ class Y2018D10(input: PuzzleInput? = null) : APuzzle2018(Day.D10, input) {
 fun main(args: Array<String>) {
 //    val day = Y2018D10(PuzzleInput.forDay(Year.Y2018, Day.D10, "test"))
     val day = Y2018D10()
-    day.run()
+//    day.run()
 }

@@ -1,11 +1,12 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import java.util.*
 
 
-class Y2018D05(input: PuzzleInput? = null) : APuzzle2018(Day.D05, input) {
+class Y2018D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D05, input) {
 
 
     private fun Char.reacts(b: Char): Boolean {
@@ -26,17 +27,17 @@ class Y2018D05(input: PuzzleInput? = null) : APuzzle2018(Day.D05, input) {
     private val polymer: String = this.input.singleLine()
     private val part1: Iterable<Char> = react(polymer.asIterable())
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return react(polymer.asIterable()).count().toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return ('a'..'z').map { it ->
             react(part1.filter { c -> !c.equals(it, ignoreCase = true) }).count()
         }.min().toString()
     }
 }
 
-fun main(args: Array<String>) {
-    Y2018D05().run()
+fun main() {
+//    Y2018D05().run()
 }

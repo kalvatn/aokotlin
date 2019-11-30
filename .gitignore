@@ -4,3 +4,6 @@ target/
 *.log
 *.attach*
 session.cookie
+build/
+.gradle
+.kotlintest/

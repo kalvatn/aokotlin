@@ -1,36 +1,35 @@
 package com.kalvatn.aoc.year2015
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import com.kalvatn.aoc.BaseDayTest
+import io.kotlintest.shouldBe
 
-class Y2015D05Test {
-    @Test
-    fun nicePartOne() {
+class Y2015D05Test : BaseDayTest() {
+
+    override suspend fun examplePartOne() {
         val day = Y2015D05()
-        Assert.assertThat(day.nicePartOne("ugknbfddgicrmopn"), equalTo(true))
-        Assert.assertThat(day.nicePartOne("aaa"), equalTo(true))
-        Assert.assertThat(day.nicePartOne("jchzalrnumimnmhp"), equalTo(false))
-        Assert.assertThat(day.nicePartOne("haegwjzuvuyypxyu"), equalTo(false))
-        Assert.assertThat(day.nicePartOne("dvszwmarrgswjxmb"), equalTo(false))
-
+        day.nicePartOne("ugknbfddgicrmopn") shouldBe true
+        day.nicePartOne("aaa") shouldBe true
+        day.nicePartOne("jchzalrnumimnmhp") shouldBe false
+        day.nicePartOne("haegwjzuvuyypxyu") shouldBe false
+        day.nicePartOne("dvszwmarrgswjxmb") shouldBe false
     }
 
-    @Test
-    fun nicePartTwo() {
+    override suspend fun examplePartTwo() {
         val day = Y2015D05()
-        Assert.assertThat(day.nicePartTwo("qjhvhtzxzqqjkmpb"), equalTo(true))
-        Assert.assertThat(day.nicePartTwo("xxyxx"), equalTo(true))
-        Assert.assertThat(day.nicePartTwo("uurcxstgmygtbstg"), equalTo(false))
-        Assert.assertThat(day.nicePartTwo("ieodomkazucvgmuy"), equalTo(false))
-        Assert.assertThat(day.nicePartTwo("xilodxfuxphuiiii"), equalTo(true))
+        day.nicePartTwo("qjhvhtzxzqqjkmpb") shouldBe true
+        day.nicePartTwo("xxyxx") shouldBe true
+        day.nicePartTwo("uurcxstgmygtbstg") shouldBe false
+        day.nicePartTwo("ieodomkazucvgmuy") shouldBe false
+        day.nicePartTwo("xilodxfuxphuiiii") shouldBe true
     }
 
-
-    @Test
-    fun testSolution() {
+    override suspend fun solutionPartOne() {
         val day = Y2015D05()
-        Assert.assertThat(day.partOne().toInt(), equalTo(255))
-        Assert.assertThat(day.partTwo().toInt(), equalTo(55))
+        day.partOne().toInt() shouldBe 255
+    }
+
+    override suspend fun solutionPartTwo() {
+        val day = Y2015D05()
+        day.partTwo().toInt() shouldBe 55
     }
 }

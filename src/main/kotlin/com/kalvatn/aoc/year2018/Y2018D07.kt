@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import java.util.*
 
-class Y2018D07(input: PuzzleInput? = null) : APuzzle2018(Day.D07, input) {
+class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D07, input) {
 
 
     data class Step(val name: Char, val prereq: MutableSet<Char> = sortedSetOf())
@@ -13,29 +14,29 @@ class Y2018D07(input: PuzzleInput? = null) : APuzzle2018(Day.D07, input) {
         val steps = mutableMapOf<Char, Step>()
         for (line in this.input.lines) {
             "^Step (\\w) must be finished before step (\\w) can begin.$".toRegex()
-                .matchEntire(line)
-                ?.destructured
-                ?.let { (prereq, name) ->
-                    steps.putIfAbsent(name.first(), Step(name.first()))
-                    steps.putIfAbsent(prereq.first(), Step(prereq.first()))
-                }
+                    .matchEntire(line)
+                    ?.destructured
+                    ?.let { (prereq, name) ->
+                        steps.putIfAbsent(name.first(), Step(name.first()))
+                        steps.putIfAbsent(prereq.first(), Step(prereq.first()))
+                    }
         }
         for (line in this.input.lines) {
             "^Step (\\w) must be finished before step (\\w) can begin.$".toRegex()
-                .matchEntire(line)
-                ?.destructured
-                ?.let { (prereq, name) ->
-                    val pre = steps[prereq.first()]!!
-                    val step = steps[name.first()]!!
-                    step.prereq.add(pre.name)
-                    steps[pre.name] = pre
-                    steps[step.name] = step
-                }
+                    .matchEntire(line)
+                    ?.destructured
+                    ?.let { (prereq, name) ->
+                        val pre = steps[prereq.first()]!!
+                        val step = steps[name.first()]!!
+                        step.prereq.add(pre.name)
+                        steps[pre.name] = pre
+                        steps[step.name] = step
+                    }
         }
         return steps
     }
 
-    fun processSteps(teamWork:Boolean = false): Pair<String, Int> {
+    fun processSteps(teamWork: Boolean = false): Pair<String, Int> {
         val steps = parseInput()
         var numberOfWorkers = 1
         val stepCosts: MutableMap<Char, Int>
@@ -76,19 +77,19 @@ class Y2018D07(input: PuzzleInput? = null) : APuzzle2018(Day.D07, input) {
         return Pair(done.joinToString(""), secondsElapsed)
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return processSteps().first
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return processSteps(true).second.toString()
     }
 
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
 //    val day = Y2018D07(PuzzleInput.forDay(Year.Y2018, Day.D07, "test"))
     val day = Y2018D07()
-    day.run()
+//    day.run()
 }

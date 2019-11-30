@@ -1,20 +1,22 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 
-class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
+class Y2018D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D09, input) {
 
     class Marble {
         val value: Int
         var previous: Marble
         var next: Marble
 
-        constructor(value:Int) {
+        constructor(value: Int) {
             this.value = value
             previous = this
             next = this
         }
+
         constructor(value: Int, previous: Marble, next: Marble) {
             this.value = value
             this.previous = previous
@@ -24,14 +26,15 @@ class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
         }
 
     }
-    class Circle(initial:Int) {
+
+    class Circle(initial: Int) {
         private var current = Marble(initial)
 
-        fun insert(value:Int) {
+        fun insert(value: Int) {
             this.current = Marble(value, previous = current, next = current.next)
         }
 
-        fun removeAndReturn():Int {
+        fun removeAndReturn(): Int {
             val value = current.value
             current.previous.next = current.next
             current.next.previous = current.previous
@@ -39,7 +42,7 @@ class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
             return value
         }
 
-        fun rotate(times:Int) = when {
+        fun rotate(times: Int) = when {
             times > 0 -> repeat(times) {
                 current = current.next
             }
@@ -49,7 +52,7 @@ class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
         }
     }
 
-    fun getHighScore(numberOfPlayers:Int, numberOfMarbles:Int): Long {
+    fun getHighScore(numberOfPlayers: Int, numberOfMarbles: Int): Long {
         val players = mutableMapOf<Int, Long>()
         (1..numberOfPlayers).forEach {
             players[it] = 0
@@ -73,13 +76,13 @@ class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
     }
 
 
-    override fun partTwo(): String {
-        val (numberOfPlayers:Int, numberOfMarbles:Int) = "(\\d+) players; last marble is worth (\\d+) points".toRegex().matchEntire(this.input.singleLine())!!.destructured.toList().map { it.toInt() }
-        return getHighScore(numberOfPlayers, numberOfMarbles*100).toString()
+    override suspend fun partTwo(): String {
+        val (numberOfPlayers: Int, numberOfMarbles: Int) = "(\\d+) players; last marble is worth (\\d+) points".toRegex().matchEntire(this.input.singleLine())!!.destructured.toList().map { it.toInt() }
+        return getHighScore(numberOfPlayers, numberOfMarbles * 100).toString()
     }
 
-    override fun partOne(): String {
-        val (numberOfPlayers:Int, numberOfMarbles:Int) = "(\\d+) players; last marble is worth (\\d+) points".toRegex().matchEntire(this.input.singleLine())!!.destructured.toList().map { it.toInt() }
+    override suspend fun partOne(): String {
+        val (numberOfPlayers: Int, numberOfMarbles: Int) = "(\\d+) players; last marble is worth (\\d+) points".toRegex().matchEntire(this.input.singleLine())!!.destructured.toList().map { it.toInt() }
         return getHighScore(numberOfPlayers, numberOfMarbles).toString()
     }
 
@@ -87,7 +90,7 @@ class Y2018D09(input: PuzzleInput? = null) : APuzzle2018(Day.D09, input) {
 }
 
 
-fun main(args: Array<String>) {
+fun main() {
     val day = Y2018D09()
-    day.run()
+//    day.run()
 }

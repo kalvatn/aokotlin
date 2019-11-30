@@ -1,11 +1,11 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.extensions.extractIntegers
-import org.jetbrains.exposed.sql.Op
 
-class Y2018D16(input: PuzzleInput? = null) : APuzzle2018(Day.D16, input) {
+class Y2018D16(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D16, input) {
 
 
     interface Operation {
@@ -177,7 +177,7 @@ class Y2018D16(input: PuzzleInput? = null) : APuzzle2018(Day.D16, input) {
     }
 
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         val operations: List<Operation> = listOf(
                 addr(),
                 addi(),
@@ -213,19 +213,19 @@ class Y2018D16(input: PuzzleInput? = null) : APuzzle2018(Day.D16, input) {
                     it.apply(a, b, c)
                     if (ar0 == register[0] && ar1 == register[1] && ar2 == register[2] && ar3 == register[3]) {
                         count++
-                        println("$opcode could be ${it.javaClass.simpleName}")
+//                        println("$opcode could be ${it.javaClass.simpleName}")
                     }
                 }
 
                 if (count >= 3) {
-                    totalCount+=1
+                    totalCount += 1
                 }
             }
         }
         return totalCount.toString()
     }
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return ""
     }
 
@@ -237,5 +237,4 @@ class Y2018D16(input: PuzzleInput? = null) : APuzzle2018(Day.D16, input) {
 fun main(args: Array<String>) {
 //    val day = Y2018D16(PuzzleInput.forDay(Year.Y2018, Day.D16, "test"))
     val day = Y2018D16()
-    day.run()
 }

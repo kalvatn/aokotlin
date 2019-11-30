@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.extensions.extractIntegers
 
-class Y2015D02(input: PuzzleInput? = null) : APuzzle2015(Day.D02, input) {
+class Y2015D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D02, input) {
 
     data class Present(val l: Int, val w: Int, val h: Int) {
         private fun sides(): List<Int> {
@@ -41,12 +42,12 @@ class Y2015D02(input: PuzzleInput? = null) : APuzzle2015(Day.D02, input) {
     private val dimensions = this.input.map { Present.fromString(it) }
 
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return dimensions.map { it.paper() }.sum().toString()
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return dimensions.map { it.ribbon() }.sum().toString()
     }
 

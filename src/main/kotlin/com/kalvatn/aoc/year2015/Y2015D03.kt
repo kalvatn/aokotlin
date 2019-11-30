@@ -1,12 +1,12 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
 import com.kalvatn.aoc.common.model.Direction
-import com.kalvatn.aoc.exceptions.Impossiburu
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import java.awt.Point
 
-class Y2015D03(input: PuzzleInput? = null) : APuzzle2015(Day.D03, input) {
+class Y2015D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D03, input) {
 
 
     private val directions = this.input.singleLine().map { Direction.fromChar(it) }
@@ -20,7 +20,7 @@ class Y2015D03(input: PuzzleInput? = null) : APuzzle2015(Day.D03, input) {
         }
     }
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         var current = Point(0, 0)
         val houses = mutableMapOf(Pair(current, 1))
         directions.forEach {
@@ -32,7 +32,7 @@ class Y2015D03(input: PuzzleInput? = null) : APuzzle2015(Day.D03, input) {
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         var current1 = Point(0, 0)
         var current2 = Point(0, 0)
         val houses = mutableMapOf(Pair(current1, 1))

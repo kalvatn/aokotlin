@@ -1,23 +1,28 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.PuzzleInput
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert
-import org.junit.Test
+import com.kalvatn.aoc.BaseDayTest
+import com.kalvatn.aoc.core.input.PuzzleInput
+import io.kotlintest.shouldBe
 
-class Y2015D01Test {
-    @Test
-    fun testExamples() {
+class Y2015D01Test : BaseDayTest() {
+
+    override suspend fun examplePartOne() {
         val test1 = Y2015D01(PuzzleInput.ofSingleLine(")"))
-        Assert.assertThat(test1.partOne().toInt(), equalTo(-1))
-        Assert.assertThat(test1.partTwo().toInt(), equalTo(1))
+        test1.partOne().toInt() shouldBe -1
     }
 
-    @Test
-    fun testSolution() {
-        val day01 = Y2015D01()
-        Assert.assertThat(day01.partOne().toInt(), equalTo(138))
-        Assert.assertThat(day01.partTwo().toInt(), equalTo(1771))
+    override suspend fun examplePartTwo() {
+        val test1 = Y2015D01(PuzzleInput.ofSingleLine(")"))
+        test1.partTwo().toInt() shouldBe 1
+    }
 
+    override suspend fun solutionPartOne() {
+        val day = Y2015D01()
+        day.partOne().toInt() shouldBe 138
+    }
+
+    override suspend fun solutionPartTwo() {
+        val day = Y2015D01()
+        day.partTwo().toInt() shouldBe 1771
     }
 }

@@ -1,11 +1,12 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.common.Day
-import com.kalvatn.aoc.common.PuzzleInput
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.exceptions.Impossiburu
 import com.kalvatn.aoc.utils.intArray2D
 
-class Y2015D06(input: PuzzleInput? = null) : APuzzle2015(Day.D06, input) {
+class Y2015D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D06, input) {
     enum class Action {
         ON, OFF, TOGGLE;
 
@@ -26,13 +27,13 @@ class Y2015D06(input: PuzzleInput? = null) : APuzzle2015(Day.D06, input) {
     data class Command(val action: Action, val start: Pair<Int, Int>, val end: Pair<Int, Int>) {
         companion object {
             fun fromString(string: String): Command {
-                "^(turn on|toggle|turn off) (\\d+),(\\d+) through (\\d+),(\\d+)"
+                return "^(turn on|toggle|turn off) (\\d+),(\\d+) through (\\d+),(\\d+)"
                         .toRegex()
                         .matchEntire(string)
                         ?.destructured
                         ?.let { (action, sx, sy, ex, ey) ->
-                            return Command(Action.fromString(action), Pair(sx.toInt(), sy.toInt()), Pair(ex.toInt(), ey.toInt()))
-                        }
+                            Command(Action.fromString(action), Pair(sx.toInt(), sy.toInt()), Pair(ex.toInt(), ey.toInt()))
+                        }!!
             }
         }
 
@@ -52,7 +53,7 @@ class Y2015D06(input: PuzzleInput? = null) : APuzzle2015(Day.D06, input) {
     }
 
 
-    override fun partOne(): String {
+    override suspend fun partOne(): String {
         return applyCommands { action: Action, current: Int ->
             when (action) {
                 Action.ON -> 1
@@ -66,7 +67,7 @@ class Y2015D06(input: PuzzleInput? = null) : APuzzle2015(Day.D06, input) {
     }
 
 
-    override fun partTwo(): String {
+    override suspend fun partTwo(): String {
         return applyCommands { action: Action, current: Int ->
             when (action) {
                 Action.ON -> current.inc()
