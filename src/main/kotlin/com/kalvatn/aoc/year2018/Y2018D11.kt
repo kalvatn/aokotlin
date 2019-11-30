@@ -92,7 +92,7 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
         val maxSize = 16
         val tasks = powerLevels.keys.map {
             GlobalScope.async {
-//                println("$it")
+                //                println("$it")
                 createPowerGridFromPoint(it, minSize, maxSize)
             }
         }
@@ -104,7 +104,7 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 }
 
 fun main() = runBlocking {
-            val day = Y2018D11(PuzzleInput.ofSingleLine("5235"))
+    val day = Y2018D11(PuzzleInput.ofSingleLine("5235"))
 //    val day = Y2018D11()
     println(day.partOne())
     println(day.partTwo())

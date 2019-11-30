@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 
 class Y2018D19(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D19, input) {

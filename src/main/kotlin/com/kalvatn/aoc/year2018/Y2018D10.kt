@@ -1,8 +1,8 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
-import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.common.model.Point
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.extensions.extractIntegers
 import kotlin.math.max
@@ -12,7 +12,7 @@ class Y2018D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
     data class Star(var position: Point, var velocity: Point) {
         companion object {
-            fun fromString(string: String):Star {
+            fun fromString(string: String): Star {
                 val (ix, iy, vx, vy) = string.extractIntegers()
                 return Star(Point(ix, iy), Point(vx, vy))
             }
@@ -22,12 +22,12 @@ class Y2018D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
             position = Point(position.x + velocity.x, position.y + velocity.y)
         }
 
-        fun toArrayCoordinates(translateX:Int, translateY:Int): Point {
+        fun toArrayCoordinates(translateX: Int, translateY: Int): Point {
             return Point(position.x + translateX, position.y + translateY)
         }
     }
 
-    fun stars():List<Star> {
+    fun stars(): List<Star> {
         return this.input.lines.map { Star.fromString(it) }
     }
 

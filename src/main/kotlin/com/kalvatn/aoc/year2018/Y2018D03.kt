@@ -1,8 +1,8 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.GenericPuzzleYearDay
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
+import com.kalvatn.aoc.core.model.GenericPuzzleYearDay
 import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.extensions.extractIntegers
 import com.kalvatn.aoc.utils.intArray2D

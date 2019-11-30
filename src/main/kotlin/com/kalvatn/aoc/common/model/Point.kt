@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.common.model
 
 
-data class Point(val x: Int, val y: Int):Comparable<Point> {
+data class Point(val x: Int, val y: Int) : Comparable<Point> {
     override fun compareTo(other: Point): Int {
         if (this.y == other.y) {
             return this.x.compareTo(other.x)
@@ -25,11 +25,11 @@ data class Point(val x: Int, val y: Int):Comparable<Point> {
     }
 
     fun plus(other: Point): Point {
-       return Point(this.x + other.x, this.y + other.y)
+        return Point(this.x + other.x, this.y + other.y)
     }
 
     fun gridFrom(size: Int): Set<Point> {
-        return (0 until size).map {x ->
+        return (0 until size).map { x ->
             (0 until size).map { y ->
                 Point(this.x + x, this.y + y)
             }

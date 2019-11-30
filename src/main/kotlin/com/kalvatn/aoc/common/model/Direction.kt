@@ -6,16 +6,16 @@ enum class Direction {
     NORTH, EAST, SOUTH, WEST;
 
     fun toPointDiff(): Point {
-        return when(this) {
+        return when (this) {
             NORTH -> Point(0, -1)
             EAST -> Point(1, 0)
             SOUTH -> Point(0, 1)
             WEST -> Point(-1, 0)
         }
     }
-    fun alias():String {
-        return when(this) {
 
+    fun alias(): String {
+        return when (this) {
             NORTH -> "UP"
             EAST -> "RIGHT"
             SOUTH -> "DOWN"
@@ -24,14 +24,14 @@ enum class Direction {
     }
 
     fun turn(turn: Turn): Direction {
-        return when(turn) {
-            Turn.LEFT -> when(this) {
+        return when (turn) {
+            Turn.LEFT -> when (this) {
                 NORTH -> WEST
                 EAST -> NORTH
                 SOUTH -> EAST
                 WEST -> SOUTH
             }
-            Turn.RIGHT -> when(this) {
+            Turn.RIGHT -> when (this) {
                 NORTH -> EAST
                 EAST -> SOUTH
                 SOUTH -> WEST
@@ -43,7 +43,7 @@ enum class Direction {
     }
 
     fun toChar(): Char {
-        return when(this) {
+        return when (this) {
             NORTH -> '^'
             EAST -> '>'
             SOUTH -> 'v'

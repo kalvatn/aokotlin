@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.year2015
 
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.exceptions.Impossiburu
 import com.kalvatn.aoc.extensions.md5

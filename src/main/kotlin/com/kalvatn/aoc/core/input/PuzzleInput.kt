@@ -6,7 +6,6 @@ import com.kalvatn.aoc.core.model.Year
 import java.io.File
 
 
-
 @Suppress("unused")
 open class PuzzleInput(val lines: List<String>) {
 

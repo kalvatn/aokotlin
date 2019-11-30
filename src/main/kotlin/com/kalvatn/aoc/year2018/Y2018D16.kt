@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.extensions.extractIntegers
 
@@ -218,7 +218,7 @@ class Y2018D16(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
                 }
 
                 if (count >= 3) {
-                    totalCount+=1
+                    totalCount += 1
                 }
             }
         }

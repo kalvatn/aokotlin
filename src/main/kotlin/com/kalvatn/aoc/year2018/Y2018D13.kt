@@ -1,10 +1,10 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
-import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.common.model.Turn
+import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.utils.buildArray2D
 import kotlin.math.max

@@ -4,18 +4,18 @@ import java.time.Duration
 
 
 fun Duration.toHMS(): String {
-    val hours = toHours()
-    val minutes = minusHours(hours).toMinutes()
-    val seconds = minusHours(hours).minusMinutes(minutes).toMillis() / 1000
-    val millis = minusHours(hours).minusMinutes(minutes).minusSeconds(seconds).toMillis()
-    val nanos = minusHours(hours).minusMinutes(minutes).minusSeconds(seconds).minusMillis(millis).toNanos()
+    val hh = toHours()
+    val mm = minusHours(hh).toMinutes()
+    val ss = minusHours(hh).minusMinutes(mm).toMillis() / 1000
+    val ms = minusHours(hh).minusMinutes(mm).minusSeconds(ss).toMillis()
+    val ns = minusHours(hh).minusMinutes(mm).minusSeconds(ss).minusMillis(ms).toNanos()
     return when {
-        hours > 0 -> "${hours}h ${minutes}m ${seconds}s ${millis}ms ${nanos}ns"
-        minutes > 0 -> "${minutes}m ${seconds}s ${millis}ms ${nanos}ns"
-        seconds > 0 -> "${seconds}s ${millis}ms ${nanos}ns"
-        millis > 0 -> "${millis}ms ${nanos}ns"
-        nanos > 0 -> "${nanos}ns"
-        else -> "${nanos}s"
+        hh > 0 -> "${hh}h ${mm}m ${ss}s ${ms}ms ${ns}ns"
+        mm > 0 -> "${mm}m ${ss}s ${ms}ms ${ns}ns"
+        ss > 0 -> "${ss}s ${ms}ms ${ns}ns"
+        ms > 0 -> "${ms}ms ${ns}ns"
+        ns > 0 -> "${ns}ns"
+        else -> "${ns}ns"
     }
 }
 

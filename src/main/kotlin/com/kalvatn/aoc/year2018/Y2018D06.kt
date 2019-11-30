@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import java.lang.Math.abs
 
@@ -102,17 +102,17 @@ class Y2018D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
 
     fun surrounding(point: Point): List<Point> {
         return listOf(
-            Point(point.x.dec(), point.y),
-            Point(point.x.dec(), point.y.inc()),
-            Point(point.x.dec(), point.y.dec()),
+                Point(point.x.dec(), point.y),
+                Point(point.x.dec(), point.y.inc()),
+                Point(point.x.dec(), point.y.dec()),
 
-            Point(point.x.inc(), point.y),
-            Point(point.x.inc(), point.y.inc()),
-            Point(point.x.inc(), point.y.dec()),
+                Point(point.x.inc(), point.y),
+                Point(point.x.inc(), point.y.inc()),
+                Point(point.x.inc(), point.y.dec()),
 
-            Point(point.x, point.y.inc()),
-            Point(point.x, point.y.dec()),
-            Point(point.x, point.y)
+                Point(point.x, point.y.inc()),
+                Point(point.x, point.y.dec()),
+                Point(point.x, point.y)
         )
     }
 

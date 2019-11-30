@@ -36,8 +36,9 @@ abstract class GenericPuzzleYearDay(
         val (p2Result, p2Time) = timeit { partTwo() }
         println("""
             |${toString()}  
-            |   part one : ${p1Result.padEnd(20)} (${p1Time.toHMS()})
-            |   part two : ${p2Result.padEnd(20)} (${p2Time.toHMS()}""".trimMargin("|"))
+            |   part one : ${p1Result.padEnd(30)} ${p1Time.toHMS()}
+            |   part two : ${p2Result.padEnd(30)} ${p2Time.toHMS()}"""
+                .trimMargin("|"))
     }
 
     override fun toString(): String {

@@ -1,12 +1,12 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 
 class Y2018D14(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D14, input) {
 
-    private fun createRecipes(partTwo:Boolean): String {
+    private fun createRecipes(partTwo: Boolean): String {
         val recipes = mutableListOf(3, 7)
         var elf1 = 0
         var elf2 = 1

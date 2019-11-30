@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 import com.kalvatn.aoc.exceptions.Impossiburu
 
@@ -12,7 +12,7 @@ class Y2018D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
     private val rules = this.input.lines.drop(1).map { it.split("=>") }.map { it[0].trim() to (it[1].trim() == "#") }.toMap()
 
 
-    fun nextGeneration(current:MutableMap<Int, Boolean>):MutableMap<Int, Boolean> {
+    fun nextGeneration(current: MutableMap<Int, Boolean>): MutableMap<Int, Boolean> {
         val indexes = current.keys.map { key -> key }
         val nextPlantIndexes = mutableMapOf<Int, Boolean>()
         indexes.forEach { index ->
@@ -32,12 +32,12 @@ class Y2018D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
         initialState.forEachIndexed { index, c ->
             plantIndexes[index] = (c == '#')
         }
-        (0 - 2..initialState.length+2).forEach {
+        (0 - 2..initialState.length + 2).forEach {
             plantIndexes.putIfAbsent(it, false)
         }
 
         val maxGenerations = 20
-        for(generation in 1..maxGenerations) {
+        for (generation in 1..maxGenerations) {
             val nextPlantIndexes = nextGeneration(plantIndexes)
             plantIndexes = nextPlantIndexes
         }
@@ -49,14 +49,14 @@ class Y2018D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
         initialState.forEachIndexed { index, c ->
             plantIndexes[index] = (c == '#')
         }
-        (0 - 2..initialState.length+2).forEach {
+        (0 - 2..initialState.length + 2).forEach {
             plantIndexes.putIfAbsent(it, false)
         }
 
         var lastSum = 0L
         val sums = mutableMapOf<Long, Int>()
         val maxGenerations = 50000000000
-        for(generation in 1..maxGenerations) {
+        for (generation in 1..maxGenerations) {
             val nextPlantIndexes = nextGeneration(plantIndexes)
             plantIndexes = nextPlantIndexes
             val sum = plantIndexes.filter { it.value }.keys.map { it.toLong() }.sum()

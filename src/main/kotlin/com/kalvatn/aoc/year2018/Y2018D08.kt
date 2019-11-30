@@ -1,7 +1,7 @@
 package com.kalvatn.aoc.year2018
 
-import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.input.PuzzleInput
+import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
 
 class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D08, input) {
@@ -10,12 +10,12 @@ class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
 
 
     data class Node(
-        val index: Int,
-        val parent:Node? = null,
-        val countChildren: Int,
-        val countMeta: Int,
-        val children:MutableList<Node> = mutableListOf(),
-        val meta:MutableList<Int> = mutableListOf()
+            val index: Int,
+            val parent: Node? = null,
+            val countChildren: Int,
+            val countMeta: Int,
+            val children: MutableList<Node> = mutableListOf(),
+            val meta: MutableList<Int> = mutableListOf()
 
     ) {
         override fun toString(): String {
@@ -23,17 +23,17 @@ class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
         }
     }
 
-    fun processNodes():MutableMap<Int, Node> {
+    fun processNodes(): MutableMap<Int, Node> {
 
-        val nodes:MutableMap<Int, Node> = mutableMapOf()
-        var currentParent:Node? = null
+        val nodes: MutableMap<Int, Node> = mutableMapOf()
+        var currentParent: Node? = null
         var i = 0
-        while (i < numbers.size-1) {
-            if(currentParent != null && (currentParent.children.size == currentParent.countChildren) ) {
-                val startMeta:Int = i
-                val meta = numbers.slice(startMeta until startMeta+currentParent.countMeta)
+        while (i < numbers.size - 1) {
+            if (currentParent != null && (currentParent.children.size == currentParent.countChildren)) {
+                val startMeta: Int = i
+                val meta = numbers.slice(startMeta until startMeta + currentParent.countMeta)
                 currentParent.meta.addAll(meta)
-                i = startMeta+currentParent.countMeta
+                i = startMeta + currentParent.countMeta
                 currentParent = currentParent.parent
             } else {
                 val countChildren = numbers[i]
@@ -81,7 +81,7 @@ class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
                     var missing = false
                     for (childIndex in node.meta) {
                         if (childIndex <= node.children.size) {
-                            val child = node.children[childIndex-1]
+                            val child = node.children[childIndex - 1]
                             if (nodeValues.containsKey(child.index)) {
                                 val childValue = nodeValues[child.index]!!
                                 if (childValue < 0) {
