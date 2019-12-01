@@ -47,4 +47,7 @@ abstract class GenericPuzzleYearDay(
 }
 
 abstract class GenericPuzzle2015(day: Day, input: PuzzleInput) : GenericPuzzleYearDay(Year.Y2015, day, input)
+abstract class GenericPuzzle2016(day: Day, input: PuzzleInput) : GenericPuzzleYearDay(Year.Y2016, day, input)
+abstract class GenericPuzzle2017(day: Day, input: PuzzleInput) : GenericPuzzleYearDay(Year.Y2017, day, input)
 abstract class GenericPuzzle2018(day: Day, input: PuzzleInput) : GenericPuzzleYearDay(Year.Y2018, day, input)
+abstract class GenericPuzzle2019(day: Day, input: PuzzleInput) : GenericPuzzleYearDay(Year.Y2019, day, input)
