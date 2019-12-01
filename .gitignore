@@ -7,3 +7,4 @@ session.cookie
 build/
 .gradle
 .kotlintest/
+out/
