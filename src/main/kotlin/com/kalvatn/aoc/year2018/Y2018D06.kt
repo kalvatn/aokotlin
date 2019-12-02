@@ -3,6 +3,8 @@ package com.kalvatn.aoc.year2018
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
+import com.kalvatn.aoc.core.runner.PuzzleRunner
+import kotlinx.coroutines.runBlocking
 import java.lang.Math.abs
 
 class Y2018D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D06, input) {
@@ -147,9 +149,7 @@ class Y2018D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
 }
 
 
-fun main() {
+fun main() = runBlocking {
 //    val day = Y2018D06(PuzzleInput.forDay(Year.Y2018, Day.D06, "test"))
-    val day = Y2018D06()
-//    day.run()
-//    println(day.partTwo())
+    PuzzleRunner(listOf(Y2018D06())).run()
 }
