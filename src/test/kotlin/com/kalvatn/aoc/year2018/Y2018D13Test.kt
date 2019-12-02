@@ -38,8 +38,8 @@ class Y2018D13Test : BaseDayTest() {
 
     @Test
     fun gridTrains() {
-        val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
-        val trains = test1.grid.trains()
+        val grid = Y2018D13.Grid(PuzzleInput.forDay(Year.Y2018, Day.D13, "test").lines)
+        val trains = grid.trains()
 
         trains shouldBe
                 setOf(
@@ -50,21 +50,21 @@ class Y2018D13Test : BaseDayTest() {
 
     @Test
     fun trainMove() {
-        val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
-        val trains = test1.grid.trains()
+        val grid = Y2018D13.Grid(PuzzleInput.forDay(Year.Y2018, Day.D13, "test").lines)
+        val trains = grid.trains()
         val train1 = trains.first()
         val train2 = trains.last()
 
-        train1.move(test1.grid)
-        train2.move(test1.grid)
+        train1.move(grid)
+        train2.move(grid)
 
         train1.position shouldBe Point(3, 0)
         train1.direction shouldBe Direction.EAST
         train2.position shouldBe Point(9, 4)
         train2.direction shouldBe Direction.EAST
         repeat(2) {
-            train1.move(test1.grid)
-            train2.move(test1.grid)
+            train1.move(grid)
+            train2.move(grid)
         }
         train1.position shouldBe Point(4, 1)
         train1.direction shouldBe Direction.SOUTH

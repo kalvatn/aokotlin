@@ -6,7 +6,9 @@ import com.kalvatn.aoc.common.model.Turn
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
+import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.utils.buildArray2D
+import kotlinx.coroutines.runBlocking
 import kotlin.math.max
 
 class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D13, input) {
@@ -15,13 +17,12 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
     class Grid(val lines: List<String>) {
         val size: Int = max(lines.size, lines.map { it.length }.max()!!)
-        var firstCrash: Point? = null
 
         private val array = buildArray2D(size, ' ')
-        private var trains = mutableSetOf<Train>()
+        private val trains = mutableSetOf<Train>()
 
         init {
-            var i = 0
+            var i = 1
             lines.forEachIndexed { y, row ->
                 row.forEachIndexed { x, col ->
                     array[y][x] = col
@@ -47,6 +48,7 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
         fun tick(): Pair<Point, Point>? {
             val removeTrains = mutableSetOf<Train>()
+            var firstCrash:Point? = null
             trains.sortedWith(compareBy(Train::position)).forEach { train ->
                 train.move(this)
                 val crashedWith = trains.filter { it != train && it.position == train.position }
@@ -62,7 +64,7 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
                 trains.removeAll(removeTrains)
             }
             if (trains.size <= 1) {
-                return Pair(firstCrash!!, trains.first().position)
+                return Pair(firstCrash ?: Point(-1,-1), trains.firstOrNull()?.position ?: Point(-1,-1))
             }
             return null
         }
@@ -136,7 +138,8 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
 }
 
-fun main(args: Array<String>) {
+fun main() = runBlocking {
 //    val day = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
-    val day = Y2018D13()
+    PuzzleRunner(listOf(Y2018D13())).run()
+
 }
