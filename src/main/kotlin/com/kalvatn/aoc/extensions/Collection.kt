@@ -29,3 +29,16 @@ fun <T, R> Iterable<T>.reductions(initial: R, operation: (acc: R, T) -> R): Sequ
     }
 }
 
+
+fun <K, V> Collection<Map<K, V>>.groupMapsBySharedKeys(): Map<K, List<V>> =
+        foldIndexed(mapOf()) { index, acc, item ->
+            when (index) {
+                0 -> item.map { it.key to listOf(it.value) }.toMap()
+                else -> {
+                    val commonKeys = acc.keys.intersect(item.keys)
+                    acc.filterKeys { it in commonKeys }.map {
+                        it.key to it.value + (item[it.key] ?: error("impossiburu"))
+                    }.toMap()
+                }
+            }
+        }

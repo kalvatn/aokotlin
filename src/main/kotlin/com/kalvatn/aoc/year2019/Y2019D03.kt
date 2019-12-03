@@ -6,6 +6,7 @@ import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2019
 import com.kalvatn.aoc.core.runner.PuzzleRunner
+import com.kalvatn.aoc.extensions.groupMapsBySharedKeys
 import kotlinx.coroutines.runBlocking
 
 data class Step(val direction: Direction, val steps: Int) {
@@ -36,23 +37,21 @@ class Wire(private val steps: List<Step>) {
     }
 }
 
+
 class Y2019D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D03, input) {
 
     private val wires = this.input.lines.map { Wire.fromString(it) }
-    private val seenBoth = wires.map {
+    private val intersections = wires.map {
         it.move()
         it
-    }.map { it.seen }
-    private val seen1 = seenBoth.first()
-    private val seen2 = seenBoth.last()
-    private val intersections = seen1.keys.intersect(seen2.keys)
+    }.map { it.seen }.groupMapsBySharedKeys()
 
     override suspend fun partOne(): String {
-        return intersections.map { it.distance(Point(0, 0)) }.min().toString()
+        return intersections.map { it.key.distance(Point(0, 0)) }.min().toString()
     }
 
     override suspend fun partTwo(): String {
-        return intersections.map { seen1[it]!! + seen2[it]!! }.min().toString()
+        return intersections.map { it.value.sum() }.min().toString()
     }
 
 }
