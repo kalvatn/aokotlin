@@ -54,10 +54,10 @@ enum class Direction {
     companion object {
         fun fromChar(char: Char): Direction {
             return when (char) {
-                '^' -> NORTH
-                '>' -> EAST
-                'v' -> SOUTH
-                '<' -> WEST
+                '^', 'U' -> NORTH
+                '>', 'R' -> EAST
+                'v', 'D' -> SOUTH
+                '<', 'L' -> WEST
                 else -> {
                     throw Impossiburu()
                 }

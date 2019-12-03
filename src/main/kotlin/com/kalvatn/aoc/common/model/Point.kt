@@ -1,5 +1,7 @@
 package com.kalvatn.aoc.common.model
 
+import kotlin.math.abs
+
 
 data class Point(val x: Int, val y: Int) : Comparable<Point> {
     override fun compareTo(other: Point): Int {
@@ -26,6 +28,9 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
 
     fun plus(other: Point): Point {
         return Point(this.x + other.x, this.y + other.y)
+    }
+    fun distance(other: Point): Int {
+        return abs(other.x - this.x) + abs(other.y - this.y)
     }
 
     fun gridFrom(size: Int): Set<Point> {
