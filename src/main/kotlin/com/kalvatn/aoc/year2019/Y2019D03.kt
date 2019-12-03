@@ -8,52 +8,51 @@ import com.kalvatn.aoc.core.model.GenericPuzzle2019
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import kotlinx.coroutines.runBlocking
 
+data class Step(val direction: Direction, val steps: Int) {
+    companion object {
+        fun fromString(s: String) =
+                Step(Direction.fromChar(s.first()), s.drop(1).toInt())
+    }
+}
+
+class Wire(private val steps: List<Step>) {
+    val seen = mutableMapOf<Point, Int>()
+
+    fun move() {
+        var totalSteps = 0
+        var current = Point(0, 0)
+        steps.forEach { step ->
+            repeat(step.steps) {
+                totalSteps++
+                current = current.plus(step.direction.toPointDiff())
+                seen.putIfAbsent(current, totalSteps)
+            }
+        }
+    }
+
+    companion object {
+        fun fromString(s: String) =
+                Wire(s.split(",").map { Step.fromString(it) })
+    }
+}
 
 class Y2019D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D03, input) {
 
-    private val directions: List<List<Pair<Direction, Int>>> = this.input.lines.map { it.split(",") }.map { list ->
-        list.map {
-            Pair(Direction.fromChar(it.first()), it.drop(1).toInt())
-        }
-    }
-
-    val seen = mutableMapOf<Int, MutableMap<Point, Int>>()
-    val intersection = mutableMapOf<Point, Pair<Int, Int>>()
-
-    fun move(id: Int, start: Point, directions: List<Pair<Direction, Int>>): Pair<Point, Int> {
-        var current = start
-        var steps = 0
-        directions.forEach { (dir, times) ->
-            println("$dir $times")
-            repeat(times) {
-                steps += 1
-                current = current.plus(dir.toPointDiff())
-                seen.putIfAbsent(id, mutableMapOf())
-                seen[id]!!.putIfAbsent(current, steps)
-                if (id != 1 && seen[1]!!.contains(current)) {
-                    intersection[current] = Pair(seen[1]!![current]!!, seen[id]!![current]!!)
-                }
-            }
-        }
-        return Pair(current, start.distance(current))
-    }
+    private val wires = this.input.lines.map { Wire.fromString(it) }
+    private val seenBoth = wires.map {
+        it.move()
+        it
+    }.map { it.seen }
+    private val seen1 = seenBoth.first()
+    private val seen2 = seenBoth.last()
+    private val intersections = seen1.keys.intersect(seen2.keys)
 
     override suspend fun partOne(): String {
-        var i = 1
-        directions.map { move(i++, Point(0, 0), it) }.forEach {
-            println(it)
-        }
-        println(intersection)
-        return intersection.map { it.key.distance(Point(0, 0)) }.min().toString()
+        return intersections.map { it.distance(Point(0, 0)) }.min().toString()
     }
 
     override suspend fun partTwo(): String {
-        var i = 1
-        directions.map { move(i++, Point(0, 0), it) }.forEach {
-            println(it)
-        }
-        println(intersection)
-        return intersection.map { it.value.first + it.value.second }.min().toString()
+        return intersections.map { seen1[it]!! + seen2[it]!! }.min().toString()
     }
 
 }

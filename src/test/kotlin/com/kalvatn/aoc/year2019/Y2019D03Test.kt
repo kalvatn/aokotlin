@@ -9,7 +9,6 @@ import io.kotlintest.shouldBe
 internal class Y2019D03Test : BaseDayTest() {
     @Test
     override suspend fun examplePartOne() {
-//        val input = PuzzleInput.ofSingleLine("")
         val input1 = PuzzleInput.forDay(Year.Y2019, Day.D03, "test")
         Y2019D03(input1).partOne().toInt() shouldBe 159
 
@@ -27,10 +26,10 @@ internal class Y2019D03Test : BaseDayTest() {
     }
 
     override suspend fun solutionPartOne() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Y2019D03().partOne().toInt() shouldBe 227
     }
 
     override suspend fun solutionPartTwo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Y2019D03().partTwo().toInt() shouldBe 20286
     }
 }
