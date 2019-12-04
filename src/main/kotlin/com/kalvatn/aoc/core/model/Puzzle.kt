@@ -34,11 +34,12 @@ abstract class GenericPuzzleYearDay(
     override suspend fun run(runBenchmark: Boolean) {
         val (p1Result, p1Time) = timeit { partOne() }
         val (p2Result, p2Time) = timeit { partTwo() }
+        val total = p1Time.plus(p2Time)
         println("""
             |${toString()}  
             |   part one : ${p1Result.padEnd(30)} ${p1Time.toHMS()}
-            |   part two : ${p2Result.padEnd(30)} ${p2Time.toHMS()}"""
-                .trimMargin("|"))
+            |   part two : ${p2Result.padEnd(30)} ${p2Time.toHMS()}
+            |${total.toHMS()}""" .trimMargin("|"))
     }
 
     override fun toString(): String {

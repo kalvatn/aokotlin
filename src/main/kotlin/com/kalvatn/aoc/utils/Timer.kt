@@ -8,12 +8,14 @@ fun Duration.toHMS(): String {
     val mm = minusHours(hh).toMinutes()
     val ss = minusHours(hh).minusMinutes(mm).toMillis() / 1000
     val ms = minusHours(hh).minusMinutes(mm).minusSeconds(ss).toMillis()
-    val ns = minusHours(hh).minusMinutes(mm).minusSeconds(ss).minusMillis(ms).toNanos()
+    val us = minusHours(hh).minusMinutes(mm).minusSeconds(ss).minusMillis(ms).toNanos() / 1000
+    val ns = toNanos()
     return when {
-        hh > 0 -> "${hh}h ${mm}m ${ss}s ${ms}ms ${ns}ns"
-        mm > 0 -> "${mm}m ${ss}s ${ms}ms ${ns}ns"
-        ss > 0 -> "${ss}s ${ms}ms ${ns}ns"
-        ms > 0 -> "${ms}ms ${ns}ns"
+        hh > 0 -> "${hh}h ${mm}m ${ss}s"
+        mm > 0 -> "${mm}m ${ss}s"
+        ss > 0 -> "${ss}s ${ms}ms"
+        ms > 0 -> "${ms}ms ${us}µs"
+        us > 0 -> "${us}µs"
         ns > 0 -> "${ns}ns"
         else -> "${ns}ns"
     }
@@ -34,8 +36,15 @@ inline fun benchmark(executions: Int = 10, block: () -> Unit): String {
         block()
         runtimes.add(System.nanoTime() - start)
     }
-    val s = "             ${runtimes.average() / 1000000.0} ms avg over $executions executions"
+    val avg = Duration.ofNanos(runtimes.average().toLong())
+    val med = Duration.ofNanos(runtimes[runtimes.size / 2])
+    return "$executions executions, ${avg.toHMS()} average, ${med.toHMS()} median"
+}
+
+inline fun printBenchmark(executions: Int = 10, block: () -> Unit) {
+    val s = benchmark(executions) {
+        block()
+    }
     println(s)
-    return s
 }
 

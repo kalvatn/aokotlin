@@ -5,6 +5,7 @@ import com.kalvatn.aoc.utils.timeit
 import com.kalvatn.aoc.utils.toHMS
 import com.kalvatn.aoc.year2015.*
 import com.kalvatn.aoc.year2018.*
+import com.kalvatn.aoc.year2019.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -15,7 +16,9 @@ class PuzzleRunner(private val puzzles: List<Puzzle> = listOf()) {
         timeit {
             puzzles.map { GlobalScope.async { it.run() } }.awaitAll()
         }.let {
-            println(it.second.toHMS())
+            println()
+            println()
+            println("${puzzles.size} puzzles finished in ${it.second.toHMS()}")
         }
     }
 }
@@ -45,7 +48,12 @@ fun main() = runBlocking {
             Y2018D13(),
             Y2018D14(),
             Y2018D15(),
-            Y2018D16()
+            Y2018D16(),
+
+            Y2019D01(),
+            Y2019D02(),
+            Y2019D03(),
+            Y2019D04()
     )
     PuzzleRunner(puzzles).run()
 }
