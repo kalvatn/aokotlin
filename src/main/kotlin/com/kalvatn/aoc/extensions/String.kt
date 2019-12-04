@@ -5,6 +5,7 @@ import java.security.MessageDigest
 
 val VOWELS: List<Char> = listOf('a', 'e', 'i', 'o', 'u')
 val CONSECUTIVE_LETTERS = ('a'..'z').map { "$it$it" }
+val CONSECUTIVE_DIGITS = (0..9).map { "$it$it" }
 private val MD5 = MessageDigest.getInstance("MD5")
 private const val HEX_CHARS = "0123456789ABCDEF"
 
@@ -35,6 +36,9 @@ fun String.hasNVowels(number: Int = 1): Boolean {
 
 fun String.hasConsecutiveLetters(number: Int = 1): Boolean {
     return CONSECUTIVE_LETTERS.filter { this.contains(it) }.count() >= number
+}
+fun String.hasConsecutiveDigits(number: Int = 1): Boolean {
+    return CONSECUTIVE_DIGITS.filter { this.contains(it) }.count() >= number
 }
 
 fun String.doesNotContain(vararg bad: String): Boolean {
