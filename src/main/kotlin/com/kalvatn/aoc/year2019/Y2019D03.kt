@@ -40,8 +40,7 @@ class Wire(private val steps: List<Step>) {
 
 class Y2019D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D03, input) {
 
-    private val wires = this.input.lines.map { Wire.fromString(it) }
-    private val intersections = wires.map {
+    private val intersections = this.input.lines.map { Wire.fromString(it) }.map {
         it.move()
         it
     }.map { it.seen }.groupMapsBySharedKeys()

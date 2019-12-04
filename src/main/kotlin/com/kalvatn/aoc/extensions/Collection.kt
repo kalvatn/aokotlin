@@ -42,3 +42,9 @@ fun <K, V> Collection<Map<K, V>>.groupMapsBySharedKeys(): Map<K, List<V>> =
                 }
             }
         }
+
+//fun <K, V> List<Map<K, V>>.groupMapsBySharedKeys2(): Map<K, List<V>> =
+//        flatMap { it.entries }
+//                .groupBy({ it.key }, { it.value })
+//                .filter { it.value.size > 1 }
+

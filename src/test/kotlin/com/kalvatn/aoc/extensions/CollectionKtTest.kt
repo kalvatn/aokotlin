@@ -20,4 +20,15 @@ class CollectionKtTest : StringSpec({
         }.toList()
         r shouldBe listOf(0, 1, 3, 6)
     }
+
+    "list intersection" {
+        val list = listOf(
+                mapOf(1 to 10, 2 to 3, 3 to 99, 5 to 999),
+                mapOf(1 to 23, 4 to 100, 3 to 1, 5 to 999)
+        )
+        val expected = mapOf(1 to listOf(10, 23), 3 to listOf(99, 1), 5 to listOf(999, 999))
+        list.groupMapsBySharedKeys() shouldBe expected
+//        list.groupMapsBySharedKeys2() shouldBe expected
+
+    }
 })
