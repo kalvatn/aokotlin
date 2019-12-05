@@ -1,33 +1,50 @@
 package com.kalvatn.aoc.year2019
 
-enum class OpCode(
-        val value: Int,
-        val calc: (x: Int, y: Int) -> Int
-) {
-    ADD(1, fun(x, y) = x + y),
-    MULTIPLY(2, fun(x, y) = x * y),
-    HALT(99, fun(_, _) = 0);
+enum class OpCode(val value: Int) {
+    ADD(1),
+    MULTIPLY(2),
+    STORE(3),
+    OUTPUT(4),
+    JUMP_IF_TRUE(5),
+    JUMP_IF_FALSE(6),
+    JUMP_IF_LESS_THAN(7),
+    JUMP_IF_EQUALS(8),
+    HALT(99);
 
     companion object {
-        fun fromInt(value: Int): OpCode = values().firstOrNull { it.value == value }
-                ?: throw IllegalArgumentException("no OpCode defined for value $value")
+        fun fromInt(value: Int): OpCode {
+            return values().firstOrNull { it.value == value }
+                    ?: throw IllegalArgumentException("no OpCode defined for value $value")
+        }
+    }
+}
+
+data class IntcodeProcessResult(
+        val memory: List<Int>,
+        val diagnosticCode: Int
+) {
+    fun getMemoryValue(key: Int): Int {
+        return memory[key]
     }
 }
 
 class IntcodeComputer(
-        private val initialProgram: List<Int> = listOf(),
+        private val program: List<Int>,
         private val initialPointerPosition: Int = 0
 ) {
 
     private var pointer = initialPointerPosition
+    private var memory = program.toMutableList()
 
-    private fun mutableMemory() = initialProgram.toMutableList()
+    private fun reset() {
+        pointer = initialPointerPosition
+        memory = program.toMutableList()
+    }
 
-
-    fun findVerbNounPairThatProducesSolution(solution:Int): Pair<Int, Int> {
+    fun findVerbNounPairThatProducesSolution(solution: Int): Pair<Int, Int> {
         for (verb in 1..99) {
             for (noun in 1..99) {
-                if (run(verb, noun) == solution) {
+                if (findSolutionForVerbNounPair(verb, noun) == solution) {
                     return Pair(verb, noun)
                 }
             }
@@ -35,29 +52,88 @@ class IntcodeComputer(
         throw IllegalArgumentException("no solution found")
     }
 
-    fun run(verb: Int, noun: Int): Int {
-        return process(mapOf(1 to verb, 2 to noun))[pointer]
+    fun findSolutionForVerbNounPair(verb: Int, noun: Int): Int {
+        reset()
+        memory[1] = verb
+        memory[2] = noun
+        return process().getMemoryValue(0)
     }
 
-    fun process(replace: Map<Int, Int> = mapOf()): List<Int> {
-        val memory = mutableMemory()
-        replace.forEach { (k, v) ->
-            memory[k] = v
-        }
+    fun runDiagnostic(input: Int): Int {
+        return process(input).diagnosticCode
+    }
 
-        loop@ for (i in initialPointerPosition until memory.size - 1 step 4) {
-            pointer = i
-            when (val opCode = OpCode.fromInt(memory[pointer])) {
-                OpCode.HALT ->
-                    pointer = initialPointerPosition
-                else -> {
-                    val i1 = memory[pointer + 1]
-                    val i2 = memory[pointer + 2]
-                    val iOut = memory[pointer + 3]
-                    memory[iOut] = opCode.calc(memory[i1], memory[i2])
+    fun process(inputInstructionValue: Int = 1): IntcodeProcessResult {
+        var lastOutput = 0
+
+        while (pointer < memory.size) {
+            val instructionInt = memory[pointer]
+            val padded = instructionInt.toString().padStart(5, '0')
+            val opcode = padded.takeLast(2).toInt()
+            val modes = padded.take(3).map { "$it".toInt() }.reversed()
+
+            when (OpCode.fromInt(opcode)) {
+                OpCode.HALT -> {
+                    return IntcodeProcessResult(
+                            memory = memory,
+                            diagnosticCode = lastOutput
+                    )
+                }
+                OpCode.ADD -> {
+                    val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
+                    val p2 = if (modes[1] == 0) memory[memory[pointer + 2]] else memory[pointer + 2]
+                    val p3 = memory[pointer + 3]
+                    memory[p3] = p1 + p2
+                    pointer += 4
+                }
+                OpCode.MULTIPLY -> {
+                    val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
+                    val p2 = if (modes[1] == 0) memory[memory[pointer + 2]] else memory[pointer + 2]
+                    val p3 = memory[pointer + 3]
+                    memory[p3] = p1 * p2
+                    pointer += 4
+                }
+                OpCode.STORE -> {
+                    val p1 = memory[pointer + 1]
+                    memory[p1] = inputInstructionValue
+                    pointer += 2
+
+                }
+                OpCode.OUTPUT -> {
+                    val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
+                    lastOutput = p1
+                    pointer += 2
+                }
+                OpCode.JUMP_IF_TRUE -> {
+                    val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
+                    val p2 = if (modes[1] == 0) memory[memory[pointer + 2]] else memory[pointer + 2]
+                    pointer = if (p1 != 0) p2 else pointer + 3
+                }
+                OpCode.JUMP_IF_FALSE -> {
+                    val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
+                    val p2 = if (modes[1] == 0) memory[memory[pointer + 2]] else memory[pointer + 2]
+                    pointer = if (p1 == 0) p2 else pointer + 3
+                }
+                OpCode.JUMP_IF_LESS_THAN -> {
+                    val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
+                    val p2 = if (modes[1] == 0) memory[memory[pointer + 2]] else memory[pointer + 2]
+                    val p3 = memory[pointer + 3]
+                    memory[p3] = if (p1 < p2) 1 else 0
+                    pointer += 4
+                }
+                OpCode.JUMP_IF_EQUALS -> {
+                    val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
+                    val p2 = if (modes[1] == 0) memory[memory[pointer + 2]] else memory[pointer + 2]
+                    val p3 = memory[pointer + 3]
+                    memory[p3] = if (p1 == p2) 1 else 0
+                    pointer += 4
                 }
             }
         }
-        return memory
+        return IntcodeProcessResult(
+                memory = memory,
+                diagnosticCode = lastOutput
+        )
     }
 }
+

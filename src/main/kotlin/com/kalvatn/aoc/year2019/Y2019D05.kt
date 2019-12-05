@@ -8,22 +8,21 @@ import com.kalvatn.aoc.extensions.extractIntegers
 import kotlinx.coroutines.runBlocking
 
 
-class Y2019D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D02, input) {
+class Y2019D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D05, input) {
 
-    private val computer = IntcodeComputer(this.input.singleLine().extractIntegers())
+    private val program by lazy { this.input.singleLine().extractIntegers() }
 
     override suspend fun partOne(): String {
-        return computer.findSolutionForVerbNounPair(12, 2).toString()
+        return IntcodeComputer(program).runDiagnostic(1).toString()
     }
 
     override suspend fun partTwo(): String {
-        val (verb, noun) = computer.findVerbNounPairThatProducesSolution(19690720)
-        return (100 * verb + noun).toString()
+        return IntcodeComputer(program).runDiagnostic(5).toString()
     }
 
 }
 
 fun main() = runBlocking {
-    PuzzleRunner(listOf(Y2019D02())).run()
+    PuzzleRunner(listOf(Y2019D05())).run()
 }
 

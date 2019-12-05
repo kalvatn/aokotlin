@@ -10,10 +10,10 @@ import io.kotlintest.shouldBe
 internal class Y2019D02Test : BaseDayTest() {
     @Test
     override suspend fun examplePartOne() {
-        IntcodeComputer(listOf(1,0,0,0,99)).process() shouldBe listOf(2,0,0,0,99)
-        IntcodeComputer(listOf(2,3,0,3,99)).process() shouldBe listOf(2,3,0,6,99)
-        IntcodeComputer(listOf(2,4,4,5,99,0)).process() shouldBe listOf(2,4,4,5,99,9801)
-        IntcodeComputer(listOf(1,1,1,4,99,5,6,0,99)).process() shouldBe listOf(30,1,1,4,2,5,6,0,99)
+        IntcodeComputer(listOf(1, 0, 0, 0, 99)).process().memory shouldBe listOf(2, 0, 0, 0, 99)
+        IntcodeComputer(listOf(2, 3, 0, 3, 99)).process().memory shouldBe listOf(2, 3, 0, 6, 99)
+        IntcodeComputer(listOf(2, 4, 4, 5, 99, 0)).process().memory shouldBe listOf(2, 4, 4, 5, 99, 9801)
+        IntcodeComputer(listOf(1, 1, 1, 4, 99, 5, 6, 0, 99)).process().memory shouldBe listOf(30, 1, 1, 4, 2, 5, 6, 0, 99)
     }
 
     @Test
