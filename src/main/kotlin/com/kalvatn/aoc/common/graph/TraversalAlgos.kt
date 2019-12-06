@@ -3,8 +3,9 @@ package com.kalvatn.aoc.common.graph
 import java.util.*
 
 
+
 @Suppress("FunctionName")
-fun <T> Graph<T>.DFS(start: T): List<T> {
+fun <T> Graph<T>.DFS(start: T, target:T? = null): List<T> {
     val visited = connections.keys.map { it to false }.toMap().toMutableMap()
 
     val stack: Deque<T> = ArrayDeque()
@@ -12,11 +13,18 @@ fun <T> Graph<T>.DFS(start: T): List<T> {
 
     stack.push(start)
 
+
+    var i = 0
     while (stack.isNotEmpty()) {
         val current = stack.pop()
         if (!visited[current]!!) {
+            i++
             traversed.add(current)
             visited[current] = true
+            if (target != null && current == target) {
+                println(i)
+                return traversed
+            }
             connections[current]?.forEach {
                 stack.push(it)
             }
@@ -26,12 +34,16 @@ fun <T> Graph<T>.DFS(start: T): List<T> {
     return traversed
 }
 
+
 @Suppress("FunctionName")
-fun <T> Graph<T>.BFS(start: T): List<T> {
+fun <T> Graph<T>.BFS(start: T, target:T? = null): List<T> {
     val visited = connections.keys.map { it to false }.toMap().toMutableMap()
 
     val queue: Deque<T> = ArrayDeque()
     val traversed: MutableList<T> = mutableListOf()
+
+    val distance = connections.keys.map { it to DISTANCE_INF }.toMap().toMutableMap()
+    distance[start] = 0
 
     queue.add(start)
     while (queue.isNotEmpty()) {
@@ -40,11 +52,16 @@ fun <T> Graph<T>.BFS(start: T): List<T> {
             traversed.add(current)
             visited[current] = true
             connections[current]?.forEach {
-                queue.add(it)
+                if (distance[it] == DISTANCE_INF) {
+                    distance[it] = distance[current]!! + 1
+                    queue.add(it)
+                }
             }
         }
 
     }
+    println(distance)
+    println(distance[target])
 
     return traversed
 }
@@ -74,7 +91,4 @@ fun <T> WeightedGraph<T>.dijkstra(start: T): List<T> {
     return traversed
 
 }
-
-
-
 
