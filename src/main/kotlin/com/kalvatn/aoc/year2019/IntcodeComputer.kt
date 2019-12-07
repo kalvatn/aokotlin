@@ -60,11 +60,19 @@ class IntcodeComputer(
     }
 
     fun runDiagnostic(input: Int): Int {
+        reset()
         return process(input).diagnosticCode
     }
 
-    fun process(inputInstructionValue: Int = 1): IntcodeProcessResult {
+    fun runPhase(first:Int, second:Int):Int {
+        reset()
+        return process(first, second).diagnosticCode
+    }
+
+    fun process(inputInstructionValue: Int = 1, input2:Int = -1): IntcodeProcessResult {
         var lastOutput = 0
+
+        var input1Used = false
 
         while (pointer < memory.size) {
             val instructionInt = memory[pointer]
@@ -95,7 +103,8 @@ class IntcodeComputer(
                 }
                 OpCode.STORE -> {
                     val p1 = memory[pointer + 1]
-                    memory[p1] = inputInstructionValue
+                    memory[p1] = if (!input1Used) inputInstructionValue else input2
+                    input1Used = true
                     pointer += 2
 
                 }
