@@ -1,79 +1,44 @@
 package com.kalvatn.aoc.year2019
 
-enum class OpCode(val value: Int) {
-    ADD(1),
-    MULTIPLY(2),
-    STORE(3),
-    OUTPUT(4),
-    JUMP_IF_TRUE(5),
-    JUMP_IF_FALSE(6),
-    JUMP_IF_LESS_THAN(7),
-    JUMP_IF_EQUALS(8),
-    HALT(99);
+import kotlinx.coroutines.delay
 
-    companion object {
-        fun fromInt(value: Int): OpCode {
-            return values().firstOrNull { it.value == value }
-                    ?: throw IllegalArgumentException("no OpCode defined for value $value")
-        }
-    }
-}
 
-data class IntcodeProcessResult(
-        val memory: List<Int>,
-        val diagnosticCode: Int,
-        val name: String = ""
-) {
-    fun getMemoryValue(key: Int): Int {
-        return memory[key]
-    }
-}
-
-class IntcodeComputer(
+class IntcodeComputerSignals(
+        private val name: String,
+        private val phase: Int,
         private val program: List<Int>,
         private val initialPointerPosition: Int = 0
 ) {
 
     private var pointer = initialPointerPosition
     private var memory = program.toMutableList()
+    private var receiver: IntcodeComputerSignals? = null
 
-    private fun reset() {
-        pointer = initialPointerPosition
-        memory = program.toMutableList()
+    var receiveFrom:IntcodeComputerSignals? = null
+    var sendTo:IntcodeComputerSignals? = null
+
+    var input: Int? = null
+
+    suspend fun receive(input: Int) {
+//        println("$name received $input")
+        this.input = input
+    }
+    suspend fun send(input:Int) {
+//        println("$name sending $input to ${sendTo?.name}")
+        sendTo?.receive(input)
     }
 
-    fun findVerbNounPairThatProducesSolution(solution: Int): Pair<Int, Int> {
-        for (verb in 1..99) {
-            for (noun in 1..99) {
-                if (findSolutionForVerbNounPair(verb, noun) == solution) {
-                    return Pair(verb, noun)
-                }
-            }
+    suspend fun waitForInput(): Int? {
+        while(this.input == null) {
+            delay(1)
         }
-        throw IllegalArgumentException("no solution found")
+        return this.input!!
     }
 
-    fun findSolutionForVerbNounPair(verb: Int, noun: Int): Int {
-        reset()
-        memory[1] = verb
-        memory[2] = noun
-        return process().getMemoryValue(0)
-    }
-
-    fun runDiagnostic(input: Int): Int {
-        reset()
-        return process(input).diagnosticCode
-    }
-
-    fun runPhase(first:Int, second:Int):Int {
-        reset()
-        return process(first, second).diagnosticCode
-    }
-
-    fun process(inputInstructionValue: Int = 1, input2:Int = -1): IntcodeProcessResult {
+    suspend fun process(): IntcodeProcessResult {
         var lastOutput = 0
 
-        var input1Used = false
+        var phaseUsed = false
 
         while (pointer < memory.size) {
             val instructionInt = memory[pointer]
@@ -83,9 +48,11 @@ class IntcodeComputer(
 
             when (OpCode.fromInt(opcode)) {
                 OpCode.HALT -> {
+//                    println("$name $lastOutput")
                     return IntcodeProcessResult(
                             memory = memory,
-                            diagnosticCode = lastOutput
+                            diagnosticCode = lastOutput,
+                            name = name
                     )
                 }
                 OpCode.ADD -> {
@@ -104,14 +71,25 @@ class IntcodeComputer(
                 }
                 OpCode.STORE -> {
                     val p1 = memory[pointer + 1]
-                    memory[p1] = if (!input1Used) inputInstructionValue else input2
-                    input1Used = true
-                    pointer += 2
+                    if (!phaseUsed) {
+                        phaseUsed = true
+                        memory[p1] = phase
+//                        println("$name STORE phase $phase")
+                    } else {
+                        this.input = waitForInput()
+                        memory[p1] = this.input!!
+//                        println("$name STORE input ${this.input}")
+                        this.input = null
+                    }
+
+                    pointer +=2
 
                 }
                 OpCode.OUTPUT -> {
                     val p1 = if (modes[0] == 0) memory[memory[pointer + 1]] else memory[pointer + 1]
                     lastOutput = p1
+//                    println("$name output $p1")
+                    send(p1)
                     pointer += 2
                 }
                 OpCode.JUMP_IF_TRUE -> {
@@ -141,6 +119,7 @@ class IntcodeComputer(
             }
         }
         return IntcodeProcessResult(
+                name = name,
                 memory = memory,
                 diagnosticCode = lastOutput
         )
