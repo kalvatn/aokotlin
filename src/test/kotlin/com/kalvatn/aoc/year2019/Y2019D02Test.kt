@@ -24,13 +24,11 @@ internal class Y2019D02Test : BaseDayTest() {
 
     @Test
     override suspend fun solutionPartOne() {
-        val day = Y2019D02()
-        day.partOne().toInt() shouldBe 3654868
+        Y2019D02().partOne().toInt() shouldBe 3654868
     }
 
     @Test
     override suspend fun solutionPartTwo() {
-        val day = Y2019D02()
-        day.partTwo().toInt() shouldBe 7014
+        Y2019D02().partTwo().toInt() shouldBe 7014
     }
 }
