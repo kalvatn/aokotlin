@@ -14,15 +14,6 @@ enum class Direction {
         }
     }
 
-    fun alias(): String {
-        return when (this) {
-            NORTH -> "UP"
-            EAST -> "RIGHT"
-            SOUTH -> "DOWN"
-            WEST -> "LEFT"
-        }
-    }
-
     fun turn(turn: Turn): Direction {
         return when (turn) {
             Turn.LEFT -> when (this) {
@@ -59,6 +50,7 @@ enum class Direction {
                 'v', 'D' -> SOUTH
                 '<', 'L' -> WEST
                 else -> {
+                    println(char)
                     throw Impossiburu()
                 }
             }

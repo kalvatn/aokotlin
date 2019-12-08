@@ -17,6 +17,10 @@ open class PuzzleInput(val lines: List<String>) {
         return lines.first()
     }
 
+    fun singleLineSplit(splitOn:String): List<String> {
+        return lines.first().split(splitOn).filter { !it.isBlank() }.map { it.trim() }
+    }
+
     fun asIntegers(): List<Int> {
         return map { it.toInt() }
     }

@@ -26,9 +26,14 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
         )
     }
 
-    fun plus(other: Point): Point {
+    operator fun plus(other: Point): Point {
         return Point(this.x + other.x, this.y + other.y)
     }
+
+    operator fun times(n:Int):Point {
+        return Point(this.x * n, this.y * n)
+    }
+
     fun distance(other: Point): Int {
         return abs(other.x - this.x) + abs(other.y - this.y)
     }
