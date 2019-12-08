@@ -11,19 +11,23 @@ internal class Y$YEARD$DAYTest : BaseDayTest() {
     override suspend fun examplePartOne() {
 //        val input = PuzzleInput.ofSingleLine("")
         val input = PuzzleInput.forDay(Year.Y$YEAR, Day.D$DAY, "test")
-        val day = Y$YEARD$DAY(input)
-        day.partOne().toInt() shouldBe 0
+        Y$YEARD$DAY(input).partOne().toInt() shouldBe 0
     }
 
+    @Test
     override suspend fun examplePartTwo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        val input = PuzzleInput.ofSingleLine("")
+        val input = PuzzleInput.forDay(Year.Y$YEAR, Day.D$DAY, "test")
+        Y$YEARD$DAY(input).partTwo().toInt() shouldBe 0
     }
 
+    @Test
     override suspend fun solutionPartOne() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Y$YEARD$DAY().partOne().toInt() shouldBe 0
     }
 
+    @Test
     override suspend fun solutionPartTwo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Y$YEARD$DAY().partTwo().toInt() shouldBe 0
     }
 }

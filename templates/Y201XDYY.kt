@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 
 class Y$YEARD$DAY(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle$YEAR(Day.D$DAY, input) {
 
-    val lines = this.input.lines
+    val lines by lazy { this.input.lines }
 
     override suspend fun partOne(): String {
         return ""
@@ -17,6 +17,10 @@ class Y$YEARD$DAY(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle$YEAR(Da
 
     override suspend fun partTwo(): String {
         return ""
+    }
+    
+    companion object {
+        
     }
 
 }
