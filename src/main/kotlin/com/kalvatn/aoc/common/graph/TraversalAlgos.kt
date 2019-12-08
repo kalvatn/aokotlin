@@ -6,7 +6,7 @@ import java.util.*
 
 @Suppress("FunctionName")
 fun <T> Graph<T>.DFS(start: T, target:T? = null): List<T> {
-    val visited = connections.keys.map { it to false }.toMap().toMutableMap()
+    val visited = edges.keys.map { it to false }.toMap().toMutableMap()
 
     val stack: Deque<T> = ArrayDeque()
     val traversed: MutableList<T> = mutableListOf()
@@ -25,7 +25,7 @@ fun <T> Graph<T>.DFS(start: T, target:T? = null): List<T> {
                 println(i)
                 return traversed
             }
-            connections[current]?.forEach {
+            edges[current]?.forEach {
                 stack.push(it)
             }
         }
@@ -36,13 +36,34 @@ fun <T> Graph<T>.DFS(start: T, target:T? = null): List<T> {
 
 
 @Suppress("FunctionName")
-fun <T> Graph<T>.BFS(start: T, target:T? = null): List<T> {
-    val visited = connections.keys.map { it to false }.toMap().toMutableMap()
+fun <T> Graph<T>.BFS(start: T): List<T> {
+    val visited = edges.keys.map { it to false }.toMap().toMutableMap()
 
-    val queue: Deque<T> = ArrayDeque()
+    val queue: Deque<T> = ArrayDeque<T>()
     val traversed: MutableList<T> = mutableListOf()
 
-    val distance = connections.keys.map { it to DISTANCE_INF }.toMap().toMutableMap()
+    queue.add(start)
+    while (queue.isNotEmpty()) {
+        val current = queue.remove()
+        if (!visited[current]!!) {
+            traversed.add(current)
+            visited[current] = true
+            edges[current]?.forEach {
+                queue.add(it)
+            }
+        }
+
+    }
+    return traversed
+}
+
+fun <T> Graph<T>.distances(start: T): Map<T, Int> {
+    val visited = edges.keys.map { it to false }.toMap().toMutableMap()
+
+    val queue: Deque<T> = ArrayDeque<T>()
+    val traversed: MutableList<T> = mutableListOf()
+
+    val distance = edges.keys.map { it to DISTANCE_INF }.toMap().toMutableMap()
     distance[start] = 0
 
     queue.add(start)
@@ -51,7 +72,7 @@ fun <T> Graph<T>.BFS(start: T, target:T? = null): List<T> {
         if (!visited[current]!!) {
             traversed.add(current)
             visited[current] = true
-            connections[current]?.forEach {
+            edges[current]?.forEach {
                 if (distance[it] == DISTANCE_INF) {
                     distance[it] = distance[current]!! + 1
                     queue.add(it)
@@ -60,10 +81,10 @@ fun <T> Graph<T>.BFS(start: T, target:T? = null): List<T> {
         }
 
     }
-    println(distance)
-    println(distance[target])
-
-    return traversed
+    return distance
+}
+fun <T> Graph<T>.shortestPath(start: T, target:T): Int {
+    return distances(start)[target] ?: error("no path found")
 }
 
 private const val DISTANCE_INF = Integer.MAX_VALUE
@@ -73,14 +94,14 @@ fun <T> WeightedGraph<T>.dijkstra(start: T): List<T> {
 
     val priorityQueue: PriorityQueue<Pair<T, Int>> = PriorityQueue()
     val traversed: MutableList<T> = mutableListOf()
-    val distances = connections.keys.map { it to DISTANCE_INF }.toMap().toMutableMap()
+    val distances = edges.keys.map { it to DISTANCE_INF }.toMap().toMutableMap()
 
     distances[start] = DISTANCE_ZERO
     priorityQueue.add(Pair(start, distances[start]!!))
 
     while (priorityQueue.isNotEmpty()) {
         val (current, _) = priorityQueue.poll()
-        connections[current]?.forEach { (node: T, weight: Int) ->
+        edges[current]?.forEach { (node: T, weight: Int) ->
             if (distances[node]!! > distances[current]!! + weight) {
                 priorityQueue.add(Pair(node, distances[current]!! + weight))
             }

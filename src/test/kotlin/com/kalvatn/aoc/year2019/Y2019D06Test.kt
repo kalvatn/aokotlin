@@ -15,15 +15,17 @@ internal class Y2019D06Test : BaseDayTest() {
         day.partOne().toInt() shouldBe 42
     }
 
+    @Test
     override suspend fun examplePartTwo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    @Test
     override suspend fun solutionPartOne() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Y2019D06().partOne().toInt() shouldBe 140608
     }
 
+    @Test
     override suspend fun solutionPartTwo() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Y2019D06().partTwo().toInt() shouldBe 337
     }
 }
