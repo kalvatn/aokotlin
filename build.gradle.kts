@@ -70,8 +70,6 @@ dependencies {
 
     implementation("com.marcinmoskala:DiscreteMathToolkit:1.0.3")
 
-
-
     // test dependencies
 //    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.3.50")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:$versionKotlintest")

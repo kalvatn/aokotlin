@@ -4,7 +4,9 @@ import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
+import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.extensions.extractIntegers
+import kotlinx.coroutines.runBlocking
 import kotlin.math.max
 
 class Y2018D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D10, input) {
@@ -55,17 +57,17 @@ class Y2018D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
             }
             if (size < minSize) {
                 minSize = size
-//                println("second : $second")
-//                (0..maxY).forEach { y ->
-//                    (0..maxX).forEach { x ->
-//                        if (starCoords.containsKey(Point(x, y))) {
-//                            print("#")
-//                        } else {
-//                            print(" ")
-//                        }
-//                    }
-//                    println()
-//                }
+                println("second : $second")
+                (0..maxY).forEach { y ->
+                    (0..maxX).forEach { x ->
+                        if (starCoords.containsKey(Point(x, y))) {
+                            print("#")
+                        } else {
+                            print(" ")
+                        }
+                    }
+                    println()
+                }
             }
             starCoords.clear()
         }
@@ -80,8 +82,6 @@ class Y2018D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 }
 
 
-fun main(args: Array<String>) {
-//    val day = Y2018D10(PuzzleInput.forDay(Year.Y2018, Day.D10, "test"))
-    val day = Y2018D10()
-//    day.run()
+fun main() = runBlocking {
+    PuzzleRunner(listOf(Y2018D10())).run()
 }
