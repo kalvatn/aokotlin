@@ -12,33 +12,19 @@ import kotlinx.coroutines.runBlocking
 
 class Y2019D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D09, input) {
 
-    val program by lazy { this.input.singleLineSplit(",").map { it.toLong() } }
+    val program by lazy { this.input.singleLineLongs() }
+    val pc = IntcodeComputer(program)
 
     override suspend fun partOne(): String {
-//        LongcodeComputer(listOf(109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99)).process()
-//        LongcodeComputer(listOf(104,1125899906842624,99)).process()
-//        LongcodeComputer(listOf(1102,34915192,34915192,7,4,7,99,0)).process()
-//        LongcodeComputer(listOf(109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99)).process()
-
-//        val pc = LongcodeComputer(program)
-        val pc = LongcodeComputer(listOf(109,4,204,1,104,1000,99))
-
-//        pc.input(1)
+        pc.input(1)
         pc.process()
-        println(pc.output().reversed())
-
-//        LongcodeComputer(PuzzleInput.forDay(Year.Y2019,Day.D05).singleLineSplit(",").map { it.toLong() }).run {
-//            this.input(5)
-//            this.process()
-//            println(this.output())
-//        }
-        println("SHOULD BE : 2494485073")
-
-        return pc.output().last().toString()
+        return pc.lastOutput().toString()
     }
 
     override suspend fun partTwo(): String {
-        return ""
+        pc.input(2)
+        pc.process()
+        return pc.lastOutput().toString()
     }
 
     companion object {

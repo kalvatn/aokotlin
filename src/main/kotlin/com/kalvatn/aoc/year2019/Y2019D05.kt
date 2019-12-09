@@ -10,7 +10,7 @@ import kotlinx.coroutines.runBlocking
 
 class Y2019D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D05, input) {
 
-    private val program by lazy { this.input.singleLine().extractIntegers() }
+    private val program by lazy { this.input.singleLineLongs() }
 
     override suspend fun partOne(): String {
         return IntcodeComputer(program).runDiagnostic(1).toString()

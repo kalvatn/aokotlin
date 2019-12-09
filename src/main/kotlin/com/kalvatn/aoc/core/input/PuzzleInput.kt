@@ -21,6 +21,9 @@ open class PuzzleInput(val lines: List<String>) {
         return lines.first().split(splitOn).filter { !it.isBlank() }.map { it.trim() }
     }
 
+    fun singleLineIntegers() = singleLineSplit(",").map { it.toInt() }
+    fun singleLineLongs() = singleLineSplit(",").map { it.toLong() }
+
     fun asIntegers(): List<Int> {
         return map { it.toInt() }
     }

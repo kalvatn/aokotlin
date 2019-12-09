@@ -10,7 +10,7 @@ import kotlinx.coroutines.runBlocking
 
 class Y2019D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D02, input) {
 
-    private val computer = IntcodeComputer(this.input.singleLine().extractIntegers())
+    private val computer = IntcodeComputer(this.input.singleLineLongs())
 
     override suspend fun partOne(): String {
         return computer.findSolutionForVerbNounPair(12, 2).toString()
