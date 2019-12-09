@@ -15,6 +15,7 @@ enum class OpCode(val value: Int) {
     JUMP_IF_FALSE(6),
     JUMP_IF_LESS_THAN(7),
     JUMP_IF_EQUALS(8),
+    ADJUST_BASE(9),
     HALT(99);
 
     companion object {
@@ -36,6 +37,8 @@ class IntcodeComputer(
     private val output = mutableListOf<Int>()
     private val input = ArrayDeque<Int>()
     internal var state = State.RUNNING
+
+    var relativeBase = 0
 
     private fun reset() {
         pointer = 0
@@ -72,7 +75,11 @@ class IntcodeComputer(
     }
 
     fun getMemoryValue(index: Int, mode: Int): Int {
-        return if (mode == 0) memory[memory[index]] else memory[index]
+        return when (mode) {
+            0 -> memory[memory[index]]
+            2 -> memory[memory[index+relativeBase]]
+            else -> memory[index]
+        }
     }
 
     private fun step() {
@@ -136,6 +143,12 @@ class IntcodeComputer(
                 val p3 = getMemoryValue(pointer + 3, 1)
                 memory[p3] = if (p1 == p2) 1 else 0
                 pointer += 4
+            }
+            OpCode.ADJUST_BASE -> {
+                println("ADJUST")
+                val p1 = getMemoryValue(pointer + 1, modes[0])
+                relativeBase += p1
+                pointer += 2
             }
         }
     }
