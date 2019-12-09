@@ -20,9 +20,10 @@ class Y2019D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
 //        LongcodeComputer(listOf(1102,34915192,34915192,7,4,7,99,0)).process()
 //        LongcodeComputer(listOf(109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99)).process()
 
-        val pc = LongcodeComputer(program)
+//        val pc = LongcodeComputer(program)
+        val pc = LongcodeComputer(listOf(109,4,204,1,104,1000,99))
 
-        pc.input(1)
+//        pc.input(1)
         pc.process()
         println(pc.output().reversed())
 
@@ -31,6 +32,7 @@ class Y2019D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
 //            this.process()
 //            println(this.output())
 //        }
+        println("SHOULD BE : 2494485073")
 
         return pc.output().last().toString()
     }
