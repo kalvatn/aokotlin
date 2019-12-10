@@ -1,6 +1,7 @@
 package com.kalvatn.aoc.common.model
 
 import kotlin.math.abs
+import kotlin.math.atan2
 
 
 data class Point(val x: Int, val y: Int) : Comparable<Point> {
@@ -36,6 +37,9 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
 
     fun distance(other: Point): Int {
         return abs(other.x - this.x) + abs(other.y - this.y)
+    }
+    fun angle(other:Point): Double {
+        return atan2((other.x - x).toDouble(), (other.y - y).toDouble())
     }
 
     fun gridFrom(size: Int): Set<Point> {
