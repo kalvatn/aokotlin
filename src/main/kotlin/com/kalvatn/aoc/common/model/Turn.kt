@@ -8,8 +8,8 @@ enum class Turn {
     companion object {
         fun fromChar(char: Char): Turn {
             return when (char) {
-                '>', 'R' -> RIGHT
-                '<', 'L' -> LEFT
+                '>', 'R', '1' -> RIGHT
+                '<', 'L', '0' -> LEFT
                 else -> throw Impossiburu()
             }
         }

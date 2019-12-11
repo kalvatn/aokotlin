@@ -59,6 +59,7 @@ class IntcodeComputer(private val program: List<Long>) {
     fun memory() = memory.toList()
     fun output() = this.output.toList()
     fun outputLast() = this.output.last()
+    fun removeOutput() = this.output.removeAt(0)
 
     fun input(input: Long): IntcodeComputer {
         this.input.add(input)
@@ -99,8 +100,12 @@ class IntcodeComputer(private val program: List<Long>) {
 
 
     private fun writeToMemory(index: Long, value: Long) {
-        extendMemory(index)
-        memory[index.toInt()] = value
+        try {
+            extendMemory(index)
+            memory[index.toInt()] = value
+        } catch (e: Exception) {
+            println("$index $value ${memory.size}")
+        }
     }
 
     private fun readFromMemory(index: Long): Long {
@@ -109,7 +114,7 @@ class IntcodeComputer(private val program: List<Long>) {
     }
 
     private fun extendMemory(index: Long) {
-        if (index > memory.size) {
+        if (index >= memory.size) {
             repeat((index.toInt() + 2 - memory.size)) {
                 memory += 0
             }
