@@ -6,10 +6,16 @@ enum class Turn {
     LEFT, RIGHT, FORWARD;
 
     companion object {
+        fun fromInt(value: Int) = when (value) {
+            0 -> LEFT
+            1 -> RIGHT
+            else -> throw Impossiburu()
+        }
+
         fun fromChar(char: Char): Turn {
             return when (char) {
-                '>', 'R', '1' -> RIGHT
-                '<', 'L', '0' -> LEFT
+                '<', 'L' -> LEFT
+                '>', 'R' -> RIGHT
                 else -> throw Impossiburu()
             }
         }

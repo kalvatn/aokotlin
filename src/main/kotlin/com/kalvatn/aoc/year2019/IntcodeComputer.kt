@@ -59,7 +59,7 @@ class IntcodeComputer(private val program: List<Long>) {
     fun memory() = memory.toList()
     fun output() = this.output.toList()
     fun outputLast() = this.output.last()
-    fun removeOutput() = this.output.removeAt(0)
+    fun clearOutput() = this.output.clear()
 
     fun input(input: Long): IntcodeComputer {
         this.input.add(input)
