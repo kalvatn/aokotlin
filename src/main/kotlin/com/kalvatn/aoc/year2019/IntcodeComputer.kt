@@ -1,10 +1,12 @@
 package com.kalvatn.aoc.year2019
 
-import com.kalvatn.aoc.year2019.AccessMode.*
+import com.kalvatn.aoc.year2019.AccessMode.READ
+import com.kalvatn.aoc.year2019.AccessMode.WRITE
+import com.kalvatn.aoc.year2019.ParameterMode.*
 import java.util.*
 
 enum class State {
-    RUNNING, WAITING, HALT
+    RUNNING, WAITING_FOR_INPUT, HALT
 }
 
 enum class AccessMode {
@@ -12,7 +14,18 @@ enum class AccessMode {
     WRITE
 }
 
-enum class OpCode(val value: Int, vararg val accessModes: AccessMode) {
+enum class ParameterMode(val value: Int) {
+    POSITION(0),
+    IMMEDIATE(1),
+    RELATIVE(2);
+
+    companion object {
+        private val BY_ID = values().map { it.value to it }.toMap()
+        fun fromInt(value: Int) = BY_ID[value] ?: error("no parameter mode with value $value")
+    }
+}
+
+enum class Operation(val value: Int, vararg val accessModes: AccessMode) {
     ADD(1, READ, READ, WRITE),
     MULTIPLY(2, READ, READ, WRITE),
     STORE(3, WRITE),
@@ -26,42 +39,37 @@ enum class OpCode(val value: Int, vararg val accessModes: AccessMode) {
 
     companion object {
         private val BY_ID = values().map { it.value to it }.toMap()
-        fun fromInt(value: Int): OpCode {
-            return BY_ID[value] ?: error("impossiburu")
-        }
+        fun fromInt(value: Int) = BY_ID[value] ?: error("no opcode with value $value")
     }
 }
 
-class IntcodeComputer(
-        private val program: List<Long>
-) {
-
-    private var pointer = 0
-    var memory = initializeMemory()
-        private set
+class IntcodeComputer(private val program: List<Long>) {
 
 
-    private val output = mutableListOf<Long>()
-    private val input = ArrayDeque<Long>()
-    internal var state = State.RUNNING
+    private val output: MutableList<Long> = mutableListOf()
+    private val input: ArrayDeque<Long> = ArrayDeque()
 
-    var relativeBase = 0
+    private var memory: LongArray = initializeMemory()
+    private var pointer = 0L
+    private var state = State.HALT
+    private var relativeBase = 0
 
-    private fun initializeMemory() = program.toLongArray()
 
-    private fun reset() {
-        pointer = 0
-        memory = initializeMemory()
-        relativeBase = 0
-    }
-
-    fun input(input: Long) {
-        this.input.add(input)
-    }
-
+    fun state() = state
+    fun memory() = memory.toList()
     fun output() = this.output.toList()
+    fun outputLast() = this.output.last()
 
-    fun lastOutput() = this.output.last()
+    fun input(input: Long): IntcodeComputer {
+        this.input.add(input)
+        return this
+    }
+
+    fun runDiagnostic(input: Long): Long {
+        reset()
+        input(input)
+        return run().outputLast()
+    }
 
     fun findVerbNounPairThatProducesSolution(solution: Long): Pair<Int, Int> {
         for (verb in 1..99) {
@@ -76,111 +84,86 @@ class IntcodeComputer(
 
     fun findSolutionForVerbNounPair(verb: Int, noun: Int): Long {
         reset()
-        memory[1] = verb.toLong()
-        memory[2] = noun.toLong()
-        return process().memory[0]
+        writeToMemory(1, verb.toLong())
+        writeToMemory(2, noun.toLong())
+        return run().memory[0]
     }
 
-    fun runDiagnostic(input: Long): Long {
-        reset()
-        this.input.add(input)
-        return process().lastOutput()
+    private fun initializeMemory() = program.toLongArray()
+
+    private fun reset() {
+        pointer = 0
+        memory = initializeMemory()
+        relativeBase = 0
     }
 
-    private fun extendMemory(index: Int) {
+
+    private fun writeToMemory(index: Long, value: Long) {
+        extendMemory(index)
+        memory[index.toInt()] = value
+    }
+
+    private fun readFromMemory(index: Long): Long {
+        extendMemory(index)
+        return memory[index.toInt()]
+    }
+
+    private fun extendMemory(index: Long) {
         if (index > memory.size) {
-            repeat((index + 2 - memory.size)) {
+            repeat((index.toInt() + 2 - memory.size)) {
                 memory += 0
             }
         }
     }
 
-    private fun writeToMemory(index: Int, value: Long) {
-        extendMemory(index)
-        memory[index] = value
-    }
-
-    private fun readFromMemory(index: Int, mode: Int, accessMode: AccessMode = READ): Long {
-        val valueAtIndex = memory[index]
-        if (accessMode == READ && mode == 0 || mode == 2) {
-            extendMemory(valueAtIndex.toInt())
+    private fun getParameters(operation: Operation, modes: List<Int>): List<Long> {
+        val params = mutableListOf<Long>(0, 0, 0)
+        operation.accessModes.forEachIndexed { i, rw ->
+            val value = readFromMemory(pointer + i + 1)
+            params[i] = when (val mode = ParameterMode.fromInt(modes[i])) {
+                RELATIVE, POSITION -> {
+                    val newIndex = if (mode == RELATIVE) value + relativeBase else value
+                    if (rw == READ) readFromMemory(newIndex) else newIndex
+                }
+                IMMEDIATE -> value
+            }
         }
-        return when (mode) {
-            0 -> if (accessMode == READ) memory[valueAtIndex.toInt()] else valueAtIndex
-            2 -> if (accessMode == READ) memory[valueAtIndex.toInt() + relativeBase] else valueAtIndex + relativeBase
-            else -> valueAtIndex
-        }
+        return params
     }
 
     private fun step() {
-        val instructionInt = memory[pointer]
+        val instructionInt = readFromMemory(pointer)
         val padded = instructionInt.toString().padStart(5, '0')
         val opcode = padded.takeLast(2).toInt()
-        val modes = padded.take(3).map { "$it".toInt() }.reversed()
+        val modes = padded.take(3).map { Character.getNumericValue(it) }.reversed()
 
-        when (OpCode.fromInt(opcode)) {
-            OpCode.HALT -> state = State.HALT
-            OpCode.STORE -> {
-                if (input.isNotEmpty()) {
-                    val p1 = readFromMemory(pointer + 1, modes[0], WRITE)
-                    writeToMemory(p1.toInt(), input.remove())
-                    pointer += 2
+        val operation = Operation.fromInt(opcode)
+        val (p1, p2, p3) = getParameters(operation, modes)
+
+        val pointerIncrement = operation.accessModes.size + 1
+        pointer += pointerIncrement
+        when (operation) {
+            Operation.STORE -> {
+                if (input.isEmpty()) {
+                    pointer -= pointerIncrement
+                    state = State.WAITING_FOR_INPUT
                 } else {
-                    state = State.WAITING
+                    writeToMemory(p1, input.remove())
                 }
             }
-            OpCode.OUTPUT -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                output.add(p1)
-                pointer += 2
-            }
-            OpCode.ADD -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                val p2 = readFromMemory(pointer + 2, modes[1])
-                val p3 = readFromMemory(pointer + 3, modes[2], WRITE)
-                writeToMemory(p3.toInt(), p1 + p2)
-                pointer += 4
-            }
-            OpCode.MULTIPLY -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                val p2 = readFromMemory(pointer + 2, modes[1])
-                val p3 = readFromMemory(pointer + 3, modes[2], WRITE)
-                writeToMemory(p3.toInt(), p1 * p2)
-                pointer += 4
-            }
-            OpCode.JUMP_IF_TRUE -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                val p2 = readFromMemory(pointer + 2, modes[1])
-                pointer = if (p1 != 0L) p2.toInt() else pointer + 3
-            }
-            OpCode.JUMP_IF_FALSE -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                val p2 = readFromMemory(pointer + 2, modes[1])
-                pointer = if (p1 == 0L) p2.toInt() else pointer + 3
-            }
-            OpCode.JUMP_IF_LESS_THAN -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                val p2 = readFromMemory(pointer + 2, modes[1])
-                val p3 = readFromMemory(pointer + 3, modes[2], WRITE)
-                writeToMemory(p3.toInt(), if (p1 < p2) 1 else 0)
-                pointer += 4
-            }
-            OpCode.JUMP_IF_EQUALS -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                val p2 = readFromMemory(pointer + 2, modes[1])
-                val p3 = readFromMemory(pointer + 3, modes[2], WRITE)
-                writeToMemory(p3.toInt(), if (p1 == p2) 1 else 0)
-                pointer += 4
-            }
-            OpCode.ADJUST_BASE -> {
-                val p1 = readFromMemory(pointer + 1, modes[0])
-                relativeBase += p1.toInt()
-                pointer += 2
-            }
+            Operation.OUTPUT -> output.add(p1)
+            Operation.ADD -> writeToMemory(p3, p1 + p2)
+            Operation.MULTIPLY -> writeToMemory(p3, p1 * p2)
+            Operation.JUMP_IF_TRUE -> if (p1 != 0L) pointer = p2
+            Operation.JUMP_IF_FALSE -> if (p1 == 0L) pointer = p2
+            Operation.JUMP_IF_LESS_THAN -> writeToMemory(p3, if (p1 < p2) 1 else 0)
+            Operation.JUMP_IF_EQUALS -> writeToMemory(p3, if (p1 == p2) 1 else 0)
+            Operation.ADJUST_BASE -> relativeBase += p1.toInt()
+            Operation.HALT -> state = State.HALT
         }
     }
 
-    fun process(): IntcodeComputer {
+    fun run(): IntcodeComputer {
         state = State.RUNNING
         while (state == State.RUNNING) {
             step()

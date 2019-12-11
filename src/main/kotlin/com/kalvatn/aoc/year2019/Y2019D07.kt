@@ -4,7 +4,6 @@ import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2019
 import com.kalvatn.aoc.core.runner.PuzzleRunner
-import com.kalvatn.aoc.extensions.extractIntegers
 import com.marcinmoskala.math.permutations
 import kotlinx.coroutines.runBlocking
 
@@ -23,10 +22,10 @@ class Y2019D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
                 do {
                     comps.forEach {
                         it.input(signal)
-                        it.process()
-                        signal = it.lastOutput()
+                        it.run()
+                        signal = it.outputLast()
                     }
-                } while (!comps.all { it.state == State.HALT })
+                } while (!comps.all { it.state() == State.HALT })
                 signal
             }.max()!!
 

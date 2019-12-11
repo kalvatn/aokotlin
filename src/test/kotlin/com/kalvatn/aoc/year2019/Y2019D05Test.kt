@@ -6,7 +6,7 @@ import io.kotlintest.shouldBe
 internal class Y2019D05Test : BaseDayTest() {
     @Test
     override suspend fun examplePartOne() {
-        IntcodeComputer(listOf(1002,4,3,4,33)).process().memory shouldBe listOf<Long>(1002, 4, 3, 4, 99)
+        IntcodeComputer(listOf(1002,4,3,4,33)).run().memory() shouldBe listOf<Long>(1002, 4, 3, 4, 99)
     }
 
     @Test
