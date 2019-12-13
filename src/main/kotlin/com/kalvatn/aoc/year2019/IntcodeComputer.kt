@@ -98,6 +98,9 @@ class IntcodeComputer(private val program: List<Long>) {
         relativeBase = 0
     }
 
+    fun replaceIndex(index:Long, value:Long) {
+        writeToMemory(index, value)
+    }
 
     private fun writeToMemory(index: Long, value: Long) {
         try {
