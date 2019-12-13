@@ -9,25 +9,23 @@ import io.kotlintest.shouldBe
 internal class Y2019D12Test : BaseDayTest() {
     @Test
     override suspend fun examplePartOne() {
-//        val input = PuzzleInput.ofSingleLine("")
-        val input = PuzzleInput.forDay(Year.Y2019, Day.D12, "test")
-        Y2019D12(input).partOne().toInt() shouldBe 0
+        val input = PuzzleInput.forDay(Year.Y2019, Day.D12, "test2")
+        Y2019D12(input).partOne().toInt() shouldBe 14645
     }
 
     @Test
     override suspend fun examplePartTwo() {
-//        val input = PuzzleInput.ofSingleLine("")
         val input = PuzzleInput.forDay(Year.Y2019, Day.D12, "test")
-        Y2019D12(input).partTwo().toInt() shouldBe 0
+        Y2019D12(input).partTwo().toInt() shouldBe 2772
     }
 
     @Test
     override suspend fun solutionPartOne() {
-        Y2019D12().partOne().toInt() shouldBe 0
+        Y2019D12().partOne().toInt() shouldBe 6735
     }
 
     @Test
     override suspend fun solutionPartTwo() {
-        Y2019D12().partTwo().toInt() shouldBe 0
+        Y2019D12().partTwo().toLong() shouldBe 326489627728984
     }
 }
