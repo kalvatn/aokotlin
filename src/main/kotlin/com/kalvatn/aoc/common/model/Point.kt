@@ -12,6 +12,12 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
         return this.y.compareTo(other.y)
     }
 
+    fun adj4():Set<Point> {
+        return Direction.values().map {
+            this + it.toPointDiff()
+        }.toSet()
+    }
+
     fun surrounding(): Set<Point> {
         return setOf(
                 Point(x.dec(), y),

@@ -41,6 +41,23 @@ enum class Direction {
             WEST -> '<'
         }
     }
+    fun toLong(): Long {
+        return when (this) {
+            NORTH -> 1
+            SOUTH ->2
+            WEST -> 3
+            EAST ->  4
+        }
+    }
+    fun fromLong(value:Long): Direction {
+        return when (value) {
+            1L -> NORTH
+            2L -> SOUTH
+            3L -> WEST
+            4L -> EAST
+            else -> error("impossiburu")
+        }
+    }
 
     companion object {
         fun fromChar(char: Char): Direction {
