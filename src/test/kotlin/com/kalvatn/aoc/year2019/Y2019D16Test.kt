@@ -2,9 +2,6 @@ package com.kalvatn.aoc.year2019
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
-import com.kalvatn.aoc.core.model.Day
-import com.kalvatn.aoc.core.model.Puzzle
-import com.kalvatn.aoc.core.model.Year
 import io.kotlintest.shouldBe
 
 internal class Y2019D16Test : BaseDayTest() {
@@ -27,15 +24,22 @@ internal class Y2019D16Test : BaseDayTest() {
 
     @Test
     override suspend fun examplePartOne() {
-        val input = PuzzleInput.ofSingleLine("80871224585914546619083218645595")
-        Y2019D16(input).partOne() shouldBe "24176176"
+        val input1 = PuzzleInput.ofSingleLine("80871224585914546619083218645595")
+        Y2019D16(input1).partOne().toInt() shouldBe 24176176
+        val input2 = PuzzleInput.ofSingleLine("19617804207202209144916044189917")
+        Y2019D16(input2).partOne().toInt() shouldBe 73745418
+        val input3 = PuzzleInput.ofSingleLine("69317163492948606335995924319873")
+        Y2019D16(input3).partOne().toInt() shouldBe 52432133
     }
 
     @Test
     override suspend fun examplePartTwo() {
-//        val input = PuzzleInput.ofSingleLine("")
-//        val input = PuzzleInput.forDay(Year.Y2019, Day.D16, "test")
-//        Y2019D16(input).partTwo().toInt() shouldBe 0
+        val input1 = PuzzleInput.ofSingleLine("03036732577212944063491565474664")
+        Y2019D16(input1).partTwo().toInt() shouldBe 84462026
+        val input2 = PuzzleInput.ofSingleLine("02935109699940807407585447034323")
+        Y2019D16(input2).partTwo().toInt() shouldBe 78725270
+        val input3 = PuzzleInput.ofSingleLine("03081770884921959731165446850517")
+        Y2019D16(input3).partTwo().toInt() shouldBe 53553731
     }
 
     @Test
@@ -45,6 +49,6 @@ internal class Y2019D16Test : BaseDayTest() {
 
     @Test
     override suspend fun solutionPartTwo() {
-//        Y2019D16().partTwo().toInt() shouldBe 0
+        Y2019D16().partTwo().toInt() shouldBe 48776785
     }
 }

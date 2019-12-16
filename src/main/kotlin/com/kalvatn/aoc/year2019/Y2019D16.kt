@@ -13,22 +13,22 @@ class Y2019D16(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 
     private val numbers by lazy { this.input.singleLineSplit("").map { it.toInt() } }
 
-    private val basePattern = listOf(0, 1, 0, -1)
+    private val pattern = listOf(0, 1, 0, -1)
 
-    fun extendPattern(index:Int):Sequence<Int> {
+    fun extendPattern(index: Int): Sequence<Int> {
         if (index == 0) {
-            return basePattern.cycle().drop(1)
+            return pattern.cycle().drop(1)
         }
         val new = mutableListOf<Int>()
-        basePattern.forEach { v ->
-            repeat(index+1) {
+        pattern.forEach { v ->
+            repeat(index + 1) {
                 new.add(v)
             }
         }
         return new.cycle().drop(1)
     }
 
-    fun phase(signal:List<Int>):List<Int> {
+    fun phase(signal: List<Int>): List<Int> {
         return (signal.indices).map { i ->
             abs(extendPattern(i).take(signal.size).mapIndexed { pi, pv ->
                 signal[pi] * pv
@@ -37,7 +37,6 @@ class Y2019D16(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     }
 
     override suspend fun partOne(): String {
-        // 7:51 -> 8:53
         var output = numbers
         repeat(100) {
             output = phase(output)
@@ -46,17 +45,18 @@ class Y2019D16(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     }
 
     override suspend fun partTwo(): String {
-        return ""
+        val offset = this.input.singleLine().take(7).toInt()
+        val output = numbers.cycle(10000).drop(offset).toMutableList()
+        repeat(100) {
+            (output.size - 2 downTo 0).forEach { index ->
+                output[index] = (output[index] + output[index + 1]) % 10
+            }
+        }
+        return output.take(8).joinToString("")
     }
-    
-    companion object {
-        
-    }
-
 }
 
 fun main() = runBlocking {
-//    PuzzleRunner(listOf(Y2019D16(PuzzleInput.ofSingleLine("12345678")))).run()
     PuzzleRunner(listOf(Y2019D16())).run()
 }
 
