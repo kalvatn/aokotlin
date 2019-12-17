@@ -12,7 +12,7 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
         return this.y.compareTo(other.y)
     }
 
-    fun adj4():Set<Point> {
+    fun adj4(): Set<Point> {
         return Direction.values().map {
             this + it.toPointDiff()
         }.toSet()
@@ -37,14 +37,15 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
         return Point(this.x + other.x, this.y + other.y)
     }
 
-    operator fun times(n:Int):Point {
+    operator fun times(n: Int): Point {
         return Point(this.x * n, this.y * n)
     }
 
     fun distance(other: Point): Int {
         return abs(other.x - this.x) + abs(other.y - this.y)
     }
-    fun angle(other:Point): Double {
+
+    fun angle(other: Point): Double {
         return atan2((other.x - x).toDouble(), (other.y - y).toDouble())
     }
 
@@ -54,5 +55,22 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
                 Point(this.x + x, this.y + y)
             }
         }.flatten().toSet()
+    }
+}
+
+fun Map<Point, Any>.print(colFn: (Point) -> Unit) {
+    val (xMin, xMax, yMin, yMax) = with(this.keys) {
+        listOf(
+                minBy { it.x }!!.x,
+                maxBy { it.x }!!.x,
+                minBy { it.y }!!.y,
+                maxBy { it.y }!!.y
+        )
+    }
+    (yMin..yMax).forEach { y ->
+        (xMin..xMax).forEach { x ->
+            colFn(Point(x, y))
+        }
+        println()
     }
 }
