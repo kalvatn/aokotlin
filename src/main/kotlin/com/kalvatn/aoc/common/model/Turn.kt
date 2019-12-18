@@ -5,6 +5,12 @@ import com.kalvatn.aoc.exceptions.Impossiburu
 enum class Turn {
     LEFT, RIGHT, FORWARD;
 
+    fun toChar() = when (this) {
+        LEFT -> 'L'
+        RIGHT -> 'R'
+        FORWARD -> 'F'
+    }
+
     companion object {
         fun fromInt(value: Int) = when (value) {
             0 -> LEFT
