@@ -18,13 +18,11 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     data class Node(
             val point: Point,
             val keys: Set<Char>,
-            val distance: Int,
-            val path: Set<Point>
+            val distance: Int
     ) : Comparable<Node> {
         override fun compareTo(other: Node): Int {
             val d = distance.compareTo(other.distance)
             if (d == 0) {
-                //                println("distance equal $distance, $keys vs ${other.keys} $k")
                 return other.keys.size.compareTo(keys.size)
             }
             return d
@@ -34,6 +32,7 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
             return "(${point.x}, ${point.y}) keys=$keys (${keys.size}) distance=$distance"
         }
     }
+
 
     override suspend fun partOne(): String {
         map.print {
@@ -51,11 +50,10 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
         queue.add(Node(
                 point = start,
                 keys = setOf(),
-                distance = 0,
-                path = setOf()
+                distance = 0
         ))
 
-        val seen = mutableSetOf<Int>()
+        val seen = mutableSetOf<Pair<Point, Set<Char>>>()
         while (queue.isNotEmpty()) {
             val current = queue.remove()
 
@@ -63,38 +61,36 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
                 continue
             }
 
-            val key = Objects.hash(current.point, current.path, current.keys.sorted())
-            if (key in seen) {
-//                println("$key already seen")
+            if (Pair(current.point, current.keys) in seen) {
                 continue
             }
-            seen.add(key)
+            seen.add(Pair(current.point, current.keys))
             if (steps % 100000L == 0L) {
                 println("$steps $current")
             }
-            val keys = current.keys.toMutableSet()
             val c = map[current.point] ?: error("impossiburu")
-            if (c in allKeys) {
-                keys.add(c)
-            } else if (c in allDoors && c.toLowerCase() !in keys) {
+            if (c in allDoors && c.toLowerCase() !in current.keys) {
                 continue
             }
+            val keys = current.keys.toMutableSet()
+            if (c in allKeys) {
+                keys.add(c)
+            }
 
-            val adj = current.point.adj4().filter { it in map.keys }.filter { map[it] != '#' }
             if (keys == allKeys) {
                 if (current.distance <= best) {
                     best = current.distance.toLong()
                 }
                 println("FOUND $keys in $best steps")
             }
-            adj.forEach {
-                queue.add(Node(point = it,
-                        keys = keys,
-                        distance = current.distance + 1,
-                        path = current.path + it
-                )
-                )
-            }
+            current.point.adj4().asSequence()
+                    .filter { it in map.keys }
+                    .filter { map[it] != '#' }
+                    .forEach {
+                        queue.add(Node(point = it,
+                                keys = keys,
+                                distance = current.distance + 1))
+                    }
             steps++
         }
         return best.toString()

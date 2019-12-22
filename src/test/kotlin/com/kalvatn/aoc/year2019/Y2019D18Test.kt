@@ -27,14 +27,13 @@ internal class Y2019D18Test : BaseDayTest() {
 
     @Test
     override suspend fun examplePartTwo() {
-//        val input = PuzzleInput.ofSingleLine("")
         val input = PuzzleInput.forDay(Year.Y2019, Day.D18, "test")
 //        Y2019D18(input).partTwo().toInt() shouldBe 0
     }
 
     @Test
     override suspend fun solutionPartOne() {
-//        Y2019D18().partOne().toInt() shouldBe 0
+        Y2019D18().partOne().toInt() shouldBe 5808
     }
 
     @Test
