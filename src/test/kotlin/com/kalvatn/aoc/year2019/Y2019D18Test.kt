@@ -38,6 +38,6 @@ internal class Y2019D18Test : BaseDayTest() {
 
     @Test
     override suspend fun solutionPartTwo() {
-//        Y2019D18().partTwo().toInt() shouldBe 0
+        Y2019D18().partTwo().toInt() shouldBe 1992
     }
 }
