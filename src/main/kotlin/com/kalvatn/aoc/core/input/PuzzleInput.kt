@@ -1,5 +1,6 @@
 package com.kalvatn.aoc.core.input
 
+import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Puzzle
 import com.kalvatn.aoc.core.model.Year
@@ -17,7 +18,7 @@ open class PuzzleInput(val lines: List<String>) {
         return lines.first()
     }
 
-    fun singleLineSplit(splitOn:String): List<String> {
+    fun singleLineSplit(splitOn: String): List<String> {
         return lines.first().split(splitOn).filter { !it.isBlank() }.map { it.trim() }
     }
 
@@ -30,6 +31,17 @@ open class PuzzleInput(val lines: List<String>) {
 
     fun asInteger(): Int {
         return asIntegers().first()
+    }
+
+
+    fun asPoints(): Map<Point, Char> {
+        val points = mutableMapOf<Point, Char>()
+        lines.forEachIndexed { y, s ->
+            s.forEachIndexed { x, c ->
+                points[Point(x, y)] = c
+            }
+        }
+        return points
     }
 
 
@@ -75,6 +87,11 @@ open class PuzzleInput(val lines: List<String>) {
         @JvmStatic
         fun ofSingleLine(string: String): PuzzleInput {
             return PuzzleInput(listOf(string))
+        }
+
+        @JvmStatic
+        fun ofString(s: String): PuzzleInput {
+            return PuzzleInput(s.split("\n"))
         }
     }
 }
