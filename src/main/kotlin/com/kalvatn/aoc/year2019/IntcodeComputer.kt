@@ -92,7 +92,7 @@ class IntcodeComputer(private val program: List<Long>) {
 
     private fun initializeMemory() = program.toLongArray()
 
-    private fun reset() {
+    fun reset() {
         pointer = 0
         memory = initializeMemory()
         relativeBase = 0
