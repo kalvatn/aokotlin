@@ -37,8 +37,14 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
                 } else {
                     Pair("$v" + maze[p2], p1)
                 }
-                val nameSorted = name.toList().sorted().joinToString("")
-                portals.computeIfAbsent(nameSorted) { mutableSetOf() }.add(Portal(nameSorted, entrance))
+
+                //TODO FIXME XXX sorting doesn't work for the real input (example problem TG <-> GT)
+                // need to figure out the name based off the entrance instead
+                // if entrance is NORTH/SOUTH of the name then the name needs to be parsed top to bottom -> entrance
+                // if entrance is WEST/EAST of the name then the name needs to be parsed right to left -> entrance
+//                val nameSorted = name.toList().sorted().joinToString("")
+//                portals.computeIfAbsent(nameSorted) { mutableSetOf() }.add(Portal(nameSorted, entrance))
+                portals.computeIfAbsent(name) { mutableSetOf() }.add(Portal(name, entrance))
             }
         }
         return portals
