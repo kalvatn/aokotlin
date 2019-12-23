@@ -1,11 +1,11 @@
 package com.kalvatn.aoc.year2019
 
+import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.common.model.print
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2019
-import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -29,22 +29,17 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     fun portals(maze: Map<Point, Char>): Map<String, Set<Portal>> {
         val portals = mutableMapOf<String, MutableSet<Portal>>()
         maze.filterValues { it in ('A'..'Z') }.forEach { (k, v) ->
-            val adj = k.adj4().filter { maze[it] in ('A'..'Z') || maze[it] == '.' }
-            if (adj.size == 2) {
-                val (p1, p2) = adj
-                val (name, entrance) = if (maze[p1] in ('A'..'Z')) {
-                    Pair(("$v" + maze[p1]), p2)
-                } else {
-                    Pair("$v" + maze[p2], p1)
+            k.adj4().firstOrNull { maze[it] == '.' }?.let {
+                val name: String = when (it) {
+                    k + Direction.NORTH.toPointDiff() -> "$v${maze[k + Direction.SOUTH.toPointDiff()]}"
+                    k + Direction.SOUTH.toPointDiff() -> "${maze[k + Direction.NORTH.toPointDiff()]}$v"
+                    k + Direction.EAST.toPointDiff() -> "${maze[k + Direction.WEST.toPointDiff()]}$v"
+                    k + Direction.WEST.toPointDiff() -> "$v${maze[k + Direction.EAST.toPointDiff()]}"
+                    else -> error("impossiburu")
                 }
+                println("$k $v $name")
 
-                //TODO FIXME XXX sorting doesn't work for the real input (example problem TG <-> GT)
-                // need to figure out the name based off the entrance instead
-                // if entrance is NORTH/SOUTH of the name then the name needs to be parsed top to bottom -> entrance
-                // if entrance is WEST/EAST of the name then the name needs to be parsed right to left -> entrance
-//                val nameSorted = name.toList().sorted().joinToString("")
-//                portals.computeIfAbsent(nameSorted) { mutableSetOf() }.add(Portal(nameSorted, entrance))
-                portals.computeIfAbsent(name) { mutableSetOf() }.add(Portal(name, entrance))
+                portals.computeIfAbsent(name) { mutableSetOf() }.add(Portal(name, it))
             }
         }
         return portals
@@ -59,7 +54,7 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         return entranceToExit.toMap()
     }
 
-    data class Node(val point: Point, val distance: Int = 0, val justExited:Boolean = false)
+    data class Node(val point: Point, val distance: Int = 0, val justExited: Boolean = false)
 
     fun nextNodes(node: Node, maze: Map<Point, Char>, p2p: Map<Point, Point>): Set<Node> {
         if (node.point in p2p && !node.justExited) {
