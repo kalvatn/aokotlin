@@ -22,6 +22,6 @@ internal class Y2019D21Test : BaseDayTest() {
 
     @Test
     override suspend fun solutionPartTwo() {
-//        Y2019D21().partTwo().toInt() shouldBe 0
+        Y2019D21().partTwo().toInt() shouldBe 1141281622
     }
 }
