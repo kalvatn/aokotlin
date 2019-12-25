@@ -1,5 +1,6 @@
 package com.kalvatn.aoc.year2019
 
+import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.common.model.asString
 import com.kalvatn.aoc.common.model.print
@@ -13,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 
 class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D24, input) {
 
-    val initialState by lazy {
+    private val initialState by lazy {
         this.input.asPoints()
     }
 
@@ -40,8 +41,8 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         fun simulate() {
             do {
                 step()
-                state.print { print(state[it]) }
-            } while(!previous.values.contains(state))
+//                state.print { print(state[it]) }
+            } while (!previous.values.contains(state))
         }
 
         override fun toString(): String {
@@ -61,7 +62,7 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
             var inc = 1
             (yMin..yMax).forEach { y ->
                 (xMin..xMax).forEach { x ->
-                    total += if (state[Point(x,y)] == '#') inc else 0
+                    total += if (state[Point(x, y)] == '#') inc else 0
                     inc *= 2
                 }
             }
@@ -75,8 +76,107 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         return game.biodiversity().toString()
     }
 
+    class GameOfLifeRecursive(initialState: Map<Point, Char>) {
+        val center = Point(2, 2)
+        var minute = 0
+        val emptyState by lazy {
+            initialState.keys.map {
+                it to if (it == center) '?' else '.'
+            }.toMap()
+        }
+        val levels = mutableMapOf<Int, Map<Point, Char>>().apply {
+            put(-1, emptyState)
+            put(0, initialState.toMutableMap().apply { this[center] = '?' })
+            put(1, emptyState)
+        }
+
+
+        fun step() {
+            val newstates = mutableMapOf<Int, Map<Point, Char>>()
+            levels.keys.toList().forEach { level ->
+                levels.putIfAbsent(level - 1, emptyState)
+                levels.putIfAbsent(level + 1, emptyState)
+
+                val newState = mutableMapOf<Point, Char>()
+                val state = levels[level]!!
+                state.keys.forEach { point ->
+                    val current = state[point] ?: error("impossiburu")
+                    if (point == center) {
+                        newState[point] = '?'
+                    } else if (point in center.adj4()) {
+                        val subState = levels[level + 1]!!
+                        val adjThisLevel = point.adj4().filter { it != center }.mapNotNull { p -> state[p] }
+                        val adjSub = when (center) {
+                            point + Direction.WEST.toPointDiff() -> rightRowPoints.mapNotNull { subState[it] }
+                            point + Direction.EAST.toPointDiff() -> leftRowPoints.mapNotNull { subState[it] }
+                            point + Direction.NORTH.toPointDiff() -> bottomRowPoints.mapNotNull { subState[it] }
+                            point + Direction.SOUTH.toPointDiff() -> topRowPoints.mapNotNull { subState[it] }
+                            else -> error("impossiburu")
+                        }
+                        val adj = adjThisLevel + adjSub
+                        if (adj.count() != 8) {
+                            error("impossiburu")
+                        }
+
+                        if (current == '#') {
+                            newState[point] = if (adj.count { v -> v == '#' } == 1) '#' else '.'
+                        } else {
+                            newState[point] = if (adj.count { v -> v == '#' } in listOf(1, 2)) '#' else '.'
+                        }
+
+                    } else {
+                        if (current == '#') {
+                            newState[point] = if (point.adj4().mapNotNull { p -> state[p] }.count { v -> v == '#' } == 1) '#' else '.'
+                        } else {
+                            newState[point] = if (point.adj4().mapNotNull { p -> state[p] }.count { v -> v == '#' } in listOf(1, 2)) '#' else '.'
+                        }
+                    }
+                }
+                newstates[level] = newState
+            }
+            minute += 1
+            newstates.forEach { (k, v) ->
+                levels[k] = v
+            }
+        }
+
+        fun simulate(minutes: Int) {
+            println("INITIAL")
+            repeat(minutes) {
+                step()
+
+            }
+            println("AFTER $minutes minutes")
+            print()
+        }
+
+        fun countBugs(): Int {
+            return levels.values.map { it.values }.flatten().count { it == '#' }
+        }
+
+        fun print() {
+            levels.keys.sorted().forEach {
+                println(it)
+                levels[it]!!.print { p ->
+                    print(levels[it]!![p])
+                }
+            }
+        }
+
+
+        companion object {
+            val rightRowPoints = (0..5).map { y -> Point(4, y) }
+            val leftRowPoints = (0..5).map { y -> Point(0, y) }
+            val bottomRowPoints = (0..5).map { x -> Point(x, 4) }
+            val topRowPoints = (0..5).map { x -> Point(x, 0) }
+        }
+    }
+
     override suspend fun partTwo(): String {
-        return ""
+        val game = GameOfLifeRecursive(initialState)
+        game.simulate(10)
+        return game.countBugs().toString()
+//        return ""
     }
 
 }
