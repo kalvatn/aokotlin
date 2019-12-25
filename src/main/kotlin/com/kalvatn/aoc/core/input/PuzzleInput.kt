@@ -33,6 +33,10 @@ open class PuzzleInput(val lines: List<String>) {
         return asIntegers().first()
     }
 
+    fun asString():String {
+        return lines.joinToString("\n")
+    }
+
 
     fun asPoints(): Map<Point, Char> {
         val points = mutableMapOf<Point, Char>()

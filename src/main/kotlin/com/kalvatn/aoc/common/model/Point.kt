@@ -88,3 +88,23 @@ fun Map<Point, Any>.print(colFn: (Point) -> Unit) {
         println()
     }
 }
+fun Map<Point, Any>.asString():String {
+    val (xMin, xMax, yMin, yMax) = with(this.keys) {
+        listOf(
+                minBy { it.x }!!.x,
+                maxBy { it.x }!!.x,
+                minBy { it.y }!!.y,
+                maxBy { it.y }!!.y
+        )
+    }
+    var s = ""
+    (yMin..yMax).forEach { y ->
+        (xMin..xMax).forEach { x ->
+            s += this[Point(x, y)]
+        }
+        if (y != yMax) {
+            s += "\n"
+        }
+    }
+    return s
+}
