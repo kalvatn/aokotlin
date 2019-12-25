@@ -58,6 +58,7 @@ class IntcodeComputer(private val program: List<Long>) {
     fun state() = state
     fun memory() = memory.toList()
     fun output() = this.output.toList()
+    fun inputQueue():List<Long> = this.input.toList()
     fun outputLast() = this.output.last()
     fun clearOutput() = this.output.clear()
 
