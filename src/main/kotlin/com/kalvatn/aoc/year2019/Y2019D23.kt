@@ -54,7 +54,6 @@ class Y2019D23(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         while (true) {
             val allIdle = router.values.flatten().isEmpty() && computers.values.all { it.output().isEmpty() }
             if (allIdle && nat.isNotEmpty()) {
-                println("ALL IDLE")
                 val (x, y) = nat
                 if (y == yTwice) {
                     return y.toString()
