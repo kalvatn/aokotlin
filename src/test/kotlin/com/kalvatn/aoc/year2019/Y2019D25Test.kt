@@ -22,6 +22,6 @@ internal class Y2019D25Test : BaseDayTest() {
 
     @Test
     override suspend fun solutionPartTwo() {
-        Y2019D25().partTwo().toInt() shouldBe 0
+        Y2019D25().partTwo() shouldBe "https://adventofcode.com/2019/day/25/answer"
     }
 }
