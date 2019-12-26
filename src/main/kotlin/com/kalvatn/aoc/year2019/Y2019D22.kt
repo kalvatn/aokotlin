@@ -60,7 +60,7 @@ class Y2019D22(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     }
 
     override suspend fun partOne(): String {
-        var deck = Deck(10007)
+        val deck = Deck(10007)
         lines.forEach {
             deck.applyTechnique(it)
         }
@@ -68,7 +68,34 @@ class Y2019D22(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     }
 
     override suspend fun partTwo(): String {
-        return ""
+        val deckSize = 119315717514047.toBigInteger()
+        val shuffleCount = 101741582076661.toBigInteger()
+        val zero = 0.toBigInteger()
+        val one = 1.toBigInteger()
+        val two = 2.toBigInteger()
+        val positionToFind = 2020.toBigInteger()
+        val table = arrayOf(one, zero)
+        input.lines.reversed().forEach { s ->
+            when {
+                s == "deal into new stack" -> {
+                    table[0] = table[0].negate()
+                    table[1] = (table[1].inc()).negate()
+                }
+                s.startsWith("cut") -> table[1] += s.split(" ").last().toBigInteger()
+                s.startsWith("deal with increment") -> {
+                    s.split(" ").last().toBigInteger().modPow(deckSize - two, deckSize).also {
+                        table[0] *= it
+                        table[1] *= it
+                    }
+                }
+                else -> error("impossiburu")
+            }
+            table[0] %= deckSize
+            table[1] %= deckSize
+        }
+        val power = table[0].modPow(shuffleCount, deckSize)
+        return (power * positionToFind + table[1] * (power + deckSize.dec()) * table[0].dec().modPow(deckSize - two, deckSize))
+                .mod(deckSize).toString()
     }
 
 }

@@ -65,15 +65,10 @@ internal class Y2019D22Test : BaseDayTest() {
 
     @Test
     override suspend fun examplePartOne() {
-//        val input1 = PuzzleInput.forDay(Year.Y2019, Day.D22, "test")
-//        Y2019D22(input1).partOne().toInt() shouldBe 0
     }
 
     @Test
     override suspend fun examplePartTwo() {
-//        val input = PuzzleInput.ofSingleLine("")
-//        val input = PuzzleInput.forDay(Year.Y2019, Day.D22, "test")
-//        Y2019D22(input).partTwo().toInt() shouldBe 0
     }
 
     @Test
@@ -83,6 +78,6 @@ internal class Y2019D22Test : BaseDayTest() {
 
     @Test
     override suspend fun solutionPartTwo() {
-//        Y2019D22().partTwo().toInt() shouldBe 0
+        Y2019D22().partTwo().toBigInteger() shouldBe 47141544607176.toBigInteger()
     }
 }
