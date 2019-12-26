@@ -86,9 +86,12 @@ internal class Y2019D24Test : BaseDayTest() {
 
     @Test
     override suspend fun examplePartTwo() {
-//        val input = PuzzleInput.ofSingleLine("")
-        val input = PuzzleInput.forDay(Year.Y2019, Day.D24, "test")
-        Y2019D24(input).partTwo().toInt() shouldBe 0
+        val input1 = PuzzleInput.forDay(Year.Y2019, Day.D24, "test")
+        val initialState = input1.asPoints()
+        val game = Y2019D24.GameOfLifeRecursive(initialState)
+
+        game.simulate(10)
+        game.countBugs() shouldBe 99
     }
 
     @Test
@@ -98,6 +101,6 @@ internal class Y2019D24Test : BaseDayTest() {
 
     @Test
     override suspend fun solutionPartTwo() {
-        Y2019D24().partTwo().toInt() shouldBe 0
+        Y2019D24().partTwo().toInt() shouldBe 1948
     }
 }

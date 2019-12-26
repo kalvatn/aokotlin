@@ -41,7 +41,6 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         fun simulate() {
             do {
                 step()
-//                state.print { print(state[it]) }
             } while (!previous.values.contains(state))
         }
 
@@ -98,6 +97,7 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
                 levels.putIfAbsent(level + 1, emptyState)
 
                 val newState = mutableMapOf<Point, Char>()
+                val newStateSub = mutableMapOf<Point,Char>()
                 val state = levels[level]!!
                 state.keys.forEach { point ->
                     val current = state[point] ?: error("impossiburu")
@@ -124,6 +124,31 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
                             newState[point] = if (adj.count { v -> v == '#' } in listOf(1, 2)) '#' else '.'
                         }
 
+                    } else if (point in topRowPoints || point in leftRowPoints || point in bottomRowPoints || point in rightRowPoints) {
+                        val subState = levels[level - 1]!!
+                        val adjThisLevel = point.adj4().mapNotNull { p -> state[p] }
+                        val adjSub = when (point) {
+                            Point(0,0) -> listOf(subState[center + Direction.NORTH.toPointDiff()], subState[center + Direction.WEST.toPointDiff()])
+                            Point(0,4) -> listOf(subState[center + Direction.SOUTH.toPointDiff()], subState[center + Direction.WEST.toPointDiff()])
+                            Point(4,0) -> listOf(subState[center + Direction.NORTH.toPointDiff()], subState[center + Direction.EAST.toPointDiff()])
+                            Point(4,4) -> listOf(subState[center + Direction.SOUTH.toPointDiff()], subState[center + Direction.EAST.toPointDiff()])
+                            in topRowPoints -> listOf(subState[center + Direction.NORTH.toPointDiff()])
+                            in leftRowPoints -> listOf(subState[center + Direction.WEST.toPointDiff()])
+                            in bottomRowPoints -> listOf(subState[center + Direction.SOUTH.toPointDiff()])
+                            in rightRowPoints -> listOf(subState[center + Direction.EAST.toPointDiff()])
+                            else -> error("impossiburu")
+                        }.filterNotNull()
+                        val adj = adjThisLevel + adjSub
+                        if (adj.count() != 4) {
+                            error("impossiburu")
+                        }
+
+                        if (current == '#') {
+                            newState[point] = if (adj.count { v -> v == '#' } == 1) '#' else '.'
+                        } else {
+                            newState[point] = if (adj.count { v -> v == '#' } in listOf(1, 2)) '#' else '.'
+                        }
+
                     } else {
                         if (current == '#') {
                             newState[point] = if (point.adj4().mapNotNull { p -> state[p] }.count { v -> v == '#' } == 1) '#' else '.'
@@ -141,13 +166,10 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         }
 
         fun simulate(minutes: Int) {
-            println("INITIAL")
             repeat(minutes) {
                 step()
 
             }
-            println("AFTER $minutes minutes")
-            print()
         }
 
         fun countBugs(): Int {
@@ -156,7 +178,6 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
 
         fun print() {
             levels.keys.sorted().forEach {
-                println(it)
                 levels[it]!!.print { p ->
                     print(levels[it]!![p])
                 }
@@ -174,7 +195,7 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
 
     override suspend fun partTwo(): String {
         val game = GameOfLifeRecursive(initialState)
-        game.simulate(10)
+        game.simulate(200)
         return game.countBugs().toString()
 //        return ""
     }
@@ -183,7 +204,7 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
 
 fun main() = runBlocking {
     val input = PuzzleInput.forDay(Year.Y2019, Day.D24, "test")
-    PuzzleRunner(listOf(Y2019D24(input))).run()
-//    PuzzleRunner(listOf(Y2019D24())).run()
+//    PuzzleRunner(listOf(Y2019D24(input))).run()
+    PuzzleRunner(listOf(Y2019D24())).run()
 }
 
