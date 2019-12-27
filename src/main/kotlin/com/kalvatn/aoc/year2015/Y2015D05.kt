@@ -3,7 +3,9 @@ package com.kalvatn.aoc.year2015
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2015
+import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.extensions.*
+import kotlinx.coroutines.runBlocking
 
 class Y2015D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D05, input) {
 
@@ -31,4 +33,7 @@ class Y2015D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
 
 }
 
+fun main() = runBlocking {
+    PuzzleRunner.run(Y2015D05())
+}
 

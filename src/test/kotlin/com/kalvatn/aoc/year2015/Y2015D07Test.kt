@@ -10,25 +10,21 @@ class Y2015D07Test : BaseDayTest() {
 
     @Test
     override suspend fun examplePartOne() {
-        val day = Y2015D07(PuzzleInput.forDay(Year.Y2015, Day.D07, "test"))
-        day.partOne().toInt() shouldBe 65412
-
+        val input = PuzzleInput.forDay(Year.Y2015, Day.D07, "test")
+        Y2015D07(input).partOne().toInt() shouldBe 65412
     }
 
     @Test
     override suspend fun examplePartTwo() {
-        val day = Y2015D07(PuzzleInput.forDay(Year.Y2015, Day.D07, "test"))
     }
 
     @Test
     override suspend fun solutionPartOne() {
-        val day = Y2015D07()
-        day.partOne().toInt() shouldBe 16076
+        Y2015D07().partOne().toInt() shouldBe 16076
     }
 
     @Test
     override suspend fun solutionPartTwo() {
-        val day = Y2015D07()
-        day.partTwo().toInt() shouldBe 2797
+        Y2015D07().partTwo().toInt() shouldBe 2797
     }
 }

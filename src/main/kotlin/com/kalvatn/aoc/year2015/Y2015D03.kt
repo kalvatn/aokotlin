@@ -4,6 +4,8 @@ import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2015
+import com.kalvatn.aoc.core.runner.PuzzleRunner
+import kotlinx.coroutines.runBlocking
 import java.awt.Point
 
 class Y2015D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D03, input) {
@@ -53,4 +55,7 @@ class Y2015D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
 
 }
 
+fun main() = runBlocking {
+    PuzzleRunner.run(Y2015D03())
+}
 

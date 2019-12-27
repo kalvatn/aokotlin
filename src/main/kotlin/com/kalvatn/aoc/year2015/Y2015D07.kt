@@ -3,7 +3,9 @@ package com.kalvatn.aoc.year2015
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2015
+import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.exceptions.Impossiburu
+import kotlinx.coroutines.runBlocking
 
 class Y2015D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D07, input) {
     private val wires = mutableMapOf<String, String>()
@@ -99,4 +101,8 @@ class Y2015D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
         return getWire("a").toString()
     }
 
+}
+
+fun main() = runBlocking {
+    PuzzleRunner.run(Y2015D07())
 }

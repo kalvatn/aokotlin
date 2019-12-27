@@ -6,27 +6,25 @@ import io.kotlintest.shouldBe
 
 class Y2015D02Test : BaseDayTest() {
 
+    @Test
     override suspend fun examplePartOne() {
-        val test1 = Y2015D02(PuzzleInput.ofSingleLine("2x3x4"))
-        test1.partOne().toInt() shouldBe 58
-        val test2 = Y2015D02(PuzzleInput.ofSingleLine("1x1x10"))
-        test2.partOne().toInt() shouldBe 43
+        Y2015D02(PuzzleInput.ofSingleLine("2x3x4")).partOne().toInt() shouldBe 58
+        Y2015D02(PuzzleInput.ofSingleLine("1x1x10")).partOne().toInt() shouldBe 43
     }
 
+    @Test
     override suspend fun examplePartTwo() {
-        val test1 = Y2015D02(PuzzleInput.ofSingleLine("2x3x4"))
-        test1.partTwo().toInt() shouldBe 34
-        val test2 = Y2015D02(PuzzleInput.ofSingleLine("1x1x10"))
-        test2.partTwo().toInt() shouldBe 14
+        Y2015D02(PuzzleInput.ofSingleLine("2x3x4")).partTwo().toInt() shouldBe 34
+        Y2015D02(PuzzleInput.ofSingleLine("1x1x10")).partTwo().toInt() shouldBe 14
     }
 
+    @Test
     override suspend fun solutionPartOne() {
-        val day = Y2015D02()
-        day.partOne().toInt() shouldBe 1606483
+        Y2015D02().partOne().toInt() shouldBe 1606483
     }
 
+    @Test
     override suspend fun solutionPartTwo() {
-        val day = Y2015D02()
-        day.partTwo().toInt() shouldBe 3842356
+        Y2015D02().partTwo().toInt() shouldBe 3842356
     }
 }

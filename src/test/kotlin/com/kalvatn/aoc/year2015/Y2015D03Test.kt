@@ -6,30 +6,26 @@ import io.kotlintest.shouldBe
 
 class Y2015D03Test : BaseDayTest() {
 
+    @Test
     override suspend fun examplePartOne() {
-        val test1 = Y2015D03(PuzzleInput.ofSingleLine(">"))
-        val test2 = Y2015D03(PuzzleInput.ofSingleLine("^>v<"))
-        val test3 = Y2015D03(PuzzleInput.ofSingleLine("^v^v^v^v^v"))
-        test1.partOne().toInt() shouldBe 2
-        test2.partOne().toInt() shouldBe 4
-        test3.partOne().toInt() shouldBe 2
+        Y2015D03(PuzzleInput.ofSingleLine(">")).partOne().toInt() shouldBe 2
+        Y2015D03(PuzzleInput.ofSingleLine("^>v<")).partOne().toInt() shouldBe 4
+        Y2015D03(PuzzleInput.ofSingleLine("^v^v^v^v^v")).partOne().toInt() shouldBe 2
     }
 
+    @Test
     override suspend fun examplePartTwo() {
-        val test2 = Y2015D03(PuzzleInput.ofSingleLine("^>v<"))
-        val test3 = Y2015D03(PuzzleInput.ofSingleLine("^v^v^v^v^v"))
-        test2.partTwo().toInt() shouldBe 3
-        test3.partTwo().toInt() shouldBe 11
+        Y2015D03(PuzzleInput.ofSingleLine("^>v<")).partTwo().toInt() shouldBe 3
+        Y2015D03(PuzzleInput.ofSingleLine("^v^v^v^v^v")).partTwo().toInt() shouldBe 11
     }
 
+    @Test
     override suspend fun solutionPartOne() {
-        val day = Y2015D03()
-        day.partOne().toInt() shouldBe 2572
-        day.partTwo().toInt() shouldBe 2631
+        Y2015D03().partOne().toInt() shouldBe 2572
     }
 
+    @Test
     override suspend fun solutionPartTwo() {
-        val day = Y2015D03()
-        day.partTwo().toInt() shouldBe 2631
+        Y2015D03().partTwo().toInt() shouldBe 2631
     }
 }

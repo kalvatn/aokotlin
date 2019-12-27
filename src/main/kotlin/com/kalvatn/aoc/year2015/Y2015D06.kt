@@ -3,8 +3,10 @@ package com.kalvatn.aoc.year2015
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2015
+import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.exceptions.Impossiburu
 import com.kalvatn.aoc.utils.intArray2D
+import kotlinx.coroutines.runBlocking
 
 class Y2015D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D06, input) {
     enum class Action {
@@ -80,4 +82,8 @@ class Y2015D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
         }.flatten().sum().toString()
     }
 
+}
+
+fun main() = runBlocking {
+    PuzzleRunner.run(Y2015D06())
 }

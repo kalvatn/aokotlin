@@ -5,6 +5,7 @@ import io.kotlintest.shouldBe
 
 class Y2015D05Test : BaseDayTest() {
 
+    @Test
     override suspend fun examplePartOne() {
         val day = Y2015D05()
         day.nicePartOne("ugknbfddgicrmopn") shouldBe true
@@ -14,6 +15,7 @@ class Y2015D05Test : BaseDayTest() {
         day.nicePartOne("dvszwmarrgswjxmb") shouldBe false
     }
 
+    @Test
     override suspend fun examplePartTwo() {
         val day = Y2015D05()
         day.nicePartTwo("qjhvhtzxzqqjkmpb") shouldBe true
@@ -23,13 +25,13 @@ class Y2015D05Test : BaseDayTest() {
         day.nicePartTwo("xilodxfuxphuiiii") shouldBe true
     }
 
+    @Test
     override suspend fun solutionPartOne() {
-        val day = Y2015D05()
-        day.partOne().toInt() shouldBe 255
+        Y2015D05().partOne().toInt() shouldBe 255
     }
 
+    @Test
     override suspend fun solutionPartTwo() {
-        val day = Y2015D05()
-        day.partTwo().toInt() shouldBe 55
+        Y2015D05().partTwo().toInt() shouldBe 55
     }
 }

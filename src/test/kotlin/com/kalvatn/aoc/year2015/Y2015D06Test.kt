@@ -17,23 +17,25 @@ class Y2015D06Test : BaseDayTest() {
         fromString("turn off 499,499 through 500,500") shouldBe Command(OFF, Pair(499, 499), Pair(500, 500))
     }
 
+    @Test
     override suspend fun examplePartOne() {
-        val day = Y2015D06(PuzzleInput.forDay(Year.Y2015, Day.D06, "test"))
-        day.partOne().toInt() shouldBe (1000 * 1000) - 1
+        val input = PuzzleInput.forDay(Year.Y2015, Day.D06, "test")
+        Y2015D06(input).partOne().toInt() shouldBe (1000 * 1000) - 1
     }
 
+    @Test
     override suspend fun examplePartTwo() {
-        val day = Y2015D06(PuzzleInput.forDay(Year.Y2015, Day.D06, "test"))
-        day.partTwo().toInt() shouldBe 2000001
+        val input = PuzzleInput.forDay(Year.Y2015, Day.D06, "test")
+        Y2015D06(input).partTwo().toInt() shouldBe 2000001
     }
 
+    @Test
     override suspend fun solutionPartOne() {
-        val day = Y2015D06()
-        day.partOne().toInt() shouldBe 543903
+        Y2015D06().partOne().toInt() shouldBe 543903
     }
 
+    @Test
     override suspend fun solutionPartTwo() {
-        val day = Y2015D06()
-        day.partTwo().toInt() shouldBe 14687245
+        Y2015D06().partTwo().toInt() shouldBe 14687245
     }
 }

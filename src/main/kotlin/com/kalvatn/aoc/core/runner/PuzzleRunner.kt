@@ -21,6 +21,12 @@ class PuzzleRunner(private val puzzles: List<Puzzle> = listOf()) {
             println("${puzzles.size} puzzles finished in ${it.second.toHMS()}")
         }
     }
+
+    companion object {
+        suspend fun run(vararg puzzle:Puzzle) {
+            PuzzleRunner(puzzle.toList()).run()
+        }
+    }
 }
 
 fun main() = runBlocking {
