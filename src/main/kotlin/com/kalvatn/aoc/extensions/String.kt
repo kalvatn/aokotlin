@@ -30,26 +30,27 @@ fun String.extractIntegers(): List<Int> {
             .map { it.toInt() }
 }
 
-fun String.hasNVowels(number: Int = 1): Boolean {
-    return this.filter { it -> VOWELS.contains(it) }.count() >= number
-}
+fun String.hasNVowels(number: Int = 1) = this.filter { VOWELS.asSequence().contains(it) }.count() >= number
 
-fun String.hasConsecutiveLetters(number: Int = 1): Boolean {
-    return CONSECUTIVE_LETTERS.filter { this.contains(it) }.count() >= number
-}
-fun String.hasConsecutiveDigits(number: Int = 1): Boolean {
-    return CONSECUTIVE_DIGITS.filter { this.contains(it) }.count() >= number
-}
+fun String.hasConsecutiveLetters(number: Int = 1) = CONSECUTIVE_LETTERS.asSequence().filter { this.contains(it) }.count() >= number
+fun String.hasConsecutiveDigits(number: Int = 1) = CONSECUTIVE_DIGITS.asSequence().filter { this.contains(it) }.count() >= number
 
-fun String.doesNotContain(vararg bad: String): Boolean {
-    return !bad.toList().filter { this.contains(it) }.any()
-}
+fun String.doesNotContain(vararg bad: String) = bad.asSequence().none { this.contains(it) }
+fun String.doesNotContain(vararg bad: Char) = bad.asSequence().none { this.contains(it) }
 
 fun String.hasXYX(): Boolean {
     val windowed = this.windowed(3, 1, false)
     val filter = windowed.filter { it[0] == it[2] }
     return filter.any()
 }
+
+fun String.hasIncreasingLetterStraight(size: Int) =
+        this.windowed(size, 1, false).asSequence().filter {
+            val map = it.map { c -> c.toInt() }
+            map.filterIndexed { index, i ->
+                if (index == size-1) { true } else { i == map[index+1]-1 }
+            }.count() == size
+        }.any()
 
 fun String.hasNonOverlappingPair(): Boolean {
     return windowed(2, 1, false)
