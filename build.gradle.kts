@@ -45,6 +45,7 @@ idea {
 
 dependencies {
     val versionKotlinCoroutines = "1.3.2"
+    val versionKotlinSerialization = "0.14.0"
     val versionKotlintest = "3.3.2"
     val versionLogback = "1.2.1"
     val versionSlf4j = "1.7.7"
@@ -54,6 +55,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$versionKotlinCoroutines")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$versionKotlinSerialization")
 
     implementation("ch.qos.logback:logback-classic:$versionLogback")
     implementation("org.slf4j:slf4j-log4j12:$versionSlf4j")
