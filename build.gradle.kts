@@ -13,10 +13,10 @@ tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 tasks.compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 tasks.compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 
 repositories {
