@@ -1,77 +1,261 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-
-group = "com.kalvatn.aoc.aokotlin"
-version = "0.0.1"
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import dependencies.Libs
+import dependencies.TestLibs
+import environment.BuildEnv
+import io.gitlab.arturbosch.detekt.Detekt
+import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import project.ProjectModule
+import project.archivaMavenRepository
+import project.getProjectModule
+import project.gitlabMavenRepository
+import repository.ArchivaRepository
+import repository.GitlabProject
 
 plugins {
-    kotlin("jvm") version "1.3.61"
-    idea
-    application
-}
-tasks.wrapper {
-    gradleVersion = "6.7"
-    distributionType = Wrapper.DistributionType.ALL
-}
-tasks.compileKotlin {
-    kotlinOptions.jvmTarget = "11"
-}
-tasks.compileTestKotlin {
-    kotlinOptions.jvmTarget = "11"
+  base
+  `maven-publish`
+  jacoco
+  `kotlin-dsl`
+//  id(BuildPlugins.KOTLIN_JVM) version BuildPlugins.Versions.KOTLIN apply false
+    kotlin("jvm") version BuildPlugins.Versions.KOTLIN
+    kotlin("plugin.serialization") version BuildPlugins.Versions.KOTLIN
+  id(BuildPlugins.SHADOW) version BuildPlugins.Versions.SHADOW apply false
+  id(BuildPlugins.DETEKT) version BuildPlugins.Versions.DETEKT
+  id(BuildPlugins.SONARQUBE) version BuildPlugins.Versions.SONARQUBE
+  id(BuildPlugins.KTLINT) version BuildPlugins.Versions.KTLINT
+//  id(BuildPlugins.PROPERTIES) version BuildPlugins.Versions.PROPERTIES
 }
 
-repositories {
+if (BuildEnv.IS_CI_ENVIRONMENT) {
+  tasks.wrapper {
+    gradleVersion = BuildEnv.GRADLE_VERSION
+    distributionType = DistributionType.BIN
+  }
+} else {
+  tasks.wrapper {
+    gradleVersion = BuildEnv.GRADLE_VERSION
+    distributionType = DistributionType.ALL
+  }
+}
+
+allprojects {
+  group = "com.kalvatn.aoc"
+  version = "0.0.1"
+  repositories {
     mavenLocal()
-    jcenter()
     mavenCentral()
+    jcenter()
+    maven {
+      url = uri("https://packages.confluent.io/maven/")
+    }
+  }
 }
 
+subprojects {
+  apply {
+    plugin(BuildPlugins.DETEKT)
+    plugin(BuildPlugins.KTLINT)
+    plugin(BuildPlugins.KOTLIN_JVM)
+    plugin(BuildPlugins.JACOCO)
+  }
 
-idea {
-    module {
-        isDownloadJavadoc = true
-        isDownloadSources = true
+  tasks.withType<Test> {
+    exclude("**/*IntegrationTest.class")
+    useJUnitPlatform()
+  }
+
+  tasks.jacocoTestReport {
+    reports {
+      xml.isEnabled = true
+      xml.destination = file("build/reports/jacoco/report.xml")
     }
+  }
+
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = BuildEnv.JAVA_VERSION.toString()
+  }
+
+  configure<JavaPluginExtension> {
+    sourceCompatibility = BuildEnv.JAVA_VERSION
+    targetCompatibility = BuildEnv.JAVA_VERSION
+  }
+
+  ktlint {
+    version.set(Libs.Versions.KTLINT)
+    debug.set(false)
+    verbose.set(true)
+    android.set(false)
+    coloredOutput.set(true)
+    outputToConsole.set(true)
+    ignoreFailures.set(true)
+    enableExperimentalRules.set(true)
+    disabledRules.set(
+      setOf(
+        "comment-spacing"
+      )
+    )
+    filter {
+      include("**/src/main/kotlin/**")
+      include("**/src/test/kotlin/**")
+      exclude("**/build/**/*")
+      exclude("**/generated/**/*")
+      exclude { element -> element.file.path.contains("generated/") }
+    }
+  }
+
+  detekt {
+    input = project.files("src/main/kotlin")
+    config = files("${project.rootDir}/.detekt.yml")
+    ignoreFailures = true
+    reports {
+      xml.enabled = true
+      html.enabled = true
+      txt.enabled = true
+    }
+  }
+  tasks.withType<Detekt> {
+    jvmTarget = BuildEnv.JAVA_VERSION.toString()
+  }
+
+  val module = getProjectModule()
+
+  if (module.publishTo.isNotEmpty()) {
+    project.publish(module.publishTo)
+  }
+  if (module.createShadowJar) {
+    project.shadowJar(module)
+  }
+
+  dependencies {
+    implementation(Libs.LOGBACK_CLASSIC)
+    implementation(Libs.KOTLIN_LOGGING)
+    implementation(Libs.NEWRELIC_API)
+
+    testImplementation(TestLibs.KOTLIN_TEST)
+    testImplementation(TestLibs.KOTLIN_TEST_JUNIT)
+    testImplementation(TestLibs.KOTLIN_COROUTINES_TEST)
+    testImplementation(TestLibs.JUNIT_JUPITER)
+    testImplementation(TestLibs.JUNIT_JUPITER_ENGINE)
+    testImplementation(TestLibs.MOCKK)
+  }
 }
 
 dependencies {
-    val versionKotlinCoroutines = "1.3.2"
-    val versionKotlinSerialization = "0.14.0"
-    val versionKotlintest = "3.3.2"
-    val versionLogback = "1.2.1"
-    val versionSlf4j = "1.7.7"
-//    val versionKtor = "1.2.2"
-//    val versionJackson = "2.9.9"
-    val versionOkHttp = "4.0.0"
-
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$versionKotlinCoroutines")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$versionKotlinSerialization")
-
-    implementation("ch.qos.logback:logback-classic:$versionLogback")
-    implementation("org.slf4j:slf4j-log4j12:$versionSlf4j")
-//    implementation("io.ktor:ktor-server-netty:$versionKtor")
-//    implementation("io.ktor:ktor-jackson:$versionKtor")
-//    implementation("io.ktor:ktor-locations:$versionKtor")
-//    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$versionJackson")
-
-
-    implementation("com.squareup.okhttp3:okhttp:$versionOkHttp")
-    implementation("com.squareup.okhttp3:logging-interceptor:$versionOkHttp")
-
-
-
-    implementation("com.marcinmoskala:DiscreteMathToolkit:1.0.3")
-
-
-
-    // test dependencies
-//    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.3.50")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:$versionKotlintest")
-}
-tasks.withType<Test> {
-    useJUnitPlatform()
+  subprojects.forEach {
+    api(it)
+  }
 }
 
-application {
-    mainClassName = "com.kalvatn.aoc.aokotlin.RunnerKt"
+fun Project.publish(publishTo: List<repository.PublishTarget>) {
+  apply {
+    plugin("maven-publish")
+  }
+  configure<PublishingExtension> {
+    publications {
+      create<MavenPublication>(project.project.name) {
+        from(project.components["java"])
+        val sourcesJar by project.tasks.creating(Jar::class) {
+          val sourceSets: SourceSetContainer by project
+          from(sourceSets["main"].allJava)
+          archiveClassifier.set("sources")
+        }
+        val javadocJar by project.tasks.creating(Jar::class) {
+          from(project.tasks["javadoc"])
+          archiveClassifier.set("javadoc")
+        }
+        artifact(sourcesJar)
+        artifact(javadocJar)
+      }
+    }
+    publishTo.forEach {
+      when (it) {
+        is ArchivaRepository -> this.repositories.add(archivaMavenRepository(it))
+        is GitlabProject -> this.repositories.add(gitlabMavenRepository(it))
+      }
+    }
+  }
+}
+
+fun Project.shadowJar(module: ProjectModule) {
+  if (module.mainClassName.isNotBlank()) {
+    apply {
+      plugin(BuildPlugins.SHADOW)
+    }
+    tasks.withType<ShadowJar> {
+      if (BuildEnv.IS_CI_ENVIRONMENT) {
+        this.outputs.cacheIf {
+          false
+        }
+      }
+      archiveFileName.set("${archiveBaseName.get()}-shadow.${archiveExtension.get()}")
+      manifest {
+        attributes["Main-Class"] = module.mainClassName
+        attributes["X-Compile-Source-JDK"] = project.java.sourceCompatibility
+        attributes["X-Compile-Target-JDK"] = project.java.targetCompatibility
+      }
+    }
+    tasks.withType<AbstractArchiveTask> {
+      // https://imperceptiblethoughts.com/shadow/configuration/reproducible-builds/
+      isPreserveFileTimestamps = false
+      isReproducibleFileOrder = true
+    }
+  }
+}
+
+tasks.named("clean", Delete::class.java) {
+  doFirst {
+    delete(rootProject.buildDir)
+  }
+}
+
+tasks.register("printProjectVersion") {
+  doLast {
+    println(project.version)
+  }
+}
+
+tasks.register<JacocoReport>("jacocoMerged") {
+  doFirst {
+    println("running jacocoMerged task")
+  }
+
+  executionData.setFrom(fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec"))
+
+  subprojects
+    .forEach {
+      this.sourceSets(it.sourceSets.main.get())
+      this.dependsOn(it.tasks.test)
+    }
+
+  reports {
+    xml.isEnabled = true
+    xml.destination = file("${project.buildDir}/reports/jacoco/report.xml")
+    html.isEnabled = true
+    html.destination = file("${project.buildDir}/reports/jacoco/html")
+  }
+}
+
+tasks.test {
+  finalizedBy("jacocoMerged")
+}
+
+val newrelicAgent: Configuration by configurations.creating
+
+dependencies {
+  newrelicAgent(Libs.NEWRELIC_AGENT_JAVA) {
+    isTransitive = false
+  }
+}
+
+tasks.register<Copy>("copyNewrelicAgent") {
+  group = "newrelic"
+  description = "copies newrelic agent jar to $buildDir/libs"
+  val newrelicAgentJar = zipTree(newrelicAgent.singleFile.toPath()).filter { it.name == "newrelic.jar" }.files.first()
+  val destDir = "$buildDir/libs"
+  from(newrelicAgentJar)
+  into(destDir)
+  doLast {
+    println("copied $newrelicAgentJar to $destDir")
+  }
 }

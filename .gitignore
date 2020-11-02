@@ -8,3 +8,4 @@ build/
 .gradle
 .kotlintest/
 out/
+.gradle-build-cache
