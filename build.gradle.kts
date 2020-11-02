@@ -9,7 +9,7 @@ plugins {
     application
 }
 tasks.wrapper {
-    gradleVersion = "6.0.1"
+    gradleVersion = "6.7"
     distributionType = Wrapper.DistributionType.ALL
 }
 tasks.compileKotlin {
@@ -25,16 +25,6 @@ repositories {
     mavenCentral()
 }
 
-sourceSets {
-    main {
-        withConvention(KotlinSourceSet::class) {
-            kotlin.srcDir("src/main/kotlin")
-        }
-        resources {
-            srcDir("src/main/resources")
-        }
-    }
-}
 
 idea {
     module {
