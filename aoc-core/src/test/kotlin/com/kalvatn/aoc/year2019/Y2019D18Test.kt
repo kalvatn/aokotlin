@@ -27,7 +27,7 @@ internal class Y2019D18Test : BaseDayTest() {
 
   @Test
   override suspend fun examplePartTwo() {
-    val input = PuzzleInput.forDay(Year.Y2019, Day.D18, "test")
+//    val input = PuzzleInput.forDay(Year.Y2019, Day.D18, "test")
 //        Y2019D18(input).partTwo().toInt() shouldBe 0
   }
 

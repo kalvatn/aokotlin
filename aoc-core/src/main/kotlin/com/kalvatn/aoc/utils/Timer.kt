@@ -2,12 +2,15 @@ package com.kalvatn.aoc.utils
 
 import java.time.Duration
 
+const val BENCHMARK_EXECUTIONS_DEFAULT = 10
+const val ONE_SECOND_IN_MILLIS = 1000
+
 fun Duration.toHMS(): String {
   val hh = toHours()
   val mm = minusHours(hh).toMinutes()
-  val ss = minusHours(hh).minusMinutes(mm).toMillis() / 1000
+  val ss = minusHours(hh).minusMinutes(mm).toMillis() / ONE_SECOND_IN_MILLIS
   val ms = minusHours(hh).minusMinutes(mm).minusSeconds(ss).toMillis()
-  val us = minusHours(hh).minusMinutes(mm).minusSeconds(ss).minusMillis(ms).toNanos() / 1000
+  val us = minusHours(hh).minusMinutes(mm).minusSeconds(ss).minusMillis(ms).toNanos() / ONE_SECOND_IN_MILLIS
   val ns = toNanos()
   return when {
     hh > 0 -> "${hh}h ${mm}m ${ss}s"
@@ -28,7 +31,7 @@ inline fun <T> timeit(block: () -> T): Pair<T, Duration> {
   return Pair(result, Duration.ofNanos(end - start))
 }
 
-inline fun benchmark(executions: Int = 10, block: () -> Unit): String {
+inline fun benchmark(executions: Int = BENCHMARK_EXECUTIONS_DEFAULT, block: () -> Unit): String {
   val runtimes = mutableListOf<Long>()
   repeat(executions) {
     val start = System.nanoTime()
@@ -40,7 +43,7 @@ inline fun benchmark(executions: Int = 10, block: () -> Unit): String {
   return "$executions executions, ${avg.toHMS()} average, ${med.toHMS()} median"
 }
 
-inline fun printBenchmark(executions: Int = 10, block: () -> Unit) {
+inline fun printBenchmark(executions: Int = BENCHMARK_EXECUTIONS_DEFAULT, block: () -> Unit) {
   val s = benchmark(executions) {
     block()
   }

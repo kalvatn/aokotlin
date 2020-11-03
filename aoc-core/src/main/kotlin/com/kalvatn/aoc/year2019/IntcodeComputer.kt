@@ -74,8 +74,8 @@ class IntcodeComputer(private val program: List<Long>) {
   }
 
   fun findVerbNounPairThatProducesSolution(solution: Long): Pair<Int, Int> {
-    for (verb in 1..99) {
-      for (noun in 1..99) {
+    for (verb in 1..Operation.HALT.value) {
+      for (noun in 1..Operation.HALT.value) {
         if (findSolutionForVerbNounPair(verb, noun) == solution) {
           return Pair(verb, noun)
         }
@@ -107,7 +107,7 @@ class IntcodeComputer(private val program: List<Long>) {
     try {
       extendMemory(index)
       memory[index.toInt()] = value
-    } catch (e: Exception) {
+    } catch (e: IndexOutOfBoundsException) {
       println("$index $value ${memory.size}")
     }
   }

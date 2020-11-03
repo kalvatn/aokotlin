@@ -10,7 +10,7 @@ import kotlin.math.abs
 
 class Y2019D16(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D16, input) {
 
-  private val numbers by lazy { this.input.singleLineSplit("").map { it.toInt() } }
+  private val numbers: List<Int> by lazy { this.input.singleLineSplit("").map { it.toInt() } }
 
   private val pattern = listOf(0, 1, 0, -1)
 
@@ -38,7 +38,7 @@ class Y2019D16(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
   }
 
   override suspend fun partOne(): String {
-    var output = numbers
+    var output = numbers.toMutableList().toList()
     repeat(100) {
       output = phase(output)
     }

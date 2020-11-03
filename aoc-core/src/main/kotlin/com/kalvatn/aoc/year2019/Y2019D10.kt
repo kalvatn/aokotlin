@@ -21,7 +21,7 @@ class Y2019D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 
   private val countVisibleByPoint by lazy { pointsWithAsteroids.map { it to visibleFrom(it) }.toMap() }
 
-  private val baseWithCount by lazy { countVisibleByPoint.maxBy { it.value }!! }
+  private val baseWithCount by lazy { countVisibleByPoint.maxByOrNull { it.value }!! }
 
   override suspend fun partOne(): String {
     return baseWithCount.value.toString()

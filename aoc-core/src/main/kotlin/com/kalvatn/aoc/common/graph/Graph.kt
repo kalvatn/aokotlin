@@ -30,7 +30,7 @@ class WeightedGraph<T> {
 
   data class Node<T>(val value: T, val distance: Int, val parent: Node<T>? = null)
 
-  tailrec fun <T> path(node: Node<T>, path: Path<T> = Path(listOf(), 0)): Path<T> {
+  private tailrec fun <T> path(node: Node<T>, path: Path<T> = Path(listOf(), 0)): Path<T> {
     if (node.parent == null) {
       return Path(path.path + node.value, path.distance + node.distance)
     }
@@ -68,7 +68,7 @@ class WeightedGraph<T> {
       }
     }
 
-    return paths.minBy { it.distance } ?: error("path not found")
+    return paths.minByOrNull { it.distance } ?: error("path not found")
   }
 
   fun longestVisitAll(start: T, first: Boolean = true): Path<T> {
@@ -102,6 +102,6 @@ class WeightedGraph<T> {
       }
     }
 
-    return paths.maxBy { it.distance } ?: error("path not found")
+    return paths.maxByOrNull { it.distance } ?: error("path not found")
   }
 }

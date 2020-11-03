@@ -33,7 +33,7 @@ class Y2019D19(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
   }
 
   private val pc = IntcodeComputer(program)
-  fun process(x: Long, y: Long): Long {
+  private fun process(x: Long, y: Long): Long {
     pc.reset()
     pc.input(x)
     pc.input(y)
@@ -77,9 +77,6 @@ class Y2019D19(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 //            }
 //        }
     return ""
-  }
-
-  companion object {
   }
 }
 

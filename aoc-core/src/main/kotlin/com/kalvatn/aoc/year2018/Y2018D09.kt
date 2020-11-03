@@ -52,7 +52,7 @@ class Y2018D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
     }
   }
 
-  fun getHighScore(numberOfPlayers: Int, numberOfMarbles: Int): Long {
+  private fun getHighScore(numberOfPlayers: Int, numberOfMarbles: Int): Long {
     val players = mutableMapOf<Int, Long>()
     (1..numberOfPlayers).forEach {
       players[it] = 0
@@ -71,7 +71,7 @@ class Y2018D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
       }
       currentPlayer = ((currentPlayer) % players.size) + 1
     }
-    return players.values.max()!!
+    return players.values.maxOrNull()!!
   }
 
   override suspend fun partTwo(): String {

@@ -19,7 +19,7 @@ class Y2015D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
     }
 
     private fun smallestSide(): Int {
-      return sides().min()!!
+      return sides().minOrNull()!!
     }
 
     fun paper(): Int {

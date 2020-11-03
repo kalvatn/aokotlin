@@ -99,7 +99,7 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     return best.toString()
   }
 
-  fun available(start: Point, map2: Map<Point, Char>): Pair<Set<Char>, Int> {
+  private fun available(start: Point, map2: Map<Point, Char>): Pair<Set<Char>, Int> {
     val queue = PriorityQueue<Node>()
     val allKeys = ('a'..'z').toSet()
     val allDoors = map2.filterValues { it in 'A'..'Z' }.values.toSet()
@@ -146,10 +146,10 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
         }
     }
 
-    return collected.maxBy { it.key.size }!!.toPair()
+    return collected.maxByOrNull { it.key.size }!!.toPair()
   }
 
-  val foundKeys = mutableSetOf<Char>()
+  private val foundKeys = mutableSetOf<Char>()
   override suspend fun partTwo(): String {
     val map2 = map.toMutableMap()
     val originalStart = map2.filterValues { it == '@' }.keys.first()
@@ -186,12 +186,5 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 }
 
 fun main() = runBlocking {
-  //    PuzzleRunner(listOf(Y2019D18(PuzzleInput.forDay(Year.Y2019, Day.D18, "test2")))).run()
-//    PuzzleRunner(listOf(Y2019D18(PuzzleInput.forDay(Year.Y2019, Day.D18, "test6")))).run()
   PuzzleRunner(listOf(Y2019D18())).run()
-//    val input6 = PuzzleInput.forDay(Year.Y2019, Day.D18, "test6")
-//    val input7 = PuzzleInput.forDay(Year.Y2019, Day.D18, "test7")
-//
-//    val input = input7
-//    println(Y2019D18(input).partTwo())
 }

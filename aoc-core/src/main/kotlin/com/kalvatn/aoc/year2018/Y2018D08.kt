@@ -26,7 +26,7 @@ class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
     }
   }
 
-  fun processNodes(): MutableMap<Int, Node> {
+  private fun processNodes(): MutableMap<Int, Node> {
     val nodes: MutableMap<Int, Node> = mutableMapOf()
     var currentParent: Node? = null
     var i = 0
@@ -75,7 +75,7 @@ class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
       nodeValues[it] = -1
     }
     while (nodeValues.values.contains(-1)) {
-      nodes.forEach { index, node ->
+      nodes.forEach { (index, node) ->
         if (node.countChildren == 0) {
           nodeValues[index] = node.meta.sum()
         } else {

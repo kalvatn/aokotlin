@@ -101,16 +101,16 @@ class Y2018D04(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzleYearDay(Yea
   }
 
   override suspend fun partOne(): String {
-    val guard = guards.maxBy { it.value.sleepTime }!!.value
-    val maxMinute = guard.sleepMinuteFrequency.maxBy { it.value }!!.key
+    val guard = guards.maxByOrNull { it.value.sleepTime }!!.value
+    val maxMinute = guard.sleepMinuteFrequency.maxByOrNull { it.value }!!.key
     return (guard.id * maxMinute).toString()
   }
 
   override suspend fun partTwo(): String {
-    val guard = guards.maxBy {
-      it.value.sleepMinuteFrequency.maxBy { mf -> mf.value }?.value ?: 0
+    val guard = guards.maxByOrNull {
+      it.value.sleepMinuteFrequency.maxByOrNull { mf -> mf.value }?.value ?: 0
     }!!.value
-    val maxMinute = guard.sleepMinuteFrequency.maxBy { it.value }!!.key
+    val maxMinute = guard.sleepMinuteFrequency.maxByOrNull { it.value }!!.key
     return (guard.id * maxMinute).toString()
   }
 }

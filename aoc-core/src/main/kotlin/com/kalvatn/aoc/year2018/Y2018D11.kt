@@ -13,8 +13,6 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
   private val serialNumber: Int = this.input.singleLine().toInt()
 
-  private val TOTAL_GRID_SIZE: Int = 300
-
   data class FuelCell(val point: Point, val serial: Int) {
 
     private fun getHundredsDigit(integer: Int): Int {
@@ -63,7 +61,7 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
         totalPower[entry] = region.map { powerLevels[it]!! }.sum()
       }
     }
-    val maxPowerPoint = totalPower.maxBy { it.value }!!.key
+    val maxPowerPoint = totalPower.maxByOrNull { it.value }!!.key
     return "${maxPowerPoint.x},${maxPowerPoint.y}"
   }
 
@@ -94,8 +92,12 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
     }
 
     val grids = tasks.awaitAll().flatten()
-    val gridWithMaxPower = grids.maxBy { it.power }!!
+    val gridWithMaxPower = grids.maxByOrNull { it.power }!!
     return "${gridWithMaxPower.topleft.x},${gridWithMaxPower.topleft.y},${gridWithMaxPower.size}"
+  }
+
+  companion object {
+    private const val TOTAL_GRID_SIZE: Int = 300
   }
 }
 

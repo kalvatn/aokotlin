@@ -80,10 +80,10 @@ class Y2019D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     ).run()
     val (xMin, xMax, yMin, yMax) = with(tiles.keys) {
       listOf(
-        minBy { it.x }!!.x,
-        maxBy { it.x }!!.x,
-        minBy { it.y }!!.y,
-        maxBy { it.y }!!.y
+        minByOrNull { it.x }!!.x,
+        maxByOrNull { it.x }!!.x,
+        minByOrNull { it.y }!!.y,
+        maxByOrNull { it.y }!!.y
       )
     }
 

@@ -29,7 +29,7 @@ fun String.extractIntegers(): List<Int> {
 }
 
 fun String.hasNVowels(number: Int = 1) =
-  this.filter { VOWELS.asSequence().contains(it) }.count() >= number
+  this.filter { VOWELS.contains(it) }.count() >= number
 
 fun String.hasConsecutiveLetters(number: Int = 1) =
   CONSECUTIVE_LETTERS.asSequence().filter { this.contains(it) }.count() >= number
@@ -37,8 +37,8 @@ fun String.hasConsecutiveLetters(number: Int = 1) =
 fun String.hasConsecutiveDigits(number: Int = 1) =
   CONSECUTIVE_DIGITS.asSequence().filter { this.contains(it) }.count() >= number
 
-fun String.doesNotContain(vararg bad: String) = bad.asSequence().none { this.contains(it) }
-fun String.doesNotContain(vararg bad: Char) = bad.asSequence().none { this.contains(it) }
+fun String.doesNotContain(vararg bad: String) = bad.none { this.contains(it) }
+fun String.doesNotContain(vararg bad: Char) = bad.none { this.contains(it) }
 
 fun String.hasXYX(): Boolean {
   val windowed = this.windowed(3, 1, false)

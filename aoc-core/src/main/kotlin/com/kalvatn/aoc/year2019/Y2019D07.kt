@@ -15,7 +15,7 @@ class Y2019D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
     toList().permutations().map { phaseSequence ->
       val comps = phaseSequence.map { phase ->
         IntcodeComputer(program).also { comp ->
-          comp.input(phase.toLong())
+          comp.input(phase)
         }
       }
       var signal = 0L
@@ -27,7 +27,7 @@ class Y2019D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
         }
       } while (!comps.all { it.state() == State.HALT })
       signal
-    }.max()!!
+    }.maxOrNull()!!
 
   override suspend fun partOne(): String {
     return (0..4L).maxSignal().toString()

@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 
 class Y2015D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D09, input) {
 
-  val graph by lazy {
+  private val graph by lazy {
     val g = WeightedGraph<String>()
     val r = "^(\\w+) to (\\w+) = (\\d+)".toRegex()
     this.input.lines.forEach {
@@ -22,16 +22,13 @@ class Y2015D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
   override suspend fun partOne(): String {
     return graph.edges.keys.map {
       graph.shortestVisitAll(it, false).distance
-    }.min().toString()
+    }.minOrNull().toString()
   }
 
   override suspend fun partTwo(): String {
     return graph.edges.keys.map {
       graph.longestVisitAll(it, false).distance
-    }.max().toString()
-  }
-
-  companion object {
+    }.maxOrNull().toString()
   }
 }
 

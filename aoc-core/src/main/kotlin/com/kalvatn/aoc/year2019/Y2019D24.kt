@@ -17,9 +17,9 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
   }
 
   class GameOfLife(initialState: Map<Point, Char>) {
-    var state = initialState
+    private var state = initialState
     var minute = 0
-    val previous = mutableMapOf<Int, Map<Point, Char>>()
+    private val previous = mutableMapOf<Int, Map<Point, Char>>()
     fun step() {
       previous[minute] = state
 
@@ -53,10 +53,10 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     fun biodiversity(): Long {
       val (xMin, xMax, yMin, yMax) = with(state.keys) {
         listOf(
-          minBy { it.x }!!.x,
-          maxBy { it.x }!!.x,
-          minBy { it.y }!!.y,
-          maxBy { it.y }!!.y
+          minByOrNull { it.x }!!.x,
+          maxByOrNull { it.x }!!.x,
+          minByOrNull { it.y }!!.y,
+          maxByOrNull { it.y }!!.y
         )
       }
       var total = 0L
@@ -78,27 +78,26 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
   }
 
   class GameOfLifeRecursive(initialState: Map<Point, Char>) {
-    val center = Point(2, 2)
-    var minute = 0
-    val emptyState by lazy {
+    private val center = Point(2, 2)
+    private var minute = 0
+    private val emptyState by lazy {
       initialState.keys.map {
         it to if (it == center) '?' else '.'
       }.toMap()
     }
-    val levels = mutableMapOf<Int, Map<Point, Char>>().apply {
+    private val levels = mutableMapOf<Int, Map<Point, Char>>().apply {
       put(-1, emptyState)
       put(0, initialState.toMutableMap().apply { this[center] = '?' })
       put(1, emptyState)
     }
 
-    fun step() {
+    private fun step() {
       val newstates = mutableMapOf<Int, Map<Point, Char>>()
       levels.keys.toList().forEach { level ->
         levels.putIfAbsent(level - 1, emptyState)
         levels.putIfAbsent(level + 1, emptyState)
 
         val newState = mutableMapOf<Point, Char>()
-        val newStateSub = mutableMapOf<Point, Char>()
         val state = levels[level]!!
         state.keys.forEach { point ->
           val current = state[point] ?: error("impossiburu")

@@ -16,7 +16,7 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
   val grid: Grid = Grid(this.input.lines)
 
   class Grid(val lines: List<String>) {
-    val size: Int = max(lines.size, lines.map { it.length }.max()!!)
+    val size: Int = max(lines.size, lines.map { it.length }.maxOrNull()!!)
 
     private val array = buildArray2D(size, ' ')
     private val trains = mutableSetOf<Train>()
@@ -74,7 +74,7 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
         row.forEachIndexed { x, col ->
           val point = Point(x, y)
           if (trainsByPos.containsKey(point)) {
-            print(trainsByPos[point]!!.direction.toChar())
+            print((trainsByPos[point] ?: error("")).direction.toChar())
           } else {
             print(col)
           }

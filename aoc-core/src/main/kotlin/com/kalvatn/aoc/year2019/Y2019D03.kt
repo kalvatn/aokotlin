@@ -45,11 +45,11 @@ class Y2019D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
   }.map { it.seen }.groupMapsBySharedKeys()
 
   override suspend fun partOne(): String {
-    return intersections.map { it.key.distance(Point(0, 0)) }.min().toString()
+    return intersections.map { it.key.distance(Point(0, 0)) }.minOrNull().toString()
   }
 
   override suspend fun partTwo(): String {
-    return intersections.map { it.value.sum() }.min().toString()
+    return intersections.map { it.value.sum() }.minOrNull().toString()
   }
 }
 

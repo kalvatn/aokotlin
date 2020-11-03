@@ -17,17 +17,15 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
   class VaccuumRobot(private val initialPos: Point, val map: Map<Point, Char>) {
 
     private val scaffold = map.filter { it.value == '#' }.keys
-//        private val intersections = map.keys.filter {
-//            map[it] == '#' && it.adj4().all { a -> map.getOrDefault(a, '.') == '#' }
-//        }
 
+    @Suppress("UNUSED_PARAMETER")
     fun print(new: Map<Point, Char>, pos: Point) {
       new.print {
         print(new[it])
       }
     }
 
-    suspend fun moves(): List<Move> {
+    fun moves(): List<Move> {
       var pos = initialPos
       val new = map.toMutableMap()
       val visited = mutableSetOf<Point>()
@@ -71,11 +69,10 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
       return moves2
     }
 
-    suspend fun move(moves: List<Move>) {
+    fun move(moves: List<Move>) {
       var pos = initialPos
       var dir = Direction.NORTH
       val new = map.toMutableMap()
-      val visited = mutableSetOf<Point>()
       moves.forEach {
         dir = dir.turn(it.turn)
         repeat(it.count) {
@@ -138,9 +135,9 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
         }
       }
     }
-    val intersections = points.keys.filter {
-      points[it] == '#' && it.adj4().all { a -> points.getOrDefault(a, '.') == '#' }
-    }.toSet()
+//    val intersections = points.keys.filter {
+//      points[it] == '#' && it.adj4().all { a -> points.getOrDefault(a, '.') == '#' }
+//    }.toSet()
 //        points.print {
 //            if (it in intersections) {
 //                print('O')
@@ -169,22 +166,22 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 //        val main = listOf(A, B, C)
 
     //TODO FIXME XXX
-    val A = "L,8,R,10,L,10,\n"
-    val B = "R,10,L,8,L,8,L,10,\n"
-    val C = "L,4,L,6,L,8,L,8,\n"
-    val D = "A,B,A,C,B,C,A,C,B,C,\n"
-    val Aenc = A.map { it.toInt() }
-    val Benc = B.map { it.toInt() }
-    val Cenc = C.map { it.toInt() }
-    val Denc = D.map { it.toInt() }
-    println("$A -> $Aenc")
-    println("$B -> $Benc")
-    println("$C -> $Cenc")
-    println("$D -> $Denc")
+    val a = "L,8,R,10,L,10,\n"
+    val b = "R,10,L,8,L,8,L,10,\n"
+    val c = "L,4,L,6,L,8,L,8,\n"
+    val d = "A,B,A,C,B,C,A,C,B,C,\n"
+    val aEnc = a.map { it.toInt() }
+    val bEnc = b.map { it.toInt() }
+    val cEnc = c.map { it.toInt() }
+    val dEnc = d.map { it.toInt() }
+    println("$a -> $aEnc")
+    println("$b -> $bEnc")
+    println("$c -> $cEnc")
+    println("$d -> $dEnc")
 
     pc.replaceIndex(0, 2)
     pc.clearOutput()
-    listOf(Denc, Aenc, Benc, Cenc).forEach { f ->
+    listOf(dEnc, aEnc, bEnc, cEnc).forEach { f ->
       f.forEach {
         pc.input(it.toLong())
         pc.run()

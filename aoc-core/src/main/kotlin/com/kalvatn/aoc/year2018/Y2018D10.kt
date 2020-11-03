@@ -35,15 +35,15 @@ class Y2018D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
     val stars = stars()
     val starCoords = mutableMapOf<Point, Star>()
     var minSize = 70
-    (0..30000).forEach { second ->
-      val minX = stars.minBy { it.position.x }!!.position.x
-      val minY = stars.minBy { it.position.y }!!.position.y
+    repeat((0..30000).count()) {
+      val minX = stars.minByOrNull { it.position.x }!!.position.x
+      val minY = stars.minByOrNull { it.position.y }!!.position.y
 
       val translateX = minX * -1
       val translateY = minY * -1
 
-      val maxX = (stars.maxBy { it.position.x }!!.position.x) + translateX
-      val maxY = (stars.maxBy { it.position.y }!!.position.y) + translateY
+      val maxX = (stars.maxByOrNull { it.position.x }!!.position.x) + translateX
+      val maxY = (stars.maxByOrNull { it.position.y }!!.position.y) + translateY
 
       val size = max(maxX, maxY)
 

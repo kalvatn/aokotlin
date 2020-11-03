@@ -12,12 +12,12 @@ class Y2018D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
   private val rules = this.input.lines.drop(1).map { it.split("=>") }
     .map { it[0].trim() to (it[1].trim() == "#") }.toMap()
 
-  fun nextGeneration(current: MutableMap<Int, Boolean>): MutableMap<Int, Boolean> {
+  private fun nextGeneration(current: MutableMap<Int, Boolean>): MutableMap<Int, Boolean> {
     val indexes = current.keys.map { key -> key }
     val nextPlantIndexes = mutableMapOf<Int, Boolean>()
     indexes.forEach { index ->
       var segment = ""
-      (index - 2..index + 2).forEach { it ->
+      (index - 2..index + 2).forEach {
         nextPlantIndexes.putIfAbsent(it, false)
         segment += if (current.getOrDefault(it, false)) '#' else '.'
       }

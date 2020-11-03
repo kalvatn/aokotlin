@@ -10,7 +10,7 @@ class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
 
   data class Step(val name: Char, val prereq: MutableSet<Char> = sortedSetOf())
 
-  fun parseInput(): Map<Char, Step> {
+  private fun parseInput(): Map<Char, Step> {
     val steps = mutableMapOf<Char, Step>()
     for (line in this.input.lines) {
       "^Step (\\w) must be finished before step (\\w) can begin.$".toRegex()
@@ -36,7 +36,7 @@ class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
     return steps
   }
 
-  fun processSteps(teamWork: Boolean = false): Pair<String, Int> {
+  private fun processSteps(teamWork: Boolean = false): Pair<String, Int> {
     val steps = parseInput()
     var numberOfWorkers = 1
     val stepCosts: MutableMap<Char, Int>
@@ -50,7 +50,7 @@ class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
     val done = mutableSetOf<Char>()
 
     val queue = ArrayDeque<Step>()
-    steps.filter { it.value.prereq.isEmpty() }.keys.sorted().map { queue.add(steps[it]) }
+    steps.filter { it.value.prereq.isEmpty() }.keys.sorted().map { queue += steps[it] }
 
     var secondsElapsed = 0
     val processing = mutableSetOf<Step>()
@@ -65,9 +65,9 @@ class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
           queue.remove(step)
           done.add(step.name)
           steps.map { it.value.prereq.remove(step.name) }
-          steps.filter { it.value.prereq.isEmpty() }.keys.sorted().map { it ->
+          steps.filter { it.value.prereq.isEmpty() }.keys.sorted().map {
             if (!done.contains(it)) {
-              queue.add(steps[it])
+              queue += steps[it]
             }
           }
         }

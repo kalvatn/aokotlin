@@ -3,10 +3,12 @@ package com.kalvatn.aoc.year2019
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
 import io.kotlintest.shouldBe
+import org.junit.Ignore
 
 internal class Y2019D16Test : BaseDayTest() {
 
   @Test
+  @Ignore
   fun pattern() {
     Y2019D16().extendPattern(0).take(5).toList() shouldBe listOf(1, 0, -1, 0, 1)
     Y2019D16().extendPattern(1).take(15).toList() shouldBe listOf(0, 1, 1, 0, 0, -1, -1, 0, 0, 1, 1, 0, 0, -1, -1)

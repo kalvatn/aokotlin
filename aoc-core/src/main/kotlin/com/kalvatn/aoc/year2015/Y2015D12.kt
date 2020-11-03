@@ -11,6 +11,7 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
+import java.lang.NumberFormatException
 
 class Y2015D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D12, input) {
 
@@ -24,11 +25,11 @@ class Y2015D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D1
     return extractNumbersFromJson(rawJson).toString()
   }
 
-  fun extractNumbersFromJson(s: String): Int {
+  private fun extractNumbersFromJson(s: String): Int {
     var sum = 0
     try {
       return s.toInt()
-    } catch (e: Exception) {
+    } catch (e: NumberFormatException) {
       when (val json = Json.parseToJsonElement(s)) {
         is JsonArray -> json.forEach { sum += extractNumbersFromJson(it.toString()) }
         is JsonObject -> {

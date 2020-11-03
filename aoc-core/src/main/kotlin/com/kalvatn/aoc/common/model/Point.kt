@@ -17,6 +17,7 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
     }.toSet()
   }
 
+  @Suppress("unused")
   fun adj8(): Set<Point> {
     return adj4() + adj4Diag()
   }
@@ -74,10 +75,10 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
 fun Map<Point, Any>.print(colFn: (Point) -> Unit) {
   val (xMin, xMax, yMin, yMax) = with(this.keys) {
     listOf(
-      minBy { it.x }!!.x,
-      maxBy { it.x }!!.x,
-      minBy { it.y }!!.y,
-      maxBy { it.y }!!.y
+      minByOrNull { it.x }!!.x,
+      maxByOrNull { it.x }!!.x,
+      minByOrNull { it.y }!!.y,
+      maxByOrNull { it.y }!!.y
     )
   }
   (yMin..yMax).forEach { y ->
@@ -91,10 +92,10 @@ fun Map<Point, Any>.print(colFn: (Point) -> Unit) {
 fun Map<Point, Any>.asString(): String {
   val (xMin, xMax, yMin, yMax) = with(this.keys) {
     listOf(
-      minBy { it.x }!!.x,
-      maxBy { it.x }!!.x,
-      minBy { it.y }!!.y,
-      maxBy { it.y }!!.y
+      minByOrNull { it.x }!!.x,
+      maxByOrNull { it.x }!!.x,
+      minByOrNull { it.y }!!.y,
+      maxByOrNull { it.y }!!.y
     )
   }
   var s = ""

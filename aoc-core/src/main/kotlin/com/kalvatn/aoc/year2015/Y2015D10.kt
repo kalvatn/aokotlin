@@ -28,7 +28,7 @@ class Y2015D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D1
     var sequence = this.input.singleLine()
     val iterations = mutableMapOf<Int, String>()
     iterations[0] = sequence
-    repeat(50) {
+    repeat(MAX_ITERATIONS) {
       sequence = sequence.lookAndSay()
       iterations[it + 1] = sequence
     }
@@ -36,11 +36,17 @@ class Y2015D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D1
   }
 
   override suspend fun partOne(): String {
-    return sequenceByIteration[40]!!.length.toString()
+    return sequenceByIteration[ITERATION_FORTY]!!.length.toString()
   }
 
   override suspend fun partTwo(): String {
-    return sequenceByIteration[50]!!.length.toString()
+    return sequenceByIteration[ITERATION_FIFTY]!!.length.toString()
+  }
+
+  companion object {
+    const val ITERATION_FORTY = 40
+    const val ITERATION_FIFTY = 50
+    const val MAX_ITERATIONS = ITERATION_FIFTY
   }
 }
 

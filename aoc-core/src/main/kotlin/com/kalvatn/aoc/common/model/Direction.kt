@@ -27,15 +27,6 @@ enum class Direction {
     }
   }
 
-  fun whichTurn(other: Direction): Turn {
-    return when (this) {
-      NORTH -> if (other == WEST) Turn.LEFT else if (other == EAST) Turn.RIGHT else error("impossiburu")
-      EAST -> if (other == NORTH) Turn.LEFT else if (other == SOUTH) Turn.RIGHT else error("impossiburu")
-      SOUTH -> if (other == EAST) Turn.LEFT else if (other == WEST) Turn.RIGHT else error("impossiburu")
-      WEST -> if (other == SOUTH) Turn.LEFT else if (other == NORTH) Turn.RIGHT else error("impossiburu")
-    }
-  }
-
   fun turn(turn: Turn): Direction {
     return when (turn) {
       Turn.LEFT -> when (this) {
@@ -72,16 +63,6 @@ enum class Direction {
     }
   }
 
-  fun fromLong(value: Long): Direction {
-    return when (value) {
-      1L -> NORTH
-      2L -> SOUTH
-      3L -> WEST
-      4L -> EAST
-      else -> error("impossiburu")
-    }
-  }
-
   companion object {
     fun fromChar(char: Char): Direction {
       return when (char) {
@@ -96,6 +77,7 @@ enum class Direction {
       }
     }
 
+    @Suppress("unused")
     fun fromPointDiff(p: Point): Direction {
       return when (p) {
         Point(0, -1) -> NORTH

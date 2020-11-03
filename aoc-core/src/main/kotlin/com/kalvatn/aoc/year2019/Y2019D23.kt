@@ -11,13 +11,13 @@ class Y2019D23(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
   val program by lazy { this.input.singleLineLongs() }
 
   override suspend fun partOne(): String {
-    val computers = (0L..49).map {
+    val computers = (0L until NUM_COMPUTERS).map {
       val pc = IntcodeComputer(program)
       pc.input(it)
       it to pc
     }.toMap()
     while (true) {
-      computers.forEach { (k, v) ->
+      computers.forEach { (_, v) ->
         v.input(-1)
         v.run()
         val message = v.output()
@@ -26,19 +26,17 @@ class Y2019D23(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
           if (dest == 255L) {
             return y.toString()
           }
-          computers[dest]!!.apply {
+          (computers[dest] ?: error("")).apply {
             input(x)
             input(y)
           }
         }
       }
     }
-
-    return ""
   }
 
   override suspend fun partTwo(): String {
-    val computers = (0L..49).map {
+    val computers = (0L until NUM_COMPUTERS).map {
       val pc = IntcodeComputer(program)
       pc.input(it)
       it to pc
@@ -94,11 +92,10 @@ class Y2019D23(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         v.clearOutput()
       }
     }
-
-    return ""
   }
 
   companion object {
+    const val NUM_COMPUTERS = 49
   }
 }
 

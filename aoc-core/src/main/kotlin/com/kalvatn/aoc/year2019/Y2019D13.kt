@@ -51,8 +51,8 @@ class Y2019D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 
   @Suppress("unused")
   private fun printGame(tiles: Map<Point, Int>) {
-    val xMax = tiles.keys.maxBy { it.x }!!.x
-    val yMax = tiles.keys.maxBy { it.y }!!.y
+    val xMax = tiles.keys.maxByOrNull { it.x }!!.x
+    val yMax = tiles.keys.maxByOrNull { it.y }!!.y
     (0..yMax).forEach { y ->
       (0..xMax).forEach { x ->
         val tile = when (tiles[Point(x, y)]) {

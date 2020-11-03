@@ -22,9 +22,6 @@ class Y2019D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
     pc.run()
     return pc.outputLast().toString()
   }
-
-  companion object {
-  }
 }
 
 fun main() = runBlocking {

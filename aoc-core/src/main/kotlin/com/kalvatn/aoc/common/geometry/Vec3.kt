@@ -6,6 +6,7 @@ data class Vec3(
   val z: Int
 )
 
+@Suppress("unused")
 fun Vec3.toMutableVec3() = MutableVec3(this.x, this.y, this.z)
 
 data class MutableVec3(

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.kalvatn.aoc.core.model
 
 import com.kalvatn.aoc.core.input.PuzzleInput
@@ -15,6 +17,7 @@ interface Puzzle {
   suspend fun run(runBenchmark: Boolean = false)
 }
 
+@Suppress("unused")
 abstract class GenericPuzzleYearDay(
   final override val year: Year,
   final override val day: Day,
@@ -36,7 +39,7 @@ abstract class GenericPuzzleYearDay(
     val total = p1Time.plus(p2Time)
     println(
       """
-            |${toString()}  
+            |${toString()}
             |   part one : ${p1Result.padEnd(30)} ${p1Time.toHMS()}
             |   part two : ${p2Result.padEnd(30)} ${p2Time.toHMS()}
             |${total.toHMS()}""".trimMargin("|")

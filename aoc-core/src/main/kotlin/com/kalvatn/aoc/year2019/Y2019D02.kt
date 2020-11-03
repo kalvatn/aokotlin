@@ -11,7 +11,10 @@ class Y2019D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
   private val computer = IntcodeComputer(this.input.singleLineLongs())
 
   override suspend fun partOne(): String {
-    return computer.findSolutionForVerbNounPair(12, 2).toString()
+    return computer.findSolutionForVerbNounPair(
+      verb = 12,
+      noun = 2
+    ).toString()
   }
 
   override suspend fun partTwo(): String {

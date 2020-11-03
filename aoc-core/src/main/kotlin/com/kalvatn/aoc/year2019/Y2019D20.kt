@@ -26,7 +26,7 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
 
   data class Portal(val name: String, val entrance: Point, val outer: Boolean = false)
 
-  fun portals(maze: Map<Point, Char>): Map<String, Set<Portal>> {
+  private fun portals(maze: Map<Point, Char>): Map<String, Set<Portal>> {
     val portals = mutableMapOf<String, MutableSet<Portal>>()
     maze.filterValues { it in ('A'..'Z') }.forEach { (k, v) ->
       k.adj4().firstOrNull { maze[it] == '.' }?.let {
@@ -46,7 +46,7 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     return portals
   }
 
-  fun portalPoints(portals: Map<String, Set<Portal>>): Map<Point, Point> {
+  private fun portalPoints(portals: Map<String, Set<Portal>>): Map<Point, Point> {
     val entranceToExit = mutableMapOf<Point, Point>()
     portals.filterValues { it.size == 2 }.values.forEach { it ->
       entranceToExit[it.first().entrance] = it.last().entrance
@@ -71,7 +71,7 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     }
   }
 
-  fun nextNodes(node: Node, maze: Map<Point, Char>, p2p: Map<Point, Point>): Set<Node> {
+  private fun nextNodes(node: Node, maze: Map<Point, Char>, p2p: Map<Point, Point>): Set<Node> {
     if (node.point in p2p && !node.justExited) {
       return setOf(
         Node(p2p[node.point] ?: error("impossiburu"), node.distance + 1, true)
@@ -83,7 +83,7 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     }.toSet()
   }
 
-  fun shortestPath(maze: Map<Point, Char>, p2p: Map<Point, Point>, start: Point, target: Point): Int {
+  private fun shortestPath(maze: Map<Point, Char>, p2p: Map<Point, Point>, start: Point, target: Point): Int {
     var best = Integer.MAX_VALUE
 
     val queue = ArrayDeque<Node>()
@@ -128,10 +128,10 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     return shortestPath(maze, p2p, start, target).toString()
   }
 
-  val maxX = maze.keys.maxBy { it.x }!!.x
-  val maxY = maze.keys.maxBy { it.y }!!.y
+  private val maxX = maze.keys.maxByOrNull { it.x }!!.x
+  private val maxY = maze.keys.maxByOrNull { it.y }!!.y
 
-  fun nextNodes2(node: Node, maze: Map<Point, Char>, p2p: Map<Point, Point>): Set<Node> {
+  private fun nextNodes2(node: Node, maze: Map<Point, Char>, p2p: Map<Point, Point>): Set<Node> {
     if (node.point in p2p && !node.justExited) {
       val outer = node.point.x == 2 || node.point.y == 2 || node.point.x == maxX - 2 || node.point.y == maxY - 2
       if (outer && node.depth > 0) {
@@ -158,14 +158,13 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     }.toSet()
   }
 
-  suspend fun shortestPath2(maze: Map<Point, Char>, p2p: Map<Point, Point>, start: Node, target: Node): Int {
+  private fun shortestPath2(maze: Map<Point, Char>, p2p: Map<Point, Point>, start: Node, target: Node): Int {
     var best = Integer.MAX_VALUE
 
     val queue = PriorityQueue<Node>()
     queue.add(start)
     val visited = mutableSetOf<Pair<Point, Int>>()
 
-    var steps = 0L
     while (queue.isNotEmpty()) {
       val current = queue.remove()
 
@@ -174,10 +173,6 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
         continue
       }
       visited.add(hash)
-
-//            if (steps++ % 10000L == 0L) {
-//                println(current)
-//            }
 
       if (current.point == target.point && current.depth == 0) {
         if (current.distance < best) {

@@ -16,7 +16,7 @@ class Y2019D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
   }
 
   override suspend fun partOne(): String {
-    val layerWithFewestZeros = layers.minBy { it.count { number -> number == 0 } }!!
+    val layerWithFewestZeros = layers.minByOrNull { it.count { number -> number == 0 } }!!
     val ones = layerWithFewestZeros.count { it == 1 }
     val twos = layerWithFewestZeros.count { it == 2 }
     return (ones * twos).toString()

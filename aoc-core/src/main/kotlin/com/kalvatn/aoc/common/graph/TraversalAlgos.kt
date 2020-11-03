@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.kalvatn.aoc.common.graph
 
 import java.util.ArrayDeque

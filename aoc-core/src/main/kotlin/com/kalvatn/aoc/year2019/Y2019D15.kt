@@ -17,9 +17,9 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 
   data class Map(val points: MutableMap<Point, Char> = mutableMapOf())
 
-  val pc = IntcodeComputer(program)
+  private val pc = IntcodeComputer(program)
 
-  val repairDroid by lazy {
+  private val repairDroid by lazy {
     RepairDroid(pc).also {
       it.move()
       it.draw()
@@ -37,27 +37,27 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     }
   }
 
-  class RepairDroid(val computer: IntcodeComputer) {
+  class RepairDroid(private val computer: IntcodeComputer) {
 
-    var curDir = Direction.NORTH
-    var curPos = Point(0, 0)
+    private var curDir = Direction.NORTH
+    private var curPos = Point(0, 0)
     val points = mutableMapOf<Point, Status>()
     val pointsVisit = mutableMapOf<Point, Int>()
-    val walls = mutableSetOf<Point>()
+    private val walls = mutableSetOf<Point>()
     var i = 0
-    var osFound = false
+    private var osFound = false
 
-    fun isFullyMapped(): Boolean {
+    private fun isFullyMapped(): Boolean {
       if (!osFound) {
         return false
       }
 
       val (xMin, xMax, yMin, yMax) = with(points.keys) {
         listOf(
-          minBy { it.x }!!.x,
-          maxBy { it.x }!!.x,
-          minBy { it.y }!!.y,
-          maxBy { it.y }!!.y
+          minByOrNull { it.x }!!.x,
+          maxByOrNull { it.x }!!.x,
+          minByOrNull { it.y }!!.y,
+          maxByOrNull { it.y }!!.y
         )
       }
       (yMin + 1 until yMax).forEach { y ->
@@ -90,14 +90,12 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
             } else {
               it to Int.MAX_VALUE
             }
-          }.minBy { it.second }!!.first
+          }.minByOrNull { it.second }!!.first
         }
 
         computer.input(curDir.toLong())
         computer.run()
-        val status = Status.fromId(computer.outputLast())
-//                println("$curPos $curDir $status")
-        when (status) {
+        when (Status.fromId(computer.outputLast())) {
           Status.MOVED -> {
             curPos += curDir.toPointDiff()
             points[curPos] = Status.MOVED
@@ -112,20 +110,14 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
               } else {
                 it to Int.MAX_VALUE
               }
-            }.minBy { it.second }!!.first
+            }.minByOrNull { it.second }!!.first
           }
           Status.FOUND_OXYGEN_SYSTEM -> {
             curPos += curDir.toPointDiff()
             points[curPos] = Status.FOUND_OXYGEN_SYSTEM
-//                        walls.add(curPos + curDir.toPointDiff())
-//                        curDir.turn(Turn.RIGHT)
             osFound = true
           }
         }
-//                if (osFound) {
-//                    draw()
-//                    delay(10)
-//                }
 
         computer.clearOutput()
       }
@@ -134,10 +126,10 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     fun draw() {
       val (xMin, xMax, yMin, yMax) = with(points.keys) {
         listOf(
-          minBy { it.x }!!.x,
-          maxBy { it.x }!!.x,
-          minBy { it.y }!!.y,
-          maxBy { it.y }!!.y
+          minByOrNull { it.x }!!.x,
+          maxByOrNull { it.x }!!.x,
+          minByOrNull { it.y }!!.y,
+          maxByOrNull { it.y }!!.y
         )
       }
       (yMin..yMax).forEach { y ->
@@ -188,34 +180,10 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
       adj.forEach {
         points[it] = Status.FOUND_OXYGEN_SYSTEM
       }
-//            val (xMin, xMax, yMin, yMax) = with(points.keys) {
-//                listOf(
-//                        minBy { it.x }!!.x,
-//                        maxBy { it.x }!!.x,
-//                        minBy { it.y }!!.y,
-//                        maxBy { it.y }!!.y
-//                )
-//            }
-//            (yMin..yMax).forEach { y ->
-//                (xMin..xMax).forEach { x ->
-//                    val p = Point(x, y)
-//                    when {
-//                        points[p] == Status.HIT_WALL -> print('#')
-//                        points[p] == Status.FOUND_OXYGEN_SYSTEM -> print('O')
-//                        points[p] == Status.MOVED -> print('.')
-//                        else -> print(' ')
-//                    }
-//
-//                }
-//                println()
-//            }
       i++
     }
 
     return "$i"
-  }
-
-  companion object {
   }
 }
 

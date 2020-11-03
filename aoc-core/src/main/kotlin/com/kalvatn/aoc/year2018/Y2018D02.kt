@@ -19,7 +19,7 @@ class Y2018D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzleYearDay(Yea
   override suspend fun partTwo(): String {
     for (s1 in boxIds) {
       for (s2 in boxIds) {
-        val equalChars = (0 until s2.length)
+        val equalChars = (s2.indices)
           .asSequence()
           .filter { s1[it] == s2[it] }
           .map { s1[it] }

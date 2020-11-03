@@ -71,9 +71,6 @@ class Y2019D25(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
   override suspend fun partTwo(): String {
     return "https://adventofcode.com/2019/day/25/answer"
   }
-
-  companion object {
-  }
 }
 
 fun main() = runBlocking {
