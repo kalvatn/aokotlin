@@ -6,11 +6,11 @@ import io.kotlintest.specs.StringSpec
 
 class DayTest : StringSpec({
 
-    "integer value of day should be as expected" {
-        Day.D01.intValue() shouldBe 1
-    }
+  "integer value of day should be as expected" {
+    Day.D01.intValue() shouldBe 1
+  }
 
-    "string value of day should be as expected" {
-        Day.D01.intString() shouldBe "01"
-    }
+  "string value of day should be as expected" {
+    Day.D01.intString() shouldBe "01"
+  }
 })

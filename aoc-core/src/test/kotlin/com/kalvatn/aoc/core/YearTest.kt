@@ -6,11 +6,11 @@ import io.kotlintest.specs.StringSpec
 
 class YearTest : StringSpec({
 
-    fun intValue() {
-        Year.Y2015.intValue() shouldBe 2015
-    }
+  fun intValue() {
+    Year.Y2015.intValue() shouldBe 2015
+  }
 
-    fun intString() {
-        Year.Y2015.intString() shouldBe "2015"
-    }
+  fun intString() {
+    Year.Y2015.intString() shouldBe "2015"
+  }
 })

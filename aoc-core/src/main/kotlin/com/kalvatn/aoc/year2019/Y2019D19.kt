@@ -7,66 +7,64 @@ import com.kalvatn.aoc.core.model.GenericPuzzle2019
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import kotlinx.coroutines.runBlocking
 
-
 class Y2019D19(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D19, input) {
 
-    private val program by lazy { this.input.singleLineLongs() }
+  private val program by lazy { this.input.singleLineLongs() }
 
-    override suspend fun partOne(): String {
-        val pc = IntcodeComputer(program)
-        val points = mutableMapOf<Point, Char>()
-        (0 until 50).forEach { y ->
-            (0 until 50).forEach { x ->
-                val point = Point(x, y)
-                pc.input(point.x.toLong())
-                pc.input(point.y.toLong())
-                pc.run()
-                points[point] = if (pc.outputLast() == 0L) '.' else '#'
-                pc.reset()
-            }
-        }
-
+  override suspend fun partOne(): String {
+    val pc = IntcodeComputer(program)
+    val points = mutableMapOf<Point, Char>()
+    (0 until 50).forEach { y ->
+      (0 until 50).forEach { x ->
+        val point = Point(x, y)
+        pc.input(point.x.toLong())
+        pc.input(point.y.toLong())
+        pc.run()
+        points[point] = if (pc.outputLast() == 0L) '.' else '#'
+        pc.reset()
+      }
+    }
 
 //        points.print {
 //            print(points[it])
 //        }
 
-        return points.filterValues { it == '#' }.count().toString()
-    }
+    return points.filterValues { it == '#' }.count().toString()
+  }
 
-    private val pc = IntcodeComputer(program)
-    fun process(x: Long, y: Long): Long {
-        pc.reset()
-        pc.input(x)
-        pc.input(y)
-        pc.run()
-        return pc.outputLast()
-    }
+  private val pc = IntcodeComputer(program)
+  fun process(x: Long, y: Long): Long {
+    pc.reset()
+    pc.input(x)
+    pc.input(y)
+    pc.run()
+    return pc.outputLast()
+  }
 
-    override suspend fun partTwo(): String {
-        val size = 100
+  override suspend fun partTwo(): String {
+    val size = 100
 
-        val allCorners = mutableListOf<List<Point>>()
+    val allCorners = mutableListOf<List<Point>>()
 
-        //TODO figure out how to calculate initial y (hardcoded size*5)
-        loop@ for (y in size * 5..size * 10) {
-            for (x in y * 2..(y * 3)) {
-                val topleft = Point(x - size + 1, y - size + 1)
-                val bottomleft = Point(x - size + 1, y)
-                val bottomright = Point(x, y)
-                val topright = Point(x, y - size + 1)
-                val corners = listOf(
-                        topleft,
-                        bottomleft,
-                        bottomright,
-                        topright
-                ).map { it to process(it.x.toLong(), it.y.toLong()) }.toMap()
-                if (corners.values.all { it == 1L }) {
-                    allCorners.add(corners.keys.toList())
-                    return ((topleft.x * 10000) + topleft.y).toString()
-                }
-            }
+    //TODO figure out how to calculate initial y (hardcoded size*5)
+    loop@ for (y in size * 5..size * 10) {
+      for (x in y * 2..(y * 3)) {
+        val topleft = Point(x - size + 1, y - size + 1)
+        val bottomleft = Point(x - size + 1, y)
+        val bottomright = Point(x, y)
+        val topright = Point(x, y - size + 1)
+        val corners = listOf(
+          topleft,
+          bottomleft,
+          bottomright,
+          topright
+        ).map { it to process(it.x.toLong(), it.y.toLong()) }.toMap()
+        if (corners.values.all { it == 1L }) {
+          allCorners.add(corners.keys.toList())
+          return ((topleft.x * 10000) + topleft.y).toString()
         }
+      }
+    }
 //        val points = mutableMapOf<Point, Long>()
 //        allCorners.flatten().forEach {
 //            points[it] = 1L
@@ -78,16 +76,13 @@ class Y2019D19(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 //                print(if (points[it] == 1L) '#' else '.')
 //            }
 //        }
-        return ""
-    }
+    return ""
+  }
 
-    companion object {
-
-    }
-
+  companion object {
+  }
 }
 
 fun main() = runBlocking {
-    PuzzleRunner(listOf(Y2019D19())).run()
+  PuzzleRunner(listOf(Y2019D19())).run()
 }
-

@@ -10,29 +10,24 @@ import kotlinx.coroutines.runBlocking
 
 class Y2015D04(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D04, input) {
 
+  private val key = this.input.singleLine()
 
-    private val key = this.input.singleLine()
-
-    private fun findSecret(startingWith: String): Int {
-        (0..Integer.MAX_VALUE).forEach {
-            if ("$key$it".md5().startsWith(startingWith)) return it
-        }
-        throw Impossiburu()
+  private fun findSecret(startingWith: String): Int {
+    (0..Integer.MAX_VALUE).forEach {
+      if ("$key$it".md5().startsWith(startingWith)) return it
     }
+    throw Impossiburu()
+  }
 
-    override suspend fun partOne(): String {
-        return findSecret("0".repeat(5)).toString()
-    }
+  override suspend fun partOne(): String {
+    return findSecret("0".repeat(5)).toString()
+  }
 
-
-    override suspend fun partTwo(): String {
-        return findSecret("0".repeat(6)).toString()
-    }
-
-
+  override suspend fun partTwo(): String {
+    return findSecret("0".repeat(6)).toString()
+  }
 }
 
 fun main() = runBlocking {
-    PuzzleRunner.run(Y2015D04())
+  PuzzleRunner.run(Y2015D04())
 }
-
