@@ -1,9 +1,8 @@
 package com.kalvatn.aoc.core
-import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.core.model.Year
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class YearTest : StringSpec({
 

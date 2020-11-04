@@ -4,7 +4,6 @@ import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
 
 internal class Y2019D16Test : BaseDayTest() {
 

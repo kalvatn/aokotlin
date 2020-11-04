@@ -11,7 +11,6 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonObject
-import java.lang.NumberFormatException
 
 class Y2015D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D12, input) {
 

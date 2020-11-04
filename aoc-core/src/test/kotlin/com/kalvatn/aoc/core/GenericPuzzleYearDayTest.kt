@@ -1,12 +1,11 @@
 package com.kalvatn.aoc.core
-import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.year2015.Y2015D04
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class GenericPuzzleYearDayTest : StringSpec({
 

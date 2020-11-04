@@ -1,5 +1,4 @@
 package com.kalvatn.aoc.year2018
-import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.common.model.Direction

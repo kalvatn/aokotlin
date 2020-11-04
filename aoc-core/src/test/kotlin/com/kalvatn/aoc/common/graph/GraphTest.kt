@@ -1,8 +1,7 @@
 package com.kalvatn.aoc.common.graph
-import org.junit.jupiter.api.Test
 
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 @Suppress("LocalVariableName")
 internal class GraphTest : StringSpec({

@@ -1,8 +1,7 @@
 package com.kalvatn.aoc.exceptions
-import org.junit.jupiter.api.Test
 
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class ExceptionsTest : StringSpec({
   "impossiburu exception message" {

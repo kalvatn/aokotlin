@@ -1,5 +1,4 @@
 package com.kalvatn.aoc.year2019
-import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import io.kotest.matchers.shouldBe

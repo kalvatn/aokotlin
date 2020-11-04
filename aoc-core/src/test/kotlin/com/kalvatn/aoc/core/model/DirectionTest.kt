@@ -1,11 +1,10 @@
 package com.kalvatn.aoc.core.model
-import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.common.model.Direction
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.common.model.Turn
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class DirectionTest : StringSpec({
   "turning from a direction should end up in the correct direction" {

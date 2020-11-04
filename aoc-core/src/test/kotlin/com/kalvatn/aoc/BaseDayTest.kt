@@ -1,5 +1,4 @@
 package com.kalvatn.aoc
-import org.junit.jupiter.api.Test
 
 import io.kotest.core.spec.style.AnnotationSpec
 import org.junit.jupiter.api.TestInstance

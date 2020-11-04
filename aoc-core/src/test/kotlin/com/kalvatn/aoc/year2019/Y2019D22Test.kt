@@ -1,5 +1,4 @@
 package com.kalvatn.aoc.year2019
-import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.year2019.Y2019D22.Deck

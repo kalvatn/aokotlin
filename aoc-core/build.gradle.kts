@@ -8,5 +8,5 @@ dependencies {
   implementation(Libs.KOTLINX_SERIALIZATION_JSON)
   implementation("com.marcinmoskala:DiscreteMathToolkit:1.0.3")
   testImplementation(TestLibs.KOTEST)
-    testImplementation(TestLibs.KOTEST_ASSERTIONS_CORE)
+  testImplementation(TestLibs.KOTEST_ASSERTIONS_CORE)
 }

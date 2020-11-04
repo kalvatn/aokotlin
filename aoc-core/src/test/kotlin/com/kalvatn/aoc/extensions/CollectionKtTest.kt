@@ -1,8 +1,7 @@
 package com.kalvatn.aoc.extensions
-import org.junit.jupiter.api.Test
 
-import io.kotest.matchers.shouldBe
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class CollectionKtTest : StringSpec({
   "cycle n" {
