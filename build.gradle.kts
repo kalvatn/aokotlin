@@ -63,7 +63,7 @@ subprojects {
   tasks.withType<Test> {
     exclude("**/*IntegrationTest.class")
     useJUnitPlatform()
-    maxHeapSize = "4096m"
+    maxHeapSize = "2048m"
     testLogging {
       events(
 //        "passed",
