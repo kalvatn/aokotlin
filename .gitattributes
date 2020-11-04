@@ -1,54 +1,75 @@
 #
 # https://help.github.com/articles/dealing-with-line-endings/
 # https://github.com/Danimoth/gitattributes/blob/master/Web.gitattributes
+# https://gist.github.com/ajdruff/16427061a41ca8c08c05992a6c74f59e
+
+# git config --global core.eol lf
+# git config --global core.autocrlf false
+# rm .git/index
+# git reset
+# git add -u
+# git commit -m "normalize line endings"
+
 #
 # Handle line endings automatically for files detected as text
 # and leave all files detected as binary untouched.
-* text=auto
+*   text=auto
 
 # These are explicitly windows files and should use crlf
-*.bat           text eol=crlf
+*.bat   text eol=crlf
 
 # These files are text and should be normalized (Convert crlf => lf)
-*.php text
-*.css text
-*.js text
-*.json text
-*.htm text
-*.html text
-*.xml text
-*.txt text
-*.ini text
-*.inc text
-*.pl text
-*.rb text
-*.py text
-*.scm text
-*.sql text
-*.svg text
-*.kt text
-*.kts text
-*.java text
-.htaccess text
-*.sh text
+*.css           text
+.htaccess       text
+*.htm           text
+*.html          text
+*.ini           text
+*.inc           text
+*.java          text
+*.js            text
+*.json          text
+*.kt            text
+*.kts           text
+*.php           text
+*.pl            text
+*.properties    text
+*.py            text
+*.rb            text
+*.scm           text
+*.sh            text
+*.sql           text
+*.svg           text
+*.txt           text
+*.xml           text
 
 # These files are binary and should be left untouched
 # (binary is a macro for -text -diff)
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.ico binary
-*.mov binary
-*.mp4 binary
-*.mp3 binary
-*.flv binary
-*.fla binary
-*.swf binary
-*.gz binary
-*.zip binary
-*.7z binary
-*.ttf binary
-*.pyc binary
 *.class binary
+*.pyc   binary
+*.out   binary
+*.exe   binary
+
+*.gif   binary
+*.ico   binary
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+
+*.fla   binary
+*.flv   binary
+*.mov   binary
+*.mp4   binary
+*.swf   binary
+
+*.mp3   binary
+*.ogg   binary
+*.wav   binary
+*.flac  binary
+
+*.7z    binary
+*.gz    binary
+*.tar   binary
+*.zip   binary
+
+*.ttf   binary
 
