@@ -3,10 +3,10 @@ package dependencies
 object TestLibs {
   const val KOTLIN_TEST = "org.jetbrains.kotlin:kotlin-test:${Versions.KOTLIN}"
   const val KOTLIN_COROUTINES_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLIN_COROUTINES}"
-  const val KOTLIN_TEST_JUNIT = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.KOTLIN}"
+  const val KOTLIN_TEST_JUNIT = "org.jetbrains.kotlin:kotlin-test-junit5:${Versions.KOTLIN}"
 
-  const val KOTEST = "io.kotlintest:kotlintest-runner-junit5:${Versions.KOTEST}"
-//  const val KOTEST_ASSERTIONS_CORE = "io.kotlintest:kotlintest-assertions-core:${Versions.KOTEST}"
+  const val KOTEST = "io.kotest:kotest-runner-junit5:${Versions.KOTEST}"
+  const val KOTEST_ASSERTIONS_CORE = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
 
   const val JUNIT_PLATFORM = "org.junit:junit-bom:${Versions.JUNIT}"
   const val JUNIT_JUPITER = "org.junit.jupiter:junit-jupiter:${Versions.JUNIT}"
@@ -29,7 +29,7 @@ object TestLibs {
     const val KOTLIN = Libs.Versions.KOTLIN
     const val KOTLIN_COROUTINES = Libs.Versions.KOTLIN_COROUTINES
     const val KTOR = Libs.Versions.KTOR
-    const val KOTEST = "3.3.2"
+    const val KOTEST = "4.3.1"
 
   }
 }

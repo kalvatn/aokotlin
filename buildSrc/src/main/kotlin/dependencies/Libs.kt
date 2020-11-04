@@ -52,7 +52,7 @@ object Libs {
 
   object Versions {
     const val KOTLIN = BuildPlugins.Versions.KOTLIN
-    const val KOTLIN_COROUTINES = "1.3.7"
+    const val KOTLIN_COROUTINES = "1.4.1"
 
     const val PROTOBUF = "3.12.2"
     const val GRPC = "1.30.0"

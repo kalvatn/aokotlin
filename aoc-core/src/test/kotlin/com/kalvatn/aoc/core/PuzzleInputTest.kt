@@ -1,11 +1,12 @@
 package com.kalvatn.aoc.core
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.year2015.Y2015D04
 import com.kalvatn.aoc.year2015.Y2015D06
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.StringSpec
 
 class PuzzleInputTest : StringSpec({
   "single line" {

@@ -1,7 +1,8 @@
 package com.kalvatn.aoc.year2019
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 
 internal class Y2019D13Test : BaseDayTest() {
   @Test

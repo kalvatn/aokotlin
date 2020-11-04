@@ -1,4 +1,5 @@
 package com.kalvatn.aoc.year2015
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
@@ -9,7 +10,7 @@ import com.kalvatn.aoc.year2015.Y2015D06.Action.ON
 import com.kalvatn.aoc.year2015.Y2015D06.Action.TOGGLE
 import com.kalvatn.aoc.year2015.Y2015D06.Command
 import com.kalvatn.aoc.year2015.Y2015D06.Command.Companion.fromString
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 
 class Y2015D06Test : BaseDayTest() {
   @Test

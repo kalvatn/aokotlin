@@ -1,10 +1,11 @@
 package com.kalvatn.aoc.year$YEAR
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Year
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 
 internal class Y$YEARD$DAYTest : BaseDayTest() {
     @Test

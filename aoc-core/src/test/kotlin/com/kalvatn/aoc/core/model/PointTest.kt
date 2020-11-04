@@ -1,8 +1,9 @@
 package com.kalvatn.aoc.core.model
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.common.model.Point
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.StringSpec
 
 class PointTest : StringSpec({
 

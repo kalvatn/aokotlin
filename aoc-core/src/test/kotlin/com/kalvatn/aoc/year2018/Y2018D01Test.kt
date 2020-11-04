@@ -1,12 +1,14 @@
 package com.kalvatn.aoc.year2018
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Disabled
 
 class Y2018D01Test : BaseDayTest() {
 
-  @Ignore
+  @Disabled
   suspend fun testHard() {
     // https://www.reddit.com/r/adventofcode/comments/a20646/2018_day_1_solutions/eaukxu5/
     val testHard = Y2018D01(PuzzleInput.ofCommaDelimited("+10000000, -9999999"))

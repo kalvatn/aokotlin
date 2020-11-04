@@ -1,8 +1,9 @@
 package com.kalvatn.aoc.year2015
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.core.input.PuzzleInput
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 
 internal class Y2015D12Test : BaseDayTest() {
   @Test

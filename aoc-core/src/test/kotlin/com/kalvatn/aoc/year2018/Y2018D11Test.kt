@@ -1,9 +1,10 @@
 package com.kalvatn.aoc.year2018
+import org.junit.jupiter.api.Test
 
 import com.kalvatn.aoc.BaseDayTest
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.input.PuzzleInput
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 
 class Y2018D11Test : BaseDayTest() {
 
