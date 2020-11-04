@@ -62,6 +62,18 @@ subprojects {
 
   tasks.withType<Test> {
     exclude("**/*IntegrationTest.class")
+    // https://kotest.io/tags/
+//    systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
+
+    // https://javabydeveloper.com/run-tag-specific-junit-5-tests-from-gradle-command/
+//    val itagsEnv = System.getProperty("includeTags")
+//    val itags = itagsEnv?.split(",")?.toTypedArray() ?: listOf<String>().toTypedArray()
+//    val etagsEnv = System.getProperty("excludeTags")
+//    val etags = etagsEnv?.split(",")?.toTypedArray() ?: listOf("slow","very-slow").toTypedArray()
+//    useJUnitPlatform {
+//      includeTags(*itags)
+//      excludeTags(*etags)
+//    }
     useJUnitPlatform()
     maxHeapSize = "2048m"
     testLogging {
