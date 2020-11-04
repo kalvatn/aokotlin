@@ -66,6 +66,8 @@ subprojects {
 //    systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
 
     // https://javabydeveloper.com/run-tag-specific-junit-5-tests-from-gradle-command/
+    // https://junit.org/junit5/docs/current/user-guide/#running-tests-tag-expressions
+    // https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering
 //    val itagsEnv = System.getProperty("includeTags")
 //    val itags = itagsEnv?.split(",")?.toTypedArray() ?: listOf<String>().toTypedArray()
 //    val etagsEnv = System.getProperty("excludeTags")
