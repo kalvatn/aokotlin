@@ -18,8 +18,8 @@ plugins {
   jacoco
   `kotlin-dsl`
 //  id(BuildPlugins.KOTLIN_JVM) version BuildPlugins.Versions.KOTLIN apply false
-  kotlin("jvm") version BuildPlugins.Versions.KOTLIN
-  kotlin("plugin.serialization") version BuildPlugins.Versions.KOTLIN
+  kotlin("jvm") version BuildPlugins.Versions.KOTLIN apply false
+  kotlin("plugin.serialization") version BuildPlugins.Versions.KOTLIN apply false
   id(BuildPlugins.SHADOW) version BuildPlugins.Versions.SHADOW apply false
   id(BuildPlugins.DETEKT) version BuildPlugins.Versions.DETEKT
   id(BuildPlugins.SONARQUBE) version BuildPlugins.Versions.SONARQUBE
