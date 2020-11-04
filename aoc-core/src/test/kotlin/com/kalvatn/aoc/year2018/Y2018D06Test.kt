@@ -1,10 +1,13 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.BaseDayTest
+import com.kalvatn.aoc.JunitTags
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Year
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.Tags
 
 class Y2018D06Test : BaseDayTest() {
   @Test
@@ -19,6 +22,7 @@ class Y2018D06Test : BaseDayTest() {
     test1.partTwo().toInt() shouldBe 90
   }
 
+  @Tags(Tag(JunitTags.SLOW))
   @Test
   override suspend fun solutionPartOne() {
     val day = Y2018D06()

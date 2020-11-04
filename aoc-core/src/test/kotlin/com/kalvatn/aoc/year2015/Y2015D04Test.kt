@@ -1,8 +1,11 @@
 package com.kalvatn.aoc.year2015
 
 import com.kalvatn.aoc.BaseDayTest
+import com.kalvatn.aoc.JunitTags
 import com.kalvatn.aoc.core.input.PuzzleInput
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.Tags
 
 class Y2015D04Test : BaseDayTest() {
 
@@ -11,6 +14,7 @@ class Y2015D04Test : BaseDayTest() {
     Y2015D04(PuzzleInput.ofSingleLine("abcdef")).partOne().toInt() shouldBe 609043
   }
 
+  @Tags(Tag(JunitTags.SLOW))
   @Test
   override suspend fun examplePartTwo() {
     Y2015D04(PuzzleInput.ofSingleLine("abcdef")).partTwo().toInt() shouldBe 6742839

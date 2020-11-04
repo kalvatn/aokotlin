@@ -1,7 +1,10 @@
 package com.kalvatn.aoc.year2015
 
 import com.kalvatn.aoc.BaseDayTest
+import com.kalvatn.aoc.JunitTags
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.Tags
 
 internal class Y2015D10Test : BaseDayTest() {
 
@@ -22,11 +25,13 @@ internal class Y2015D10Test : BaseDayTest() {
   override suspend fun examplePartTwo() {
   }
 
+  @Tags(Tag(JunitTags.SLOW))
   @Test
   override suspend fun solutionPartOne() {
     Y2015D10().partOne().toInt() shouldBe 492982
   }
 
+  @Tags(Tag(JunitTags.SLOW))
   @Test
   override suspend fun solutionPartTwo() {
     Y2015D10().partTwo().toInt() shouldBe 6989950

@@ -1,9 +1,12 @@
 package com.kalvatn.aoc.year2019
 
 import com.kalvatn.aoc.BaseDayTest
+import com.kalvatn.aoc.JunitTags
 import com.kalvatn.aoc.core.input.PuzzleInput
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.Tags
 
 internal class Y2019D16Test : BaseDayTest() {
 
@@ -46,11 +49,13 @@ internal class Y2019D16Test : BaseDayTest() {
     Y2019D16(input3).partTwo().toInt() shouldBe 53553731
   }
 
+  @Tags(Tag(JunitTags.VERY_SLOW))
   @Test
   override suspend fun solutionPartOne() {
     Y2019D16().partOne().toInt() shouldBe 34841690
   }
 
+  @Tags(Tag(JunitTags.SLOW))
   @Test
   override suspend fun solutionPartTwo() {
     Y2019D16().partTwo().toInt() shouldBe 48776785
