@@ -95,7 +95,7 @@ class Y2019D23(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
   }
 
   companion object {
-    const val NUM_COMPUTERS = 49
+    const val NUM_COMPUTERS = 50
   }
 }
 

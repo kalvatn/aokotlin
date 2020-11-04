@@ -8,6 +8,7 @@ object TestLibs {
   const val KOTEST = "io.kotlintest:kotlintest-runner-junit5:${Versions.KOTEST}"
 //  const val KOTEST_ASSERTIONS_CORE = "io.kotlintest:kotlintest-assertions-core:${Versions.KOTEST}"
 
+  const val JUNIT_PLATFORM = "org.junit:junit-bom:${Versions.JUNIT}"
   const val JUNIT_JUPITER = "org.junit.jupiter:junit-jupiter:${Versions.JUNIT}"
   const val JUNIT_JUPITER_ENGINE = "org.junit.jupiter:junit-jupiter-engine:${Versions.JUNIT}"
 
@@ -21,7 +22,7 @@ object TestLibs {
 
   object Versions {
     // test scope
-    const val JUNIT = "5.5.1"
+    const val JUNIT = "5.7.0"
     const val MOCKK = "1.9.3"
     const val MOCKSERVER = "5.9.0"
     const val TEST_CONTAINERS = "1.12.2"

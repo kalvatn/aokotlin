@@ -63,6 +63,13 @@ subprojects {
   tasks.withType<Test> {
     exclude("**/*IntegrationTest.class")
     useJUnitPlatform()
+    testLogging {
+      events(
+//        "passed",
+        "skipped",
+        "failed"
+      )
+    }
   }
 
   tasks.jacocoTestReport {
@@ -132,11 +139,12 @@ subprojects {
     implementation(Libs.KOTLIN_LOGGING)
     implementation(Libs.NEWRELIC_API)
 
+    testImplementation(platform(TestLibs.JUNIT_PLATFORM))
+    testImplementation(TestLibs.JUNIT_JUPITER)
+    testImplementation(TestLibs.JUNIT_JUPITER_ENGINE)
     testImplementation(TestLibs.KOTLIN_TEST)
     testImplementation(TestLibs.KOTLIN_TEST_JUNIT)
     testImplementation(TestLibs.KOTLIN_COROUTINES_TEST)
-    testImplementation(TestLibs.JUNIT_JUPITER)
-    testImplementation(TestLibs.JUNIT_JUPITER_ENGINE)
     testImplementation(TestLibs.MOCKK)
   }
 }
