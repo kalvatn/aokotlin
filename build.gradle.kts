@@ -150,6 +150,8 @@ subprojects {
   }
 
   dependencies {
+    implementation(kotlin("stdlib"))
+    implementation(kotlin("reflect"))
     implementation(Libs.LOGBACK_CLASSIC)
     implementation(Libs.KOTLIN_LOGGING)
     implementation(Libs.NEWRELIC_API)
