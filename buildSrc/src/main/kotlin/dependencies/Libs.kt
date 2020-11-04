@@ -16,6 +16,7 @@ object Libs {
   const val JAVAX_ANNOTATION_API = "javax.annotation:javax.annotation-api:${Versions.JAVAX_ANNOTATION_API}"
 
   const val KOTLIN_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KOTLIN_COROUTINES}"
+  const val KOTLINX_SERIALIZATION_JSON = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.KOTLINX_SERIALIZATION_JSON}"
 
   const val KTOR_SERVER_CORE = "io.ktor:ktor-server-core:${Versions.KTOR}"
   const val KTOR_AUTH = "io.ktor:ktor-auth:${Versions.KTOR}"
@@ -80,6 +81,7 @@ object Libs {
 
     const val KAFKA = "2.6.0"
     const val KAFKA_PROTOBUF = "5.5.0"
+    const val KOTLINX_SERIALIZATION_JSON = "1.0.1"
 
   }
 }
