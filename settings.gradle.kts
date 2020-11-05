@@ -14,5 +14,11 @@ buildCache {
 rootProject.name = "aokotlin"
 include(
   // must be defined in buildSrc/models/ProjectModule
-  "aoc-core"
+  "aoc-core",
+  "aoc-2015",
+  "aoc-2016",
+  "aoc-2017",
+  "aoc-2018",
+  "aoc-2019",
+  "aoc-2020"
 )
