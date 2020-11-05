@@ -6,7 +6,10 @@ enum class Year {
   Y2016,
   Y2017,
   Y2018,
-  Y2019;
+  Y2019,
+  Y2020,
+
+  ;
 
   fun intValue(): Int {
     return intString().toInt()

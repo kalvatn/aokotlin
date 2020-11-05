@@ -47,12 +47,34 @@ open class PuzzleInput(val lines: List<String>) {
   }
 
   companion object {
+    const val P1_TEST_SUFFIX = "test_p1"
+    const val P2_TEST_SUFFIX = "test_p2"
     val NULL = PuzzleInput(listOf())
 
     private fun downloadInput(year: Year, day: Day, inputFile: File) {
       val content = PuzzleInputDownloader.downloadInput(year, day)
       inputFile.createNewFile()
       inputFile.writeText(content)
+    }
+
+    @JvmStatic
+    fun p1Test(puzzle: Puzzle, case: Int = 1): PuzzleInput {
+      return forDay(puzzle, suffix = "${P1_TEST_SUFFIX}_$case")
+    }
+
+    @JvmStatic
+    fun p1Test(year: Year, day: Day, case: Int = 1): PuzzleInput {
+      return forDay(year, day, suffix = "${P1_TEST_SUFFIX}_$case")
+    }
+
+    @JvmStatic
+    fun p2Test(puzzle: Puzzle, case: Int = 1): PuzzleInput {
+      return forDay(puzzle, suffix = "${P2_TEST_SUFFIX}_$case")
+    }
+
+    @JvmStatic
+    fun p2Test(year: Year, day: Day, case: Int = 1): PuzzleInput {
+      return forDay(year, day, suffix = "${P2_TEST_SUFFIX}_$case")
     }
 
     @JvmStatic
