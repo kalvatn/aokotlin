@@ -7,6 +7,7 @@ import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Year
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Disabled
 
 class Y2018D13Test : BaseDayTest() {
 
@@ -17,6 +18,7 @@ class Y2018D13Test : BaseDayTest() {
   }
 
   @Test
+  @Disabled
   fun gridPrint() {
     val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
     test1.grid.print()

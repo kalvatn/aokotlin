@@ -25,10 +25,12 @@ internal class Y2019D03Test : BaseDayTest() {
     Y2019D03(input2).partTwo().toInt() shouldBe 410
   }
 
+  @Test
   override suspend fun solutionPartOne() {
     Y2019D03().partOne().toInt() shouldBe 227
   }
 
+  @Test
   override suspend fun solutionPartTwo() {
     Y2019D03().partTwo().toInt() shouldBe 20286
   }
