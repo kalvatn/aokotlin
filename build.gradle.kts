@@ -155,13 +155,18 @@ subprojects {
     implementation(Libs.LOGBACK_CLASSIC)
     implementation(Libs.KOTLIN_LOGGING)
     implementation(Libs.NEWRELIC_API)
+    implementation(Libs.KOTLIN_COROUTINES)
 
     testImplementation(platform(TestLibs.JUNIT_PLATFORM))
     testImplementation(TestLibs.JUNIT_JUPITER)
     testImplementation(TestLibs.JUNIT_JUPITER_ENGINE)
+
     testImplementation(TestLibs.KOTLIN_TEST)
     testImplementation(TestLibs.KOTLIN_TEST_JUNIT)
     testImplementation(TestLibs.KOTLIN_COROUTINES_TEST)
+
+    testImplementation(TestLibs.KOTEST)
+    testImplementation(TestLibs.KOTEST_ASSERTIONS_CORE)
     testImplementation(TestLibs.MOCKK)
   }
 }
