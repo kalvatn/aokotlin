@@ -70,21 +70,25 @@ class Y2018D13Test : BaseDayTest() {
     train2.direction shouldBe Direction.EAST
   }
 
+  @Test
   override suspend fun examplePartOne() {
     val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
     test1.partOne() shouldBe "7,3"
   }
 
+  @Test
   override suspend fun examplePartTwo() {
-    val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test"))
-    test1.partTwo().toInt() shouldBe 0
+    val test1 = Y2018D13(PuzzleInput.forDay(Year.Y2018, Day.D13, "test2"))
+    test1.partTwo() shouldBe "6,4"
   }
 
+  @Test
   override suspend fun solutionPartOne() {
     val day = Y2018D13()
     day.partOne() shouldBe "40,90"
   }
 
+  @Test
   override suspend fun solutionPartTwo() {
     val day = Y2018D13()
     day.partTwo() shouldBe "65,81"

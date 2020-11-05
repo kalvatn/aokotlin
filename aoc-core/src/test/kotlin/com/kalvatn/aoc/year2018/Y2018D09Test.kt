@@ -5,6 +5,7 @@ import com.kalvatn.aoc.core.input.PuzzleInput
 import io.kotest.matchers.shouldBe
 
 class Y2018D09Test : BaseDayTest() {
+  @Test
   override suspend fun examplePartOne() {
     val test1 = Y2018D09(PuzzleInput.ofSingleLine("9 players; last marble is worth 23 points"))
     test1.partOne().toInt() shouldBe 32
@@ -20,14 +21,17 @@ class Y2018D09Test : BaseDayTest() {
     test6.partOne().toInt() shouldBe 37305
   }
 
+  @Test
   override suspend fun examplePartTwo() {
   }
 
+  @Test
   override suspend fun solutionPartOne() {
     val day = Y2018D09()
     day.partOne().toInt() shouldBe 370210
   }
 
+  @Test
   override suspend fun solutionPartTwo() {
     val day = Y2018D09()
     day.partTwo().toLong() shouldBe 3101176548

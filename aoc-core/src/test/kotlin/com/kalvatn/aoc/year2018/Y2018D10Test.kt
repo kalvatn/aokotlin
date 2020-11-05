@@ -1,11 +1,14 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.BaseDayTest
+import com.kalvatn.aoc.JunitTags
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Year
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Tag
+import org.junit.jupiter.api.Tags
 
 class Y2018D10Test : BaseDayTest() {
 
@@ -33,17 +36,22 @@ class Y2018D10Test : BaseDayTest() {
     star.position.y shouldBe 0
   }
 
+  @Test
   override suspend fun examplePartOne() {
   }
 
+  @Test
   override suspend fun examplePartTwo() {
   }
 
+  @Tags(Tag(JunitTags.SLOW))
+  @Test
   override suspend fun solutionPartOne() {
     val day = Y2018D10()
     day.partOne() shouldBe "AHFGRKEE"
   }
 
+  @Test
   override suspend fun solutionPartTwo() {
     val day = Y2018D10()
     day.partTwo().toInt() shouldBe 10243
