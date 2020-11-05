@@ -5,10 +5,11 @@ import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.exceptions.CookieMissing
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import java.io.File
 
 object PuzzleInputDownloader {
 
-  private val sessionCookieFile = PuzzleInputDownloader::class.java.getResource("/session.cookie")
+  private val sessionCookieFile = File(".aoc-session-cookie")
   private val client = OkHttpClient()
 
   fun downloadInput(year: Year, day: Day): String {

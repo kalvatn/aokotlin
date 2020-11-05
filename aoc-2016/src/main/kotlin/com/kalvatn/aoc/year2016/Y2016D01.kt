@@ -30,6 +30,9 @@ class Y2016D01(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2016(Day.D0
   }
 
   override suspend fun partOne(): String {
+    this.input.singleLineSplit(",").map {
+      Turn.fromChar(it[0]) to it.drop(1).toInt()
+    }
     return START.distance(state.current).toString()
   }
 
@@ -46,5 +49,7 @@ class Y2016D01(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2016(Day.D0
 }
 
 fun main() = runBlocking {
+  val start = System.currentTimeMillis()
   PuzzleRunner(listOf(Y2016D01())).run()
+  println(System.currentTimeMillis() - start)
 }

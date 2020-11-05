@@ -9,3 +9,4 @@ build/
 .kotlintest/
 out/
 .gradle-build-cache
+.aoc-session-cookie
