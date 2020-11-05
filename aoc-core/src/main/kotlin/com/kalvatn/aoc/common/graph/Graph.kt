@@ -19,7 +19,7 @@ class Graph<T> {
 
 class WeightedGraph<T> {
 
-  internal val edges = mutableMapOf<T, MutableMap<T, Int>>()
+  val edges = mutableMapOf<T, MutableMap<T, Int>>()
 
   fun connect(source: T, target: T, weight: Int) {
     edges.computeIfAbsent(source) { mutableMapOf() }.computeIfAbsent(target) { weight }

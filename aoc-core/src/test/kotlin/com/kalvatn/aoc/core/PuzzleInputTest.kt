@@ -2,8 +2,6 @@ package com.kalvatn.aoc.core
 
 import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.input.PuzzleInput
-import com.kalvatn.aoc.year2015.Y2015D04
-import com.kalvatn.aoc.year2015.Y2015D06
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -38,17 +36,17 @@ class PuzzleInputTest : StringSpec({
     i.asInteger() shouldBe 234
   }
 
-  "for day" {
-    val puzzle = Y2015D04()
-    val i = PuzzleInput.forDay(puzzle)
-    i.singleLine() shouldBe "bgvyzdsv"
-  }
-
-  "for day with suffix" {
-    val puzzle = Y2015D06()
-    val i = PuzzleInput.forDay(puzzle, suffix = "test")
-    i.lines shouldBe listOf("turn on 0,0 through 0,0", "toggle 0,0 through 999,999")
-  }
+//  "for day" {
+//    val puzzle = Y2015D04()
+//    val i = PuzzleInput.forDay(puzzle)
+//    i.singleLine() shouldBe "bgvyzdsv"
+//  }
+//
+//  "for day with suffix" {
+//    val puzzle = Y2015D06()
+//    val i = PuzzleInput.forDay(puzzle, suffix = "test")
+//    i.lines shouldBe listOf("turn on 0,0 through 0,0", "toggle 0,0 through 999,999")
+//  }
 
   "as points" {
     PuzzleInput.ofString(
