@@ -19,7 +19,7 @@ class Y2018D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzleYearDay(Yea
     }
   }
 
-  private fun createFabric(claims: List<Claim>): Array<Array<Int>> {
+  private fun createFabric(claims: List<Claim>): Array<IntArray> {
     val size = when {
       claims.size < 5 -> 8
       else -> 1000

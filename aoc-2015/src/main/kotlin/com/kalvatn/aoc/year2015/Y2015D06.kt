@@ -5,6 +5,7 @@ import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2015
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.exceptions.Impossiburu
+import com.kalvatn.aoc.utils.flatten
 import com.kalvatn.aoc.utils.intArray2D
 import kotlinx.coroutines.runBlocking
 
@@ -40,7 +41,7 @@ class Y2015D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
     }
   }
 
-  private fun applyCommands(valueFn: (Action, Int) -> Int): Array<Array<Int>> {
+  private fun applyCommands(valueFn: (Action, Int) -> Int): Array<IntArray> {
     val commands = this.input.lines.map { Command.fromString(it) }
     val intArray2D = intArray2D(1000)
     for (command in commands) {
