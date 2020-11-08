@@ -2,6 +2,7 @@ package com.kalvatn.aoc.core.model
 
 import com.kalvatn.aoc.utils.timeit
 import com.kalvatn.aoc.utils.toHMS
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.time.Duration
 
@@ -26,9 +27,9 @@ class PartResult<T>(
     return value?.hashCode() ?: 0
   }
   companion object {
-    fun <T> of(block:() -> T): PartResult<T> {
+    suspend fun <T> of(block:() -> T): PartResult<T> = coroutineScope {
       val (result, duration) = timeit(block)
-      return PartResult(result, duration)
+      PartResult(result, duration)
     }
   }
 }

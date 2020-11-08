@@ -12,8 +12,8 @@ fun String.md5(): String {
   val bytes = MD5.digest(toByteArray())
   val result = StringBuilder(bytes.size * 2)
 
-  bytes.forEach {
-    val i = it.toInt()
+  for(b in bytes) {
+    val i = b.toInt()
     result.append(HEX_CHARS[i shr 4 and 0x0f])
     result.append(HEX_CHARS[i and 0x0f])
   }
