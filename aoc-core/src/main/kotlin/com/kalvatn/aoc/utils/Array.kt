@@ -76,11 +76,15 @@ fun Array<IntArray>.flatten(): List<Int> {
 @Suppress("unused")
 fun <E> Array<Array<E>>.print(block: (E) -> String) {
   forEach { row ->
-    row.forEach { col ->
-      print(block(col))
-    }
-    println()
+    row.print(block)
   }
+}
+
+fun <E> Array<E>.print(block: (E) -> String) {
+  forEach {
+    print(block(it))
+  }
+  println()
 }
 
 @Suppress("unused")
@@ -91,4 +95,26 @@ fun <E> Array<Array<E>>.print(transform: Map<E, String>, default: String) {
     }
     println()
   }
+}
+
+fun <T> Array<T>.shl(d: Int): Array<T> {
+  val newList = this.copyOf()
+  var shift = d
+  if (shift > size) shift %= size
+  forEachIndexed { index, value ->
+    val newIndex = (index + (size - shift)) % size
+    newList[newIndex] = value
+  }
+  return newList
+}
+fun <T> Array<T>.shr(d: Int): Array<T> {
+  return shl(-d)
+}
+
+fun main() {
+  val a = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
+  a.print { "$it"}
+  a.shl(1).print { "$it" }
+  a.shl(9).print { "$it" }
+  a.shr(3).print { "$it" }
 }
