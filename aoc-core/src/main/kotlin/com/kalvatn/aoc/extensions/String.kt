@@ -45,6 +45,11 @@ fun String.hasXYX(): Boolean {
   val filter = windowed.filter { it[0] == it[2] }
   return filter.any()
 }
+fun String.hasXYYX(): Boolean {
+  val windowed = this.windowed(4, 1, false)
+  val filter = windowed.filter { it[0] != it[1] && it[0] == it[3] && it[1] == it[2] }
+  return filter.any()
+}
 
 fun String.hasIncreasingLetterStraight(size: Int) =
   this.windowed(size, 1, false).asSequence().filter {
