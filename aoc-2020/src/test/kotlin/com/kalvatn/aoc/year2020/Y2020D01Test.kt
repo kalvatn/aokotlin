@@ -42,5 +42,4 @@ internal class Y2020D01Test {
   fun solve(task: Task) = runBlockingTest {
     puzzle().solve(task.input) shouldBe task.result
   }
-
 }

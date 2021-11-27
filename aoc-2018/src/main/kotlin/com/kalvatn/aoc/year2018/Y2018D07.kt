@@ -42,10 +42,9 @@ class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
     val stepCosts: MutableMap<Char, Int>
     if (teamWork) {
       numberOfWorkers = if (steps.size > 6) 5 else 2
-      stepCosts = steps.keys.sorted().map { it to it.toInt() - 64 + if (steps.size > 6) 60 else 0 }
-        .toMap().toMutableMap()
+      stepCosts = steps.keys.sorted().associateWith { it.code - 64 + if (steps.size > 6) 60 else 0 }.toMutableMap()
     } else {
-      stepCosts = steps.keys.sorted().map { it to 0 }.toMap().toMutableMap()
+      stepCosts = steps.keys.sorted().associateWith { 0 }.toMutableMap()
     }
     val done = mutableSetOf<Char>()
 

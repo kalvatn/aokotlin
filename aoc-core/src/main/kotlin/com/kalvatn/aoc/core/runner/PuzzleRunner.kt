@@ -3,14 +3,14 @@ package com.kalvatn.aoc.core.runner
 import com.kalvatn.aoc.core.model.Puzzle
 import com.kalvatn.aoc.utils.timeit
 import com.kalvatn.aoc.utils.toHMS
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 class PuzzleRunner(private val puzzles: List<Puzzle> = listOf()) {
-  suspend fun run() {
+  suspend fun run() = coroutineScope {
     timeit {
-      puzzles.map { GlobalScope.async { it.run() } }.awaitAll()
+      puzzles.map { async { it.run() } }.awaitAll()
     }.let {
       println()
       println()
@@ -24,4 +24,3 @@ class PuzzleRunner(private val puzzles: List<Puzzle> = listOf()) {
     }
   }
 }
-

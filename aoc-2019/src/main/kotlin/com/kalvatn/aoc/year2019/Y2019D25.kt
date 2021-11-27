@@ -7,16 +7,16 @@ import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.extensions.extractIntegers
 import kotlinx.coroutines.runBlocking
 
-fun List<Long>.toAscii() = this.map { it.toChar() }.joinToString("")
+fun List<Long>.toAscii() = this.map { it.toInt().toChar() }.joinToString("")
 
 fun IntcodeComputer.inputCmd(s: String) {
   println("'$s'")
-  s.map { it.toLong() }.also {
+  s.map { it.code.toLong() }.also {
     println(it)
   }.forEach {
     input(it)
   }
-  input('\n'.toLong())
+  input('\n'.code.toLong())
   run()
 }
 

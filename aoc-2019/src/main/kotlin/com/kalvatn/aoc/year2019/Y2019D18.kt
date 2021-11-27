@@ -68,7 +68,7 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
         println("$steps $current")
       }
       val c = map[current.point] ?: error("impossiburu")
-      if (c in allDoors && c.toLowerCase() !in current.keys) {
+      if (c in allDoors && c.lowercaseChar() !in current.keys) {
         continue
       }
       val keys = current.keys.toMutableSet()
@@ -121,7 +121,7 @@ class Y2019D18(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
       }
       seen.add(hash)
       val c = map[current.point] ?: error("impossiburu")
-      if (c in allDoors && c.toLowerCase() !in (foundKeys + current.keys)) {
+      if (c in allDoors && c.lowercaseChar() !in (foundKeys + current.keys)) {
         continue
       }
       val keys = current.keys.toMutableSet()

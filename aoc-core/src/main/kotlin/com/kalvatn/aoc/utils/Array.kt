@@ -62,6 +62,7 @@ fun Array<IntArray>.print(block: (Int) -> String) {
     println()
   }
 }
+
 fun Array<IntArray>.flatten(): List<Int> {
   val result = ArrayList<Int>(sumOf { it.size })
   for (row in this) {
@@ -71,7 +72,6 @@ fun Array<IntArray>.flatten(): List<Int> {
   }
   return result
 }
-
 
 @Suppress("unused")
 fun <E> Array<Array<E>>.print(block: (E) -> String) {

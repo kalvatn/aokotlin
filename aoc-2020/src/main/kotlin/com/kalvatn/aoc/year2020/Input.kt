@@ -8,7 +8,7 @@ import com.kalvatn.aoc.core.model.Year
 import java.io.File
 
 interface Input {
-  fun lines():List<String>
+  fun lines(): List<String>
   fun <E> map(fn: (String) -> E): List<E> {
     return lines().map { fn(it) }
   }

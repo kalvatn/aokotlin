@@ -1,10 +1,6 @@
 package com.kalvatn.aoc.year2018
 
 import com.kalvatn.aoc.BaseDayTest
-import com.kalvatn.aoc.core.input.PuzzleInput
-import com.kalvatn.aoc.core.model.Day
-import com.kalvatn.aoc.core.model.Year
-import io.kotest.matchers.shouldBe
 
 class Y2018D15Test : BaseDayTest() {
   @Test

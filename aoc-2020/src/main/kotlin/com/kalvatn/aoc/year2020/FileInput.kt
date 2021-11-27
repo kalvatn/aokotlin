@@ -12,6 +12,4 @@ class FileInput(
   override fun lines(): List<String> {
     return file.readLines()
   }
-
-
 }

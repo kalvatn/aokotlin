@@ -92,13 +92,13 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     val pc = IntcodeComputer(program)
     pc.run()
     pc.output().forEach {
-      when (it.toChar()) {
+      when (it.toInt().toChar()) {
         '\n' -> {
           y += 1
           x = 0
         }
         else -> {
-          points[Point(x, y)] = it.toChar()
+          points[Point(x, y)] = it.toInt().toChar()
           x++
         }
       }
@@ -124,13 +124,13 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     val pc = IntcodeComputer(program)
     pc.run()
     pc.output().forEach {
-      when (it.toChar()) {
+      when (it.toInt().toChar()) {
         '\n' -> {
           y += 1
           x = 0
         }
         else -> {
-          points[Point(x, y)] = it.toChar()
+          points[Point(x, y)] = it.toInt().toChar()
           x++
         }
       }
@@ -170,10 +170,10 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     val b = "R,10,L,8,L,8,L,10,\n"
     val c = "L,4,L,6,L,8,L,8,\n"
     val d = "A,B,A,C,B,C,A,C,B,C,\n"
-    val aEnc = a.map { it.toInt() }
-    val bEnc = b.map { it.toInt() }
-    val cEnc = c.map { it.toInt() }
-    val dEnc = d.map { it.toInt() }
+    val aEnc = a.map { it.code }
+    val bEnc = b.map { it.code }
+    val cEnc = c.map { it.code }
+    val dEnc = d.map { it.code }
     println("$a -> $aEnc")
     println("$b -> $bEnc")
     println("$c -> $cEnc")
@@ -187,8 +187,8 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
         pc.run()
       }
     }
-    pc.input('n'.toInt().toLong())
-    pc.input('\n'.toInt().toLong())
+    pc.input('n'.code.toLong())
+    pc.input('\n'.code.toLong())
     pc.run()
 
     return pc.outputLast().toString()

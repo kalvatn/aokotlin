@@ -9,7 +9,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 
 interface Puzzle<T1, T2> {
-  suspend fun solve(input:Input):Output<T1, T2>
+  suspend fun solve(input: Input): Output<T1, T2>
 }
 
 class Y2020D01 : Puzzle<Int, Int> {
@@ -43,4 +43,3 @@ fun main() = runBlocking {
   val input = Input.p1Test(Year.Y2020, Day.D01, 1)
   Y2020D01().solve(input).print()
 }
-

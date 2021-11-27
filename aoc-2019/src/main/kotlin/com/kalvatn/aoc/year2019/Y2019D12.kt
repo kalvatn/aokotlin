@@ -53,9 +53,9 @@ class Y2019D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     val newVelocities = this.map { moon ->
       moon to moon.velocity + this.filterNot { it == moon }.map { moon.calcNewVelocity(it) }.let { v ->
         Vec3(
-          v.sumBy { it.x },
-          v.sumBy { it.y },
-          v.sumBy { it.z }
+          v.sumOf { it.x },
+          v.sumOf { it.y },
+          v.sumOf { it.z }
         )
       }
     }.toMap()

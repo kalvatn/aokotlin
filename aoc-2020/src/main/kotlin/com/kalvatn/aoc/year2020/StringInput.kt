@@ -5,9 +5,9 @@ class StringInput(
   private val splitOn: String = ""
 ) : Input {
   override fun toString(): String {
-    return if (splitOn.isNotEmpty())
+    return if (splitOn.isNotEmpty()) {
       "string ${content.length} split='$splitOn'"
-    else "string ${content.length}"
+    } else "string ${content.length}"
   }
 
   override fun lines(): List<String> {

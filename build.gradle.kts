@@ -88,7 +88,7 @@ subprojects {
     android.set(false)
     coloredOutput.set(true)
     outputToConsole.set(true)
-    ignoreFailures.set(true)
+    ignoreFailures.set(false)
     enableExperimentalRules.set(true)
     disabledRules.set(
       setOf(

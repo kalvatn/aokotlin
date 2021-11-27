@@ -64,4 +64,3 @@ fun main() = runBlocking {
   )
   PuzzleRunner(puzzles).run()
 }
-

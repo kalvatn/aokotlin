@@ -5,7 +5,6 @@ import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.utils.toHMS
 import java.time.Duration
 
-
 class PartResult<T>(
   val value: T,
   val nanos: Duration = Duration.ZERO
@@ -44,5 +43,4 @@ data class Output<T1, T2>(
         .trimMargin("|")
     )
   }
-
 }

@@ -4,9 +4,9 @@ import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2018
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 
 class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D11, input) {
@@ -67,25 +67,25 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
   data class PowerGrid(val topleft: Point, val size: Int, val power: Int)
 
-  private suspend fun createPowerGridFromPoint(point: Point, minSize: Int, maxSize: Int): Set<PowerGrid> {
-    return (minSize..maxSize)
+  private suspend fun createPowerGridFromPoint(point: Point, minSize: Int, maxSize: Int): Set<PowerGrid> = coroutineScope {
+    (minSize..maxSize)
       .asSequence()
       .filter { point.x + it <= TOTAL_GRID_SIZE }
       .filter { point.y + it <= TOTAL_GRID_SIZE }
       .toList()
       .map {
-        GlobalScope.async {
+        async {
           PowerGrid(point, it, point.gridFrom(it).map { point -> powerLevels[point]!! }.sum())
         }
       }.awaitAll()
       .toSet()
   }
 
-  override suspend fun partTwo(): String {
+  override suspend fun partTwo(): String = coroutineScope {
     val minSize = 8
     val maxSize = 16
     val tasks = powerLevels.keys.map {
-      GlobalScope.async {
+      async {
         //                println("$it")
         createPowerGridFromPoint(it, minSize, maxSize)
       }
@@ -93,7 +93,7 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
     val grids = tasks.awaitAll().flatten()
     val gridWithMaxPower = grids.maxByOrNull { it.power }!!
-    return "${gridWithMaxPower.topleft.x},${gridWithMaxPower.topleft.y},${gridWithMaxPower.size}"
+    "${gridWithMaxPower.topleft.x},${gridWithMaxPower.topleft.y},${gridWithMaxPower.size}"
   }
 
   companion object {

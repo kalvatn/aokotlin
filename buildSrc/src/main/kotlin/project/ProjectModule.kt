@@ -1,6 +1,5 @@
 package project
 
-import repository.ArchivaRepository
 import repository.PublishTarget
 
 @Suppress("unused")

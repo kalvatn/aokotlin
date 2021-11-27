@@ -1,4 +1,3 @@
-import dependencies.Libs
 import project.ProjectModule
 
 dependencies {

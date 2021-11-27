@@ -28,13 +28,13 @@ class Y2019D21(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     )
     pc.run()
     cmds.forEach { cmd ->
-      cmd.map { it.toLong() }.forEach {
+      cmd.map { it.code.toLong() }.forEach {
         pc.input(it)
       }
-      pc.input('\n'.toLong())
+      pc.input('\n'.code.toLong())
     }
     pc.run()
-    val message = pc.output().map { it.toChar() }.joinToString("")
+    val message = pc.output().map { it.toInt().toChar() }.joinToString("")
     if (message.contains("Didn't make it across:")) {
       println(message)
     } else {
@@ -68,13 +68,13 @@ class Y2019D21(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     )
     pc.run()
     cmds.forEach { cmd ->
-      cmd.map { it.toLong() }.forEach {
+      cmd.map { it.code.toLong() }.forEach {
         pc.input(it)
       }
-      pc.input('\n'.toLong())
+      pc.input('\n'.code.toLong())
     }
     pc.run()
-    val message = pc.output().map { it.toChar() }.joinToString("")
+    val message = pc.output().map { it.toInt().toChar() }.joinToString("")
     if (message.contains("Didn't make it across:")) {
       println(message)
     } else {
