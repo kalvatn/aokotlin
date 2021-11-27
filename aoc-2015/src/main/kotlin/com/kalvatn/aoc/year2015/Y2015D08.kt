@@ -17,15 +17,15 @@ class Y2015D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
   private fun escape(s: String) = s.replace("\\", "\\\\").replace("\"", "\\\"")
   private fun countEscaped(s: String) = escape(s).length + 2
 
-  fun p1(vararg lines: String) = lines.sumOf { countAll(it) - countData(it) }
-  fun p2(vararg lines: String) = lines.sumOf { countEscaped(it) - countAll(it) }
+  fun p1(lines: List<String>) = lines.sumOf { countAll(it) - countData(it) }
+  fun p2(lines: List<String>) = lines.sumOf { countEscaped(it) - countAll(it) }
 
   override suspend fun partOne(): String {
-    return p1(*lines.toTypedArray()).toString()
+    return p1(lines).toString()
   }
 
   override suspend fun partTwo(): String {
-    return p2(*lines.toTypedArray()).toString()
+    return p2(lines).toString()
   }
 }
 

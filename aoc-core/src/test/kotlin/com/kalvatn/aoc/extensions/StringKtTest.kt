@@ -28,14 +28,14 @@ class StringKtTest : StringSpec({
   }
 
   "does not contain" {
-    "ugknbfddgicrmopn".doesNotContain("ab", "cd", "pq", "xy") shouldBe true
-    "aaa".doesNotContain("ab", "cd", "pq", "xy") shouldBe true
-    "abcdde".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
-    "ab".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
-    "cd".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
-    "pq".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
-    "xy".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
-    "haegwjzuvuyypxyu".doesNotContain("ab", "cd", "pq", "xy") shouldBe false
+    "ugknbfddgicrmopn".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe true
+    "aaa".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe true
+    "abcdde".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe false
+    "ab".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe false
+    "cd".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe false
+    "pq".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe false
+    "xy".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe false
+    "haegwjzuvuyypxyu".doesNotContain(listOf("ab", "cd", "pq", "xy")) shouldBe false
   }
 
   "has xyx" {

@@ -36,7 +36,7 @@ class Y2015D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D1
     while (true) {
       new = new.increment()
       if (
-        new.doesNotContain(*BAD_CHARS) &&
+        new.doesNotContain(BAD_CHARS) &&
         new.hasIncreasingLetterStraight(3) &&
         new.hasConsecutiveLetters(2)
       ) {
@@ -54,7 +54,7 @@ class Y2015D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D1
   }
 
   companion object {
-    val BAD_CHARS = listOf('i', 'o', 'l').toCharArray()
+    val BAD_CHARS = listOf("i", "o", "l")
   }
 }
 

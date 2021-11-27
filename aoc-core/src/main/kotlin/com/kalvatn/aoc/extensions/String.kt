@@ -37,8 +37,7 @@ fun String.hasConsecutiveLetters(number: Int = 1) =
 fun String.hasConsecutiveDigits(number: Int = 1) =
   CONSECUTIVE_DIGITS.asSequence().filter { this.contains(it) }.count() >= number
 
-fun String.doesNotContain(vararg bad: String) = bad.none { this.contains(it) }
-fun String.doesNotContain(vararg bad: Char) = bad.none { this.contains(it) }
+fun String.doesNotContain(bad: List<String>) = bad.none { this.contains(it) }
 
 fun String.hasXYX(): Boolean {
   val windowed = this.windowed(3, 1, false)

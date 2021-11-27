@@ -8,21 +8,21 @@ internal class Y2015D08Test : BaseDayTest() {
   @Test
   override suspend fun examplePartOne() {
     val day = Y2015D08()
-    day.p1("\"\"") shouldBe 2
-    day.p1("\"abc\"") shouldBe 2
-    day.p1("\"aaa\"aaa\"") shouldBe 3
-    day.p1("\"\\x27\"") shouldBe 5
-    day.p1("\"\"", "\"abc\"", "\"aaa\"aaa\"", "\"\\x27\"") shouldBe 12
+    day.p1(listOf("\"\"")) shouldBe 2
+    day.p1(listOf("\"abc\"")) shouldBe 2
+    day.p1(listOf("\"aaa\"aaa\"")) shouldBe 3
+    day.p1(listOf("\"\\x27\"")) shouldBe 5
+    day.p1(listOf("\"\"", "\"abc\"", "\"aaa\"aaa\"", "\"\\x27\"")) shouldBe 12
   }
 
   @Test
   override suspend fun examplePartTwo() {
     val day = Y2015D08()
-    day.p2("\"\"") shouldBe 4
-    day.p2("\"abc\"") shouldBe 4
-    day.p2("\"aaa\\\"aaa\"") shouldBe 6
-    day.p2("\"\\x27\"") shouldBe 5
-    day.p2("\"\"", "\"abc\"", "\"aaa\\\"aaa\"", "\"\\x27\"") shouldBe 19
+    day.p2(listOf("\"\"")) shouldBe 4
+    day.p2(listOf("\"abc\"")) shouldBe 4
+    day.p2(listOf("\"aaa\\\"aaa\"")) shouldBe 6
+    day.p2(listOf("\"\\x27\"")) shouldBe 5
+    day.p2(listOf("\"\"", "\"abc\"", "\"aaa\\\"aaa\"", "\"\\x27\"")) shouldBe 19
   }
 
   @Test

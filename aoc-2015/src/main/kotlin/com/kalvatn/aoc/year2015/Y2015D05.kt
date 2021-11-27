@@ -16,7 +16,7 @@ class Y2015D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
   fun nicePartOne(string: String): Boolean {
     return string.hasNVowels(3) &&
       string.hasConsecutiveLetters(1) &&
-      string.doesNotContain("ab", "cd", "pq", "xy")
+      string.doesNotContain(listOf("ab", "cd", "pq", "xy"))
   }
 
   fun nicePartTwo(string: String): Boolean {

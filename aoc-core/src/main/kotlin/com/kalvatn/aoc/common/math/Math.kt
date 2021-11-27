@@ -11,28 +11,28 @@ fun gcd(a: Long, b: Long): Long {
 /**
  * least common multiple
  */
-fun lcm(a: Long, b: Long): Long {
+fun leastCommonMultiple(a: Long, b: Long): Long {
   return a / gcd(a, b) * b
 }
 
-private tailrec fun lcm(vararg numbers: Long): Long {
+private tailrec fun leastCommonMultiple(numbers: List<Long>): Long {
   if (numbers.size == 1) {
     return 1L
   }
   if (numbers.size == 2) {
-    return lcm(numbers[0], numbers[1])
+    return leastCommonMultiple(numbers[0], numbers[1])
   }
-  val f = lcm(numbers[0], numbers[1])
-  return lcm(*(numbers.drop(2) + f).toLongArray())
+  val f = leastCommonMultiple(numbers[0], numbers[1])
+  return leastCommonMultiple((numbers.drop(2) + f))
 }
 
 @Suppress("unused")
-fun List<Long>.gcd(): Long = lcm(*this.toLongArray())
+fun List<Long>.gcd(): Long = leastCommonMultiple(this)
 
 @Suppress("unused")
-fun List<Int>.gcd(): Int = lcm(*this.map { it.toLong() }.toLongArray()).toInt()
+fun List<Int>.gcd(): Int = leastCommonMultiple(this.map { it.toLong() }).toInt()
 
-fun List<Long>.lcm(): Long = lcm(*this.toLongArray())
+fun List<Long>.lcm(): Long = leastCommonMultiple(this)
 
 @Suppress("unused")
-fun List<Int>.lcm(): Int = lcm(*this.map { it.toLong() }.toLongArray()).toInt()
+fun List<Int>.leastCommonMultiple(): Int = leastCommonMultiple(this.map { it.toLong() }).toInt()
