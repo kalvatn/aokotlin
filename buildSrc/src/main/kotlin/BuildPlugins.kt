@@ -5,7 +5,7 @@ object BuildPlugins {
   const val JACOCO = "org.gradle.jacoco"
 
   object Versions {
-    const val KOTLIN = "1.5.31"
+    const val KOTLIN = "1.6.0"
     const val DETEKT = "1.18.1"
     const val KTLINT = "10.2.0"
   }
