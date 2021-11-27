@@ -8,6 +8,7 @@ enum class Year {
   Y2018,
   Y2019,
   Y2020,
+  Y2021,
 
   ;
 

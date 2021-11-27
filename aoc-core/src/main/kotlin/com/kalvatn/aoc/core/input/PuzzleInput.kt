@@ -5,6 +5,7 @@ import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.Puzzle
 import com.kalvatn.aoc.core.model.Year
 import java.io.File
+import java.nio.file.Paths
 
 @Suppress("unused")
 open class PuzzleInput(val lines: List<String>) {
@@ -18,7 +19,7 @@ open class PuzzleInput(val lines: List<String>) {
   }
 
   fun singleLineSplit(splitOn: String): List<String> {
-    return lines.first().split(splitOn).filter { !it.isBlank() }.map { it.trim() }
+    return lines.first().split(splitOn).filter { it.isNotBlank() }.map { it.trim() }
   }
 
   fun singleLineIntegers() = singleLineSplit(",").map { it.toInt() }
@@ -47,8 +48,8 @@ open class PuzzleInput(val lines: List<String>) {
   }
 
   companion object {
-    const val P1_TEST_SUFFIX = "test_p1"
-    const val P2_TEST_SUFFIX = "test_p2"
+    private const val P1_TEST_SUFFIX = "test_p1"
+    private const val P2_TEST_SUFFIX = "test_p2"
     val NULL = PuzzleInput(listOf())
 
     private fun downloadInput(year: Year, day: Day, inputFile: File) {
@@ -84,15 +85,20 @@ open class PuzzleInput(val lines: List<String>) {
 
     @JvmStatic
     fun forDay(year: Year, day: Day, suffix: String = ""): PuzzleInput {
-      val extra = if (!suffix.isBlank()) "_$suffix" else ""
-      val filename = "/inputs/${year.intString()}/${day.intString()}$extra"
+      val root = "/home/kalvatn/work/github/kalvatn/aokotlin"
+      val module = "/aoc-${year.intValue()}"
+      val inputs = "src/main/resources/inputs"
+      val inputDir = Paths.get(root, module, inputs).toFile()
+      inputDir.mkdirs()
 
-      val inputFile = File(PuzzleInput::class.java.getResource(filename).file)
+      val extra = if (suffix.isNotBlank()) "_$suffix" else ""
+      val filename = "${year.intString()}/${day.intString()}$extra"
+      val inputFile = File(inputDir, filename)
       if (suffix.isBlank() && !inputFile.exists()) {
         println("${inputFile.absolutePath} does not exist")
         downloadInput(year, day, inputFile)
       }
-      return PuzzleInput(inputFile.readLines().filter { !it.isBlank() })
+      return PuzzleInput(inputFile.readLines().filter { it.isNotBlank() })
     }
 
     @JvmStatic
@@ -102,7 +108,7 @@ open class PuzzleInput(val lines: List<String>) {
 
     @JvmStatic
     fun ofSingleLineSplit(string: String, splitOn: String = ""): PuzzleInput {
-      return PuzzleInput(string.split(splitOn).filter { !it.isBlank() }.map { it.trim() })
+      return PuzzleInput(string.split(splitOn).filter { it.isNotBlank() }.map { it.trim() })
     }
 
     @JvmStatic

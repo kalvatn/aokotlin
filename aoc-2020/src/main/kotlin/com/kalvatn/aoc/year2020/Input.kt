@@ -7,6 +7,7 @@ import com.kalvatn.aoc.core.model.Puzzle
 import com.kalvatn.aoc.core.model.Year
 import java.io.File
 
+@Suppress("unused")
 interface Input {
   fun lines(): List<String>
   fun <E> map(fn: (String) -> E): List<E> {
@@ -18,7 +19,7 @@ interface Input {
   }
 
   fun singleLineSplit(splitOn: String): List<String> {
-    return lines().first().split(splitOn).filter { !it.isBlank() }.map { it.trim() }
+    return lines().first().split(splitOn).filter { it.isNotBlank() }.map { it.trim() }
   }
 
   fun singleLineIntegers() = singleLineSplit(",").map { it.toInt() }
@@ -77,10 +78,10 @@ interface Input {
 
     @JvmStatic
     fun forDay(year: Year, day: Day, suffix: String = ""): FileInput {
-      val extra = if (!suffix.isBlank()) "_$suffix" else ""
+      val extra = if (suffix.isNotBlank()) "_$suffix" else ""
       val filename = "/inputs/${year.intString()}/${day.intString()}$extra"
 
-      val inputFile = File(FileInput::class.java.getResource(filename).file)
+      val inputFile = File(FileInput::class.java.getResource(filename)!!.file)
       if (suffix.isBlank() && !inputFile.exists()) {
         println("${inputFile.absolutePath} does not exist")
         val content = PuzzleInputDownloader.downloadInput(year, day)

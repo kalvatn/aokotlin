@@ -13,10 +13,10 @@ object PuzzleInputDownloader {
 
   fun downloadInput(year: Year, day: Day): String {
     val url = "https://adventofcode.com/${year.intValue()}/day/${day.intValue()}/input"
-    val sessionCookie = sessionCookieFile.readText()
-    if (sessionCookie.isBlank()) {
+    if (sessionCookieFile == null) {
       throw CookieMissing()
     }
+    val sessionCookie = sessionCookieFile.readText()
     val request = Request.Builder()
       .url(url)
       .addHeader("Cookie", "session=$sessionCookie")
