@@ -81,9 +81,9 @@ class Y2019D24(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
     private val center = Point(2, 2)
     private var minute = 0
     private val emptyState by lazy {
-      initialState.keys.map {
-        it to if (it == center) '?' else '.'
-      }.toMap()
+      initialState.keys.associateWith {
+        if (it == center) '?' else '.'
+      }
     }
     private val levels = mutableMapOf<Int, Map<Point, Char>>().apply {
       put(-1, emptyState)

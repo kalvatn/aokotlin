@@ -39,8 +39,8 @@ class Y2018D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
   }
 
   override suspend fun partOne(): String {
-    val xMax = lol.map { it.x }.maxOrNull()!!
-    val yMax = lol.map { it.y }.maxOrNull()!!
+    val xMax = lol.maxOf { it.x }
+    val yMax = lol.maxOf { it.y }
 
     val pts = (0..xMax).map { x ->
       (0..yMax).map { y ->
@@ -95,7 +95,7 @@ class Y2018D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
     var area = 0L
     for (x in 0..xMax) {
       for (y in 0..yMax) {
-        if (lol.map { dist(it, Point(x, y)) }.sum() < 10000) {
+        if (lol.sumOf { dist(it, Point(x, y)) } < 10000) {
           area++
         }
       }

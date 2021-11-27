@@ -24,11 +24,11 @@ class Y2019D01(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
   }
 
   override suspend fun partOne(): String {
-    return lines.map { fuelPartOne(it) }.sum().toString()
+    return lines.sumOf { fuelPartOne(it) }.toString()
   }
 
   override suspend fun partTwo(): String {
-    return lines.map { fuelPartTwo(it) }.sum().toString()
+    return lines.sumOf { fuelPartTwo(it) }.toString()
   }
 }
 

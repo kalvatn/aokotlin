@@ -9,8 +9,7 @@ import kotlinx.coroutines.runBlocking
 class Y2018D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D12, input) {
 
   private val initialState = this.input.lines.first().split(":")[1].trim()
-  private val rules = this.input.lines.drop(1).map { it.split("=>") }
-    .map { it[0].trim() to (it[1].trim() == "#") }.toMap()
+  private val rules = this.input.lines.drop(1).map { it.split("=>") }.associate { it[0].trim() to (it[1].trim() == "#") }
 
   private fun nextGeneration(current: MutableMap<Int, Boolean>): MutableMap<Int, Boolean> {
     val indexes = current.keys.map { key -> key }
@@ -58,7 +57,7 @@ class Y2018D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
     for (generation in 1..maxGenerations) {
       val nextPlantIndexes = nextGeneration(plantIndexes)
       plantIndexes = nextPlantIndexes
-      val sum = plantIndexes.filter { it.value }.keys.map { it.toLong() }.sum()
+      val sum = plantIndexes.filter { it.value }.keys.sumOf { it.toLong() }
       val diff = sum - lastSum
 
       sums[diff] = sums.getOrDefault(diff, 0).inc()

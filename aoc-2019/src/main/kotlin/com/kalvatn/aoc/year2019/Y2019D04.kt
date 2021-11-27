@@ -32,12 +32,12 @@ class Y2019D04(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
 
   override suspend fun partOne(): String {
     val (min, max) = range
-    return (min..max).filter { it.valid() }.count().toString()
+    return (min..max).count { it.valid() }.toString()
   }
 
   override suspend fun partTwo(): String {
     val (min, max) = range
-    return (min..max).filter { it.valid2() }.count().toString()
+    return (min..max).count { it.valid2() }.toString()
   }
 }
 

@@ -48,7 +48,7 @@ class Y2019D20(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
 
   private fun portalPoints(portals: Map<String, Set<Portal>>): Map<Point, Point> {
     val entranceToExit = mutableMapOf<Point, Point>()
-    portals.filterValues { it.size == 2 }.values.forEach { it ->
+    portals.filterValues { it.size == 2 }.values.forEach {
       entranceToExit[it.first().entrance] = it.last().entrance
       entranceToExit[it.last().entrance] = it.first().entrance
     }

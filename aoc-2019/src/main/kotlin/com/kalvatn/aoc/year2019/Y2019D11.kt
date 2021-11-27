@@ -18,7 +18,7 @@ class Y2019D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     WHITE(1);
 
     companion object {
-      private val BY_ID = values().map { it.value to it }.toMap()
+      private val BY_ID = values().associateBy { it.value }
       fun fromId(value: Int): Color = BY_ID[value] ?: error("no color with value $value")
     }
   }

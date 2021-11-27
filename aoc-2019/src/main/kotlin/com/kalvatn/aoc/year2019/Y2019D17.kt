@@ -69,6 +69,7 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
       return moves2
     }
 
+    @Suppress("unused")
     fun move(moves: List<Move>) {
       var pos = initialPos
       var dir = Direction.NORTH

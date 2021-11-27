@@ -15,7 +15,7 @@ class StringInput(
       return listOf(content)
     }
     return content.split(splitOn)
-      .filter { !it.isBlank() }
+      .filter { it.isNotBlank() }
       .map { it.trim() }
   }
 }

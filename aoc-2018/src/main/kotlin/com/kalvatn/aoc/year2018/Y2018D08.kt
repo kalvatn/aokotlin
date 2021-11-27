@@ -65,7 +65,7 @@ class Y2018D08(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
 
   override suspend fun partOne(): String {
     val nodes = processNodes()
-    return nodes.values.map { it.meta.sum() }.sum().toString()
+    return nodes.values.sumOf { it.meta.sum() }.toString()
   }
 
   override suspend fun partTwo(): String {

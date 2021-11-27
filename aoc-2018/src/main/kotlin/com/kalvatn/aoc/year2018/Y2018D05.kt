@@ -31,7 +31,7 @@ class Y2018D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
   }
 
   override suspend fun partTwo(): String {
-    return ('a'..'z').map { it ->
+    return ('a'..'z').map {
       react(part1.filter { c -> !c.equals(it, ignoreCase = true) }).count()
     }.minOrNull().toString()
   }

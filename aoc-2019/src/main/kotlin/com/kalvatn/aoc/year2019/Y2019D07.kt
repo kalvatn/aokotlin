@@ -12,7 +12,7 @@ class Y2019D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
   private val program by lazy { this.input.singleLineLongs() }
 
   private fun LongRange.maxSignal() =
-    toList().permutations().map { phaseSequence ->
+    toList().permutations().maxOf { phaseSequence ->
       val comps = phaseSequence.map { phase ->
         IntcodeComputer(program).also { comp ->
           comp.input(phase)
@@ -27,7 +27,7 @@ class Y2019D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D0
         }
       } while (!comps.all { it.state() == State.HALT })
       signal
-    }.maxOrNull()!!
+    }
 
   override suspend fun partOne(): String {
     return (0..4L).maxSignal().toString()

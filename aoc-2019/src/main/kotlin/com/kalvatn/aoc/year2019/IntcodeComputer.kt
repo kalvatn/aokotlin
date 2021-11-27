@@ -22,7 +22,7 @@ enum class ParameterMode(val value: Int) {
   RELATIVE(2);
 
   companion object {
-    private val BY_ID = values().map { it.value to it }.toMap()
+    private val BY_ID = values().associateBy { it.value }
     fun fromInt(value: Int) = BY_ID[value] ?: error("no parameter mode with value $value")
   }
 }
@@ -40,7 +40,7 @@ enum class Operation(val value: Int, vararg val accessModes: AccessMode) {
   HALT(99);
 
   companion object {
-    private val BY_ID = values().map { it.value to it }.toMap()
+    private val BY_ID = values().associateBy { it.value }
     fun fromInt(value: Int) = BY_ID[value] ?: error("no opcode with value $value")
   }
 }

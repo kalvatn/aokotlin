@@ -18,11 +18,11 @@ internal class Y2020D01Test {
   private companion object {
     @JvmStatic
     fun examples(): Stream<Task> {
-      val p1_1 = Input.p1Test(Year.Y2020, Day.D01, 1)
+      val p1Case1 = Input.p1Test(Year.Y2020, Day.D01, 1)
       return Arrays.stream(
         arrayOf(
-          Task(p1_1, Output(Year.Y2020, Day.D01, PartResult(138), PartResult(1771))),
-          Task(p1_1, Output(Year.Y2020, Day.D01, PartResult(138), PartResult(1771)))
+          Task(p1Case1, Output(Year.Y2020, Day.D01, PartResult(138), PartResult(1771))),
+          Task(p1Case1, Output(Year.Y2020, Day.D01, PartResult(138), PartResult(1771)))
         )
       )
     }

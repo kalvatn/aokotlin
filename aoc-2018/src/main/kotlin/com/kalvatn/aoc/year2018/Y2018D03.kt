@@ -43,12 +43,12 @@ class Y2018D03(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzleYearDay(Yea
   private val fabric = createFabric(claims)
 
   override suspend fun partOne(): String {
-    val count = fabric.map { array ->
+    val count = fabric.sumOf { array ->
       array
         .asSequence()
         .filter { it == -1 }
         .count()
-    }.sum()
+    }
     return count.toString()
   }
 

@@ -17,9 +17,9 @@ class Y2019D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
   }
 
   private fun outputToState(pc: IntcodeComputer): Map<Point, Int> {
-    return pc.output().map { it.toInt() }.chunked(3).map {
+    return pc.output().map { it.toInt() }.chunked(3).associate {
       Point(it[0], it[1]) to it[2]
-    }.toMap()
+    }
   }
 
   override suspend fun partTwo(): String {

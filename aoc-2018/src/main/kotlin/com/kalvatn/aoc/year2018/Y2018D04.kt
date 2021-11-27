@@ -39,7 +39,7 @@ class Y2018D04(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzleYearDay(Yea
 
     companion object {
       fun fromString(string: String): GuardRecord {
-        val regex = "^\\[(\\d+)-(\\d+)-(\\d+) (\\d+):(\\d+)\\] (?:Guard #(\\d+) )?([\\w\\s]+)".toRegex()
+        val regex = "^\\[(\\d+)-(\\d+)-(\\d+) (\\d+):(\\d+)] (?:Guard #(\\d+) )?([\\w\\s]+)".toRegex()
         return regex.matchEntire(string)
           ?.destructured
           ?.let { (y, m, d, hh, mm, guardId, action) ->

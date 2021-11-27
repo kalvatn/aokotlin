@@ -12,7 +12,7 @@ class Y2019D14(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 
   private val regex = "(\\d+)\\s(\\w+)".toRegex()
   private val recipes by lazy {
-    this.input.lines.map { reaction ->
+    this.input.lines.associate { reaction ->
       val quantities = regex.findAll(reaction).map {
         it.destructured.let { mr ->
           val name = mr.component2()
@@ -23,7 +23,7 @@ class Y2019D14(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
       val requires = quantities.take(quantities.count() - 1)
       val recipe = Recipe(produces, requires)
       recipe.produces.component to recipe
-    }.toMap()
+    }
   }
 
   data class Quantity(val component: String, val quantity: Int)

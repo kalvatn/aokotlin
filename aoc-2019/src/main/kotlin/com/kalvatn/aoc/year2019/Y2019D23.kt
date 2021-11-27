@@ -11,11 +11,11 @@ class Y2019D23(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
   val program by lazy { this.input.singleLineLongs() }
 
   override suspend fun partOne(): String {
-    val computers = (0L until NUM_COMPUTERS).map {
+    val computers = (0L until NUM_COMPUTERS).associateWith {
       val pc = IntcodeComputer(program)
       pc.input(it)
-      it to pc
-    }.toMap()
+      pc
+    }
     while (true) {
       computers.forEach { (_, v) ->
         v.input(-1)
@@ -36,11 +36,11 @@ class Y2019D23(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D2
   }
 
   override suspend fun partTwo(): String {
-    val computers = (0L until NUM_COMPUTERS).map {
+    val computers = (0L until NUM_COMPUTERS).associateWith {
       val pc = IntcodeComputer(program)
       pc.input(it)
-      it to pc
-    }.toMap()
+      pc
+    }
 
     val nat = mutableListOf<Long>()
     var yTwice = -1L

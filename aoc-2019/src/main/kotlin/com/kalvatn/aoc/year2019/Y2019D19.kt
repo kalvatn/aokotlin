@@ -58,7 +58,7 @@ class Y2019D19(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
           bottomleft,
           bottomright,
           topright
-        ).map { it to process(it.x.toLong(), it.y.toLong()) }.toMap()
+        ).associateWith { process(it.x.toLong(), it.y.toLong()) }
         if (corners.values.all { it == 1L }) {
           allCorners.add(corners.keys.toList())
           return ((topleft.x * 10000) + topleft.y).toString()

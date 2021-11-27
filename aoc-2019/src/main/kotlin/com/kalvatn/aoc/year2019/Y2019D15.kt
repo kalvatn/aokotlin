@@ -15,8 +15,6 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 
   private val program by lazy { this.input.singleLineLongs() }
 
-  data class Map(val points: MutableMap<Point, Char> = mutableMapOf())
-
   private val pc = IntcodeComputer(program)
 
   private val repairDroid by lazy {
@@ -32,7 +30,7 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     FOUND_OXYGEN_SYSTEM(2);
 
     companion object {
-      private val BY_ID = values().map { it.value to it }.toMap()
+      private val BY_ID = values().associateBy { it.value }
       fun fromId(value: Long): Status = BY_ID[value] ?: error("no status with value $value")
     }
   }
@@ -42,9 +40,9 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     private var curDir = Direction.NORTH
     private var curPos = Point(0, 0)
     val points = mutableMapOf<Point, Status>()
-    val pointsVisit = mutableMapOf<Point, Int>()
+    private val pointsVisit = mutableMapOf<Point, Int>()
     private val walls = mutableSetOf<Point>()
-    var i = 0
+    private var i = 0
     private var osFound = false
 
     private fun isFullyMapped(): Boolean {
@@ -171,7 +169,7 @@ class Y2019D15(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     val queue = ArrayDeque<List<Point>>()
     queue.add(listOf(os))
     while (queue.isNotEmpty()) {
-      if (points.filter { it.value == Status.MOVED }.count() == 0) {
+      if (points.filter { it.value == Status.MOVED }.isEmpty()) {
         break
       }
       val cur = queue.remove()

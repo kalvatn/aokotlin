@@ -19,7 +19,7 @@ class Y2019D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 
   private fun visibleFrom(p: Point): Int = pointsWithAsteroids.filterNot { it == p }.map { it.angle(p) }.distinct().size
 
-  private val countVisibleByPoint by lazy { pointsWithAsteroids.map { it to visibleFrom(it) }.toMap() }
+  private val countVisibleByPoint by lazy { pointsWithAsteroids.associateWith { visibleFrom(it) } }
 
   private val baseWithCount by lazy { countVisibleByPoint.maxByOrNull { it.value }!! }
 

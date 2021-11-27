@@ -9,7 +9,7 @@ import kotlin.math.abs
 
 class Y2019D22(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D22, input) {
 
-  val lines by lazy { this.input.lines }
+  private val lines by lazy { this.input.lines }
 
   data class Deck(val size: Int) {
     private var deck = (0 until size).toList()
