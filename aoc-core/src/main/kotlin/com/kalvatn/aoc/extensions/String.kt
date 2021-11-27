@@ -48,7 +48,7 @@ fun String.hasXYX(): Boolean {
 
 fun String.hasIncreasingLetterStraight(size: Int) =
   this.windowed(size, 1, false).asSequence().filter {
-    val map = it.map { c -> c.toInt() }
+    val map = it.map { c -> c.code }
     map.filterIndexed { index, i ->
       if (index == size - 1) {
         true

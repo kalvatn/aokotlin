@@ -1,30 +1,19 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import dependencies.Libs
 import dependencies.TestLibs
 import environment.BuildEnv
 import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import project.ProjectModule
-import project.archivaMavenRepository
 import project.getProjectModule
-import project.gitlabMavenRepository
-import repository.ArchivaRepository
-import repository.GitlabProject
 
 plugins {
   base
-  `maven-publish`
   jacoco
   `kotlin-dsl`
-//  id(BuildPlugins.KOTLIN_JVM) version BuildPlugins.Versions.KOTLIN apply false
   kotlin("jvm") version BuildPlugins.Versions.KOTLIN apply false
   kotlin("plugin.serialization") version BuildPlugins.Versions.KOTLIN apply false
-  id(BuildPlugins.SHADOW) version BuildPlugins.Versions.SHADOW apply false
   id(BuildPlugins.DETEKT) version BuildPlugins.Versions.DETEKT
-  id(BuildPlugins.SONARQUBE) version BuildPlugins.Versions.SONARQUBE
   id(BuildPlugins.KTLINT) version BuildPlugins.Versions.KTLINT
-//  id(BuildPlugins.PROPERTIES) version BuildPlugins.Versions.PROPERTIES
 }
 
 if (BuildEnv.IS_CI_ENVIRONMENT) {
@@ -46,9 +35,6 @@ allprojects {
     mavenLocal()
     mavenCentral()
     jcenter()
-    maven {
-      url = uri("https://packages.confluent.io/maven/")
-    }
   }
 }
 
@@ -62,20 +48,6 @@ subprojects {
 
   tasks.withType<Test> {
     exclude("**/*IntegrationTest.class")
-    // https://kotest.io/tags/
-//    systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
-
-    // https://javabydeveloper.com/run-tag-specific-junit-5-tests-from-gradle-command/
-    // https://junit.org/junit5/docs/current/user-guide/#running-tests-tag-expressions
-    // https://junit.org/junit5/docs/current/user-guide/#writing-tests-tagging-and-filtering
-//    val itagsEnv = System.getProperty("includeTags")
-//    val itags = itagsEnv?.split(",")?.toTypedArray() ?: listOf<String>().toTypedArray()
-//    val etagsEnv = System.getProperty("excludeTags")
-//    val etags = etagsEnv?.split(",")?.toTypedArray() ?: listOf("slow","very-slow").toTypedArray()
-//    useJUnitPlatform {
-//      includeTags(*itags)
-//      excludeTags(*etags)
-//    }
     useJUnitPlatform()
     maxHeapSize = "2048m"
     ignoreFailures = true
@@ -95,8 +67,13 @@ subprojects {
     }
   }
 
-  tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = BuildEnv.JAVA_VERSION.toString()
+  tasks.withType<KotlinCompile> {
+    kotlinOptions {
+      jvmTarget = BuildEnv.JAVA_VERSION.toString()
+      allWarningsAsErrors = false
+      languageVersion = "1.5"
+      apiVersion = "1.5"
+    }
   }
 
   configure<JavaPluginExtension> {
@@ -143,19 +120,11 @@ subprojects {
 
   val module = getProjectModule()
 
-  if (module.publishTo.isNotEmpty()) {
-    project.publish(module.publishTo)
-  }
-  if (module.createShadowJar) {
-    project.shadowJar(module)
-  }
-
   dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("reflect"))
     implementation(Libs.LOGBACK_CLASSIC)
     implementation(Libs.KOTLIN_LOGGING)
-    implementation(Libs.NEWRELIC_API)
     implementation(Libs.KOTLIN_COROUTINES)
 
     testImplementation(platform(TestLibs.JUNIT_PLATFORM))
@@ -168,7 +137,6 @@ subprojects {
 
     testImplementation(TestLibs.KOTEST)
     testImplementation(TestLibs.KOTEST_ASSERTIONS_CORE)
-    testImplementation(TestLibs.MOCKK)
   }
 }
 
@@ -178,71 +146,9 @@ dependencies {
   }
 }
 
-fun Project.publish(publishTo: List<repository.PublishTarget>) {
-  apply {
-    plugin("maven-publish")
-  }
-  configure<PublishingExtension> {
-    publications {
-      create<MavenPublication>(project.project.name) {
-        from(project.components["java"])
-        val sourcesJar by project.tasks.creating(Jar::class) {
-          val sourceSets: SourceSetContainer by project
-          from(sourceSets["main"].allJava)
-          archiveClassifier.set("sources")
-        }
-        val javadocJar by project.tasks.creating(Jar::class) {
-          from(project.tasks["javadoc"])
-          archiveClassifier.set("javadoc")
-        }
-        artifact(sourcesJar)
-        artifact(javadocJar)
-      }
-    }
-    publishTo.forEach {
-      when (it) {
-        is ArchivaRepository -> this.repositories.add(archivaMavenRepository(it))
-        is GitlabProject -> this.repositories.add(gitlabMavenRepository(it))
-      }
-    }
-  }
-}
-
-fun Project.shadowJar(module: ProjectModule) {
-  if (module.mainClassName.isNotBlank()) {
-    apply {
-      plugin(BuildPlugins.SHADOW)
-    }
-    tasks.withType<ShadowJar> {
-      if (BuildEnv.IS_CI_ENVIRONMENT) {
-        this.outputs.cacheIf {
-          false
-        }
-      }
-      archiveFileName.set("${archiveBaseName.get()}-shadow.${archiveExtension.get()}")
-      manifest {
-        attributes["Main-Class"] = module.mainClassName
-        attributes["X-Compile-Source-JDK"] = project.java.sourceCompatibility
-        attributes["X-Compile-Target-JDK"] = project.java.targetCompatibility
-      }
-    }
-    tasks.withType<AbstractArchiveTask> {
-      // https://imperceptiblethoughts.com/shadow/configuration/reproducible-builds/
-      isPreserveFileTimestamps = false
-      isReproducibleFileOrder = true
-    }
-  }
-}
-
 tasks.named("clean", Delete::class.java) {
   doFirst {
     delete(rootProject.buildDir)
-  }
-}
-
-tasks.register("printProjectVersion") {
-  doLast {
-    println(project.version)
   }
 }
 
@@ -269,24 +175,4 @@ tasks.register<JacocoReport>("jacocoMerged") {
 
 tasks.test {
   finalizedBy("jacocoMerged")
-}
-
-val newrelicAgent: Configuration by configurations.creating
-
-dependencies {
-  newrelicAgent(Libs.NEWRELIC_AGENT_JAVA) {
-    isTransitive = false
-  }
-}
-
-tasks.register<Copy>("copyNewrelicAgent") {
-  group = "newrelic"
-  description = "copies newrelic agent jar to $buildDir/libs"
-  val newrelicAgentJar = zipTree(newrelicAgent.singleFile.toPath()).filter { it.name == "newrelic.jar" }.files.first()
-  val destDir = "$buildDir/libs"
-  from(newrelicAgentJar)
-  into(destDir)
-  doLast {
-    println("copied $newrelicAgentJar to $destDir")
-  }
 }

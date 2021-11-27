@@ -63,7 +63,7 @@ fun Array<IntArray>.print(block: (Int) -> String) {
   }
 }
 fun Array<IntArray>.flatten(): List<Int> {
-  val result = ArrayList<Int>(sumBy { it.size })
+  val result = ArrayList<Int>(sumOf { it.size })
   for (row in this) {
     for (col in row) {
       result.add(col)

@@ -21,5 +21,6 @@ include(
   "aoc-2018",
   "aoc-2019",
   "aoc-2020",
+  "aoc-2021",
   "aoc-runner"
 )

@@ -4,6 +4,7 @@ target/
 *.log
 *.attach*
 session.cookie
+.aoc-session-cookie
 build/
 .gradle
 .kotlintest/

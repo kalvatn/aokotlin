@@ -17,6 +17,7 @@ enum class ProjectModule(
   AOC_2018(moduleName = "aoc-2018"),
   AOC_2019(moduleName = "aoc-2019"),
   AOC_2020(moduleName = "aoc-2020"),
+  AOC_2021(moduleName = "aoc-2021"),
   AOC_RUNNER(moduleName = "aoc-runner"),
   ;
 
