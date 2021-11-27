@@ -70,7 +70,7 @@ subprojects {
   tasks.withType<KotlinCompile> {
     kotlinOptions {
       jvmTarget = BuildEnv.JAVA_VERSION.toString()
-      allWarningsAsErrors = false
+      allWarningsAsErrors = true
       languageVersion = "1.5"
       apiVersion = "1.5"
     }
