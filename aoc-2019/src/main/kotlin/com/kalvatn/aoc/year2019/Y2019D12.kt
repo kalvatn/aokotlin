@@ -50,15 +50,15 @@ class Y2019D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
   }
 
   private fun List<Moon>.move() {
-    val newVelocities = this.map { moon ->
-      moon to moon.velocity + this.filterNot { it == moon }.map { moon.calcNewVelocity(it) }.let { v ->
+    val newVelocities = this.associateWith { moon ->
+      moon.velocity + this.filterNot { it == moon }.map { moon.calcNewVelocity(it) }.let { v ->
         Vec3(
           v.sumOf { it.x },
           v.sumOf { it.y },
           v.sumOf { it.z }
         )
       }
-    }.toMap()
+    }
 
     this.forEach {
       it.velocity = newVelocities[it] ?: error("impossiburu")
@@ -70,7 +70,7 @@ class Y2019D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
     repeat(1000) {
       moons.move()
     }
-    return moons.map { it.totalEnergy() }.sum().toString()
+    return moons.sumOf { it.totalEnergy() }.toString()
   }
 
   override suspend fun partTwo(): String {

@@ -114,7 +114,7 @@ class Y2019D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2019(Day.D1
 //                print(points[it])
 //            }
 //        }
-    return intersections.map { it.x * it.y }.sum().toString()
+    return intersections.sumOf { it.x * it.y }.toString()
   }
 
   override suspend fun partTwo(): String {

@@ -71,7 +71,7 @@ class Y2018D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D0
           }
         }
       }
-      processing.removeAll(processing.filter { done.contains(it.name) })
+      processing.removeAll(processing.filter { done.contains(it.name) }.toSet())
       secondsElapsed += 1
     }
     return Pair(done.joinToString(""), secondsElapsed)

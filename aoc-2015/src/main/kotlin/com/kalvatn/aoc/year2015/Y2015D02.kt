@@ -15,7 +15,7 @@ class Y2015D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
     }
 
     private fun surface(): Int {
-      return sides().map { it * 2 }.sum()
+      return sides().sumOf { it * 2 }
     }
 
     private fun smallestSide(): Int {
@@ -27,7 +27,7 @@ class Y2015D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
     }
 
     fun ribbon(): Int {
-      val wrap = listOf(l, w, h).sorted().take(2).map { it * 2 }.sum()
+      val wrap = listOf(l, w, h).sorted().take(2).sumOf { it * 2 }
       val bow = l * w * h
       return wrap + bow
     }
@@ -43,11 +43,11 @@ class Y2015D02(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
   private val dimensions = this.input.map { Present.fromString(it) }
 
   override suspend fun partOne(): String {
-    return dimensions.map { it.paper() }.sum().toString()
+    return dimensions.sumOf { it.paper() }.toString()
   }
 
   override suspend fun partTwo(): String {
-    return dimensions.map { it.ribbon() }.sum().toString()
+    return dimensions.sumOf { it.ribbon() }.toString()
   }
 }
 

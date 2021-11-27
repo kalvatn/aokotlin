@@ -25,22 +25,22 @@ class Y2015D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D1
   }
 
   private fun extractNumbersFromJson(s: String): Int {
-    var sum = 0
-    try {
-      return s.toInt()
+    return try {
+      s.toInt()
     } catch (e: NumberFormatException) {
-      when (val json = Json.parseToJsonElement(s)) {
-        is JsonArray -> json.forEach { sum += extractNumbersFromJson(it.toString()) }
+      return when (val json = Json.parseToJsonElement(s)) {
+        is JsonArray -> json.sumOf { extractNumbersFromJson(it.toString()) }
         is JsonObject -> {
-          if (!json.jsonObject.values.contains(JsonPrimitive("red"))) {
-            json.jsonObject.values.forEach {
-              sum += extractNumbersFromJson(it.toString())
-            }
+          val values = json.jsonObject.values
+          return if (!values.contains(JsonPrimitive("red"))) {
+            values.sumOf { extractNumbersFromJson(it.toString()) }
+          } else {
+            0
           }
         }
+        else -> 0
       }
     }
-    return sum
   }
 }
 

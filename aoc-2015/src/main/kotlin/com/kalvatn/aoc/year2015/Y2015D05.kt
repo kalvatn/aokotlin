@@ -25,11 +25,11 @@ class Y2015D05(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
   }
 
   override suspend fun partOne(): String {
-    return input.lines.filter { nicePartOne(it) }.count().toString()
+    return input.lines.count { nicePartOne(it) }.toString()
   }
 
   override suspend fun partTwo(): String {
-    return input.lines.filter { nicePartTwo(it) }.count().toString()
+    return input.lines.count { nicePartTwo(it) }.toString()
   }
 }
 

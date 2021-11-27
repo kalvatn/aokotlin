@@ -64,7 +64,7 @@ class Y2015D06(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2015(Day.D0
           else -> 0
         }
       }
-    }.flatten().filter { it == 1 }.count().toString()
+    }.flatten().count { it == 1 }.toString()
   }
 
   override suspend fun partTwo(): String {

@@ -58,7 +58,7 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
       val center = Point(entry.x + 1, entry.y + 1)
       val region = (center.surrounding() + center)
       if (region.all { powerLevels.containsKey(it) }) {
-        totalPower[entry] = region.map { powerLevels[it]!! }.sum()
+        totalPower[entry] = region.sumOf { powerLevels[it]!! }
       }
     }
     val maxPowerPoint = totalPower.maxByOrNull { it.value }!!.key
@@ -75,7 +75,7 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
       .toList()
       .map {
         async {
-          PowerGrid(point, it, point.gridFrom(it).map { point -> powerLevels[point]!! }.sum())
+          PowerGrid(point, it, point.gridFrom(it).sumOf { point -> powerLevels[point]!! })
         }
       }.awaitAll()
       .toSet()
@@ -86,7 +86,6 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
     val maxSize = 16
     val tasks = powerLevels.keys.map {
       async {
-        //                println("$it")
         createPowerGridFromPoint(it, minSize, maxSize)
       }
     }
