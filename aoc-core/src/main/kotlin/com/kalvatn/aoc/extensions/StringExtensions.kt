@@ -7,14 +7,15 @@ val CONSECUTIVE_LETTERS = ('a'..'z').map { "$it$it" }
 val CONSECUTIVE_DIGITS = (0..9).map { "$it$it" }
 private val MD5 = MessageDigest.getInstance("MD5")
 private const val HEX_CHARS = "0123456789ABCDEF"
+const val SHIFT_BY_TO_DIVIDE_BY_SIXTEEN = 4
 
 fun String.md5(): String {
-  val bytes = MD5.digest(toByteArray())
-  val result = StringBuilder(bytes.size * 2)
+  val digestBytes = MD5.digest(toByteArray())
+  val result = StringBuilder(digestBytes.size * 2)
 
-  bytes.forEach {
+  digestBytes.forEach {
     val i = it.toInt()
-    result.append(HEX_CHARS[i shr 4 and 0x0f])
+    result.append(HEX_CHARS[i shr SHIFT_BY_TO_DIVIDE_BY_SIXTEEN and 0x0f])
     result.append(HEX_CHARS[i and 0x0f])
   }
   return result.toString()
