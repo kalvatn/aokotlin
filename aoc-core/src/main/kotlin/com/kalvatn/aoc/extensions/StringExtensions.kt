@@ -24,12 +24,12 @@ fun String.extractIntegers(): List<Int> {
   return Regex("[^?\\-\\d+]")
     .replace(this, " ")
     .split(" ")
-    .filter { !it.isBlank() }
+    .filter { it.isNotBlank() }
     .map { it.toInt() }
 }
 
 fun String.hasNVowels(number: Int = 1) =
-  this.filter { VOWELS.contains(it) }.count() >= number
+  this.count { VOWELS.contains(it) } >= number
 
 fun String.hasConsecutiveLetters(number: Int = 1) =
   CONSECUTIVE_LETTERS.asSequence().filter { this.contains(it) }.count() >= number

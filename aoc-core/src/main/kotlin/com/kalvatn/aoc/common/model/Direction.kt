@@ -1,22 +1,11 @@
 package com.kalvatn.aoc.common.model
 
-import com.kalvatn.aoc.exceptions.Impossiburu
-
-enum class DirectionDiag {
-  NW, NE, SW, SE;
-
-  fun toPointDiff(): Point {
-    return when (this) {
-      NW -> Direction.NORTH.toPointDiff() + Direction.WEST.toPointDiff()
-      NE -> Direction.NORTH.toPointDiff() + Direction.EAST.toPointDiff()
-      SW -> Direction.SOUTH.toPointDiff() + Direction.WEST.toPointDiff()
-      SE -> Direction.SOUTH.toPointDiff() + Direction.EAST.toPointDiff()
-    }
-  }
-}
-
-enum class Direction {
-  NORTH, EAST, SOUTH, WEST;
+enum class Direction(val longValue: Long, val charValues: List<Char>) {
+  NORTH(1, listOf('^', 'U', 'N')),
+  SOUTH(2, listOf('v', 'D', 'S')),
+  WEST(3, listOf('<', 'L', 'W')),
+  EAST(4, listOf('>', 'R', 'E'))
+  ;
 
   fun toPointDiff(): Point {
     return when (this) {
@@ -45,37 +34,15 @@ enum class Direction {
     }
   }
 
-  fun toChar(): Char {
-    return when (this) {
-      NORTH -> '^'
-      EAST -> '>'
-      SOUTH -> 'v'
-      WEST -> '<'
-    }
-  }
+  fun toChar(): Char = this.charValues.first()
 
-  fun toLong(): Long {
-    return when (this) {
-      NORTH -> 1
-      SOUTH -> 2
-      WEST -> 3
-      EAST -> 4
-    }
-  }
+  fun toLong(): Long = this.longValue
 
   companion object {
-    fun fromChar(char: Char): Direction {
-      return when (char) {
-        '^', 'U' -> NORTH
-        '>', 'R' -> EAST
-        'v', 'D' -> SOUTH
-        '<', 'L' -> WEST
-        else -> {
-          println(char)
-          throw Impossiburu()
-        }
+    fun fromChar(char: Char): Direction =
+      values().first {
+        it.charValues.contains(char)
       }
-    }
 
     @Suppress("unused")
     fun fromPointDiff(p: Point): Direction {

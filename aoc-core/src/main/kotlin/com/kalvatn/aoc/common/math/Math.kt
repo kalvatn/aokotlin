@@ -1,18 +1,12 @@
 package com.kalvatn.aoc.common.math
 
-/**
- * greatest common denominator
- */
-fun gcd(a: Long, b: Long): Long {
+fun greatestCommonDenominator(a: Long, b: Long): Long {
   if (b == 0L) return a
-  return gcd(b, a % b)
+  return greatestCommonDenominator(b, a % b)
 }
 
-/**
- * least common multiple
- */
 fun leastCommonMultiple(a: Long, b: Long): Long {
-  return a / gcd(a, b) * b
+  return a / greatestCommonDenominator(a, b) * b
 }
 
 private tailrec fun leastCommonMultiple(numbers: List<Long>): Long {
@@ -26,13 +20,4 @@ private tailrec fun leastCommonMultiple(numbers: List<Long>): Long {
   return leastCommonMultiple((numbers.drop(2) + f))
 }
 
-@Suppress("unused")
-fun List<Long>.gcd(): Long = leastCommonMultiple(this)
-
-@Suppress("unused")
-fun List<Int>.gcd(): Int = leastCommonMultiple(this.map { it.toLong() }).toInt()
-
 fun List<Long>.lcm(): Long = leastCommonMultiple(this)
-
-@Suppress("unused")
-fun List<Int>.leastCommonMultiple(): Int = leastCommonMultiple(this.map { it.toLong() }).toInt()

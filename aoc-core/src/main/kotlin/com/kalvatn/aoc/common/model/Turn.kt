@@ -1,29 +1,16 @@
 package com.kalvatn.aoc.common.model
 
-import com.kalvatn.aoc.exceptions.Impossiburu
+enum class Turn(val intValue: Int, private val charValues: List<Char>) {
+  LEFT(0, listOf('L', '<')),
+  RIGHT(1, listOf('R', '>')),
+  FORWARD(2, listOf('F', '^'));
 
-enum class Turn {
-  LEFT, RIGHT, FORWARD;
-
-  fun toChar() = when (this) {
-    LEFT -> 'L'
-    RIGHT -> 'R'
-    FORWARD -> 'F'
-  }
+  fun toChar() = charValues.first()
+  fun toInt() = intValue
 
   companion object {
-    fun fromInt(value: Int) = when (value) {
-      0 -> LEFT
-      1 -> RIGHT
-      else -> throw Impossiburu()
-    }
+    fun fromInt(value: Int) = values().first { it.intValue == value }
 
-    fun fromChar(char: Char): Turn {
-      return when (char) {
-        '<', 'L' -> LEFT
-        '>', 'R' -> RIGHT
-        else -> throw Impossiburu()
-      }
-    }
+    fun fromChar(char: Char) = values().first { it.charValues.contains(char) }
   }
 }

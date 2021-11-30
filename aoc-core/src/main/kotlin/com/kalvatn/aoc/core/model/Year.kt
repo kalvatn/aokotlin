@@ -9,7 +9,6 @@ enum class Year {
   Y2019,
   Y2020,
   Y2021,
-
   ;
 
   fun intValue(): Int {

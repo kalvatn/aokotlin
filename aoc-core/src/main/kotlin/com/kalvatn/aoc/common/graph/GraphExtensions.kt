@@ -2,13 +2,14 @@
 
 package com.kalvatn.aoc.common.graph
 
+import com.kalvatn.aoc.common.graph.WeightedGraph.Companion.DISTANCE_INF
+import com.kalvatn.aoc.common.graph.WeightedGraph.Companion.DISTANCE_ZERO
 import java.util.ArrayDeque
 import java.util.Deque
 import java.util.PriorityQueue
 
-@Suppress("FunctionName")
-fun <T> Graph<T>.DFS(start: T, target: T? = null): List<T> {
-  val visited = edges.keys.map { it to false }.toMap().toMutableMap()
+fun <T> Graph<T>.dfs(start: T, target: T? = null): List<T> {
+  val visited = edges.keys.associateWith { false }.toMutableMap()
 
   val stack: Deque<T> = ArrayDeque()
   val traversed: MutableList<T> = mutableListOf()
@@ -35,9 +36,8 @@ fun <T> Graph<T>.DFS(start: T, target: T? = null): List<T> {
   return traversed
 }
 
-@Suppress("FunctionName")
-fun <T> Graph<T>.BFS(start: T): List<T> {
-  val visited = edges.keys.map { it to false }.toMap().toMutableMap()
+fun <T> Graph<T>.bfs(start: T): List<T> {
+  val visited = edges.keys.associateWith { false }.toMutableMap()
 
   val queue: Deque<T> = ArrayDeque<T>()
   val traversed: MutableList<T> = mutableListOf()
@@ -57,12 +57,12 @@ fun <T> Graph<T>.BFS(start: T): List<T> {
 }
 
 fun <T> Graph<T>.distances(start: T): Map<T, Int> {
-  val visited = edges.keys.map { it to false }.toMap().toMutableMap()
+  val visited = edges.keys.associateWith { false }.toMutableMap()
 
   val queue: Deque<T> = ArrayDeque<T>()
   val traversed: MutableList<T> = mutableListOf()
 
-  val distance = edges.keys.map { it to DISTANCE_INF }.toMap().toMutableMap()
+  val distance = edges.keys.associateWith { DISTANCE_INF }.toMutableMap()
   distance[start] = 0
 
   queue.add(start)
@@ -86,13 +86,10 @@ fun <T> Graph<T>.shortestPath(start: T, target: T): Int {
   return distances(start)[target] ?: error("no path found")
 }
 
-private const val DISTANCE_INF = Integer.MAX_VALUE
-private const val DISTANCE_ZERO = 0
-
 fun <T> WeightedGraph<T>.dijkstra(start: T): List<T> {
   val priorityQueue: PriorityQueue<Pair<T, Int>> = PriorityQueue()
   val traversed: MutableList<T> = mutableListOf()
-  val distances = edges.keys.map { it to DISTANCE_INF }.toMap().toMutableMap()
+  val distances = edges.keys.associateWith { DISTANCE_INF }.toMutableMap()
 
   distances[start] = DISTANCE_ZERO
   priorityQueue.add(Pair(start, distances[start]!!))

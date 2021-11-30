@@ -27,10 +27,10 @@ internal class GraphTest : StringSpec({
   }
 
   "DFS" {
-    graph.DFS(A) shouldBe listOf(A, C, D, E, B)
+    graph.dfs(A) shouldBe listOf(A, C, D, E, B)
   }
   "BFS" {
-    graph.BFS(A) shouldBe listOf(A, B, C, D, E)
+    graph.bfs(A) shouldBe listOf(A, B, C, D, E)
   }
 
   "distances" {
