@@ -54,6 +54,7 @@ open class PuzzleInput(val lines: List<String>) {
 
     private fun downloadInput(year: Year, day: Day, inputFile: File) {
       val content = PuzzleInputDownloader.downloadInput(year, day)
+      inputFile.parentFile.mkdirs()
       inputFile.createNewFile()
       inputFile.writeText(content)
     }
