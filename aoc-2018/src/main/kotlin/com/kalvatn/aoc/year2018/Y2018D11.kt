@@ -56,7 +56,7 @@ class Y2018D11(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
         continue
       }
       val center = Point(entry.x + 1, entry.y + 1)
-      val region = (center.surrounding() + center)
+      val region = (center.adj8() + center)
       if (region.all { powerLevels.containsKey(it) }) {
         totalPower[entry] = region.sumOf { powerLevels[it]!! }
       }

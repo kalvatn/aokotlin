@@ -17,7 +17,6 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
     }.toSet()
   }
 
-  @Suppress("unused")
   fun adj8(): Set<Point> {
     return adj4() + adj4Diag()
   }
@@ -26,21 +25,6 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
     return DirectionDiag.values().map {
       this + it.toPointDiff()
     }.toSet()
-  }
-
-  fun surrounding(): Set<Point> {
-    return setOf(
-      Point(x.dec(), y),
-      Point(x.dec(), y.inc()),
-      Point(x.dec(), y.dec()),
-
-      Point(x.inc(), y),
-      Point(x.inc(), y.inc()),
-      Point(x.inc(), y.dec()),
-
-      Point(x, y.inc()),
-      Point(x, y.dec())
-    )
   }
 
   operator fun plus(other: Point): Point {

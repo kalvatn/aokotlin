@@ -8,7 +8,7 @@ class PointTest : StringSpec({
 
   "test surrounding" {
     val point = Point(2, 2)
-    val surrounding = point.surrounding()
+    val surrounding = point.adj8()
     val expected = setOf(
 
       Point(1, 1),
