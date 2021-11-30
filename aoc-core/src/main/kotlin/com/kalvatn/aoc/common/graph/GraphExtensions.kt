@@ -59,7 +59,7 @@ fun <T> Graph<T>.bfs(start: T): List<T> {
 fun <T> Graph<T>.distances(start: T): Map<T, Int> {
   val visited = edges.keys.associateWith { false }.toMutableMap()
 
-  val queue: Deque<T> = ArrayDeque<T>()
+  val queue: Deque<T> = ArrayDeque()
   val traversed: MutableList<T> = mutableListOf()
 
   val distance = edges.keys.associateWith { DISTANCE_INF }.toMutableMap()
@@ -68,14 +68,13 @@ fun <T> Graph<T>.distances(start: T): Map<T, Int> {
   queue.add(start)
   while (queue.isNotEmpty()) {
     val current = queue.remove()
-    if (!visited[current]!!) {
-      traversed.add(current)
-      visited[current] = true
-      edges[current]?.forEach {
-        if (distance[it] == DISTANCE_INF) {
-          distance[it] = distance[current]!! + 1
-          queue.add(it)
-        }
+    if (visited.getValue(current)) continue
+    traversed.add(current)
+    visited[current] = true
+    edges[current]?.forEach {
+      if (distance[it] == DISTANCE_INF) {
+        distance[it] = distance[current]!! + 1
+        queue.add(it)
       }
     }
   }
