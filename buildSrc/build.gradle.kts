@@ -3,10 +3,10 @@ plugins {
 }
 
 repositories {
-  jcenter()
+  mavenCentral()
 }
 
 kotlinDslPluginOptions {
-  experimentalWarning.set(false)
+  this.jvmTarget.set(JavaVersion.VERSION_11.toString())
 }
 
