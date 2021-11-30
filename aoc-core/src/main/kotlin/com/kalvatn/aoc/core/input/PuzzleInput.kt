@@ -47,6 +47,7 @@ open class PuzzleInput(val lines: List<String>) {
     return points
   }
 
+  @Suppress("TooManyFunctions")
   companion object {
     private const val P1_TEST_SUFFIX = "test_p1"
     private const val P2_TEST_SUFFIX = "test_p2"
