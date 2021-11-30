@@ -20,6 +20,7 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
     private val array = buildArray2D(size, ' ')
     private val trains = mutableSetOf<Train>()
+    var firstCrash: Point? = null
 
     init {
       var i = 1
@@ -47,7 +48,6 @@ class Y2018D13(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2018(Day.D1
 
     fun tick(): Pair<Point, Point>? {
       val removeTrains = mutableSetOf<Train>()
-      var firstCrash: Point? = null
       trains.sortedWith(compareBy(Train::position)).forEach { train ->
         train.move(this)
         val crashedWith = trains.filter { it != train && it.position == train.position }
