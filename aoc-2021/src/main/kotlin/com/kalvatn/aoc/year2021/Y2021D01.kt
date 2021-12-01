@@ -25,7 +25,16 @@ class Y2021D01(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D0
   }
 
   override suspend fun partTwo(): String {
-    return ""
+    var count = 0
+    val measurements = lines.map { it.toInt() }.windowed(3, 1).map { it.sum() }
+    var prev = measurements.first()
+    measurements.drop(1).forEach { measurement ->
+      if (measurement > prev) {
+        count = count.inc()
+      }
+      prev = measurement
+    }
+    return "$count"
   }
 
   companion object {
