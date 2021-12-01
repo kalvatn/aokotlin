@@ -18,6 +18,7 @@ enum class ProjectModule(
   AOC_2020(moduleName = "aoc-2020"),
   AOC_2021(moduleName = "aoc-2021"),
   AOC_RUNNER(moduleName = "aoc-runner"),
+  KNOWIT_2021(moduleName = "knowit-2021"),
   ;
 
   fun modulePath() = ":$moduleName"
