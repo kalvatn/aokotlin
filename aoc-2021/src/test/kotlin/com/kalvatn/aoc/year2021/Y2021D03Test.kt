@@ -11,7 +11,7 @@ internal class Y2021D03Test : BaseDayTest() {
   @Test
   override suspend fun examplePartOne() {
     val input = PuzzleInput.p1Test(Year.Y2021, Day.D03)
-    Y2021D03(input).partOne() shouldBe ""
+    Y2021D03(input).partOne() shouldBe "198"
   }
 
   @Test
@@ -22,7 +22,7 @@ internal class Y2021D03Test : BaseDayTest() {
 
   @Test
   override suspend fun solutionPartOne() {
-    Y2021D03().partOne() shouldBe ""
+    Y2021D03().partOne() shouldBe "2498354"
   }
 
   @Test
