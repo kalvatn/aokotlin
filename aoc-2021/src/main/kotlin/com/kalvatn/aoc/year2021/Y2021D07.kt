@@ -11,9 +11,9 @@ import kotlin.math.abs
 class Y2021D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D07, input) {
 
   private val lines by lazy { this.input.lines }
+  private val numbers = lines.first().split(",").map { it.toInt() }
 
   override suspend fun partOne(): String {
-    val numbers = lines.first().split(",").map { it.toInt() }
     val (min, max) = listOf(numbers.minOf { it }, numbers.maxOf { it })
     val minFuel = (min..max).map { toPos ->
       numbers.sumOf { fromPos ->
@@ -24,13 +24,18 @@ class Y2021D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D0
   }
 
   override suspend fun partTwo(): String {
-    return ""
+    val (min, max) = listOf(numbers.minOf { it }, numbers.maxOf { it })
+    val minFuel = (min..max).map { toPos ->
+      numbers.sumOf { fromPos ->
+        val steps = abs(fromPos - toPos)
+        steps + (1 until steps).sumOf { it }
+      }
+    }.minOf { it }
+    return "$minFuel"
   }
 
 }
 
 fun main() = runBlocking {
-  val input = PuzzleInput.p1Test(Year.Y2021, Day.D07)
-  PuzzleRunner.run(Y2021D07(input))
   PuzzleRunner.run(Y2021D07())
 }
