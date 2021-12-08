@@ -1,9 +1,9 @@
 package com.kalvatn.aoc.year2021
 
+import com.kalvatn.aoc.common.math.triangularSum
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2021
-import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
@@ -27,13 +27,11 @@ class Y2021D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D0
     val (min, max) = listOf(numbers.minOf { it }, numbers.maxOf { it })
     val minFuel = (min..max).map { toPos ->
       numbers.sumOf { fromPos ->
-        val steps = abs(fromPos - toPos)
-        steps + (1 until steps).sumOf { it }
+        abs(fromPos - toPos).triangularSum()
       }
     }.minOf { it }
     return "$minFuel"
   }
-
 }
 
 fun main() = runBlocking {

@@ -21,3 +21,6 @@ private tailrec fun leastCommonMultiple(numbers: List<Long>): Long {
 }
 
 fun List<Long>.lcm(): Long = leastCommonMultiple(this)
+
+fun Int.triangularSum() =
+  this * this.inc() / 2
