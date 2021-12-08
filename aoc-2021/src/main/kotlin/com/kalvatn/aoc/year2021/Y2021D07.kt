@@ -6,24 +6,27 @@ import com.kalvatn.aoc.core.model.GenericPuzzle2021
 import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import kotlinx.coroutines.runBlocking
+import kotlin.math.abs
 
 class Y2021D07(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D07, input) {
 
   private val lines by lazy { this.input.lines }
 
   override suspend fun partOne(): String {
-    lines.forEach {
-      println(it)
-    }
-    return ""
+    val numbers = lines.first().split(",").map { it.toInt() }
+    val (min, max) = listOf(numbers.minOf { it }, numbers.maxOf { it })
+    val minFuel = (min..max).map { toPos ->
+      numbers.sumOf { fromPos ->
+        abs(fromPos - toPos)
+      }
+    }.minOf { it }
+    return "$minFuel"
   }
 
   override suspend fun partTwo(): String {
     return ""
   }
 
-  companion object {
-  }
 }
 
 fun main() = runBlocking {
