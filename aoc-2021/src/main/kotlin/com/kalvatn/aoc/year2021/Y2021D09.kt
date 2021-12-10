@@ -12,9 +12,10 @@ class Y2021D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D0
 
   private val lines by lazy { this.input.lines }
 
-  override suspend fun partOne(): String {
-    val grid = lines.map { line -> line.map { it.digitToInt() } }
-    val risk = (0 until grid.size).flatMap { y ->
+  private val grid = lines.map { line -> line.map { it.digitToInt() } }
+
+  fun lowPoints() =
+    (grid.indices).flatMap { y ->
       (0 until grid.first().size).map { x ->
         val height = grid[y][x]
         val c = Point(x, y)
@@ -25,18 +26,14 @@ class Y2021D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D0
             null
           }
         }
-        if (adj.all { it > height }) {
-          height.inc()
-        } else {
-          null
-        }
+        if (adj.all { it > height }) c else null
       }
-    }
-      .filterNotNull()
-      .filter { it > 0 }
-      .also {
-        println(it)
-      }.sumOf { it }
+    }.filterNotNull()
+
+  override suspend fun partOne(): String {
+    val risk = lowPoints().map {
+      grid[it.y][it.x].inc()
+    }.sumOf { it }
 
     return "$risk"
   }

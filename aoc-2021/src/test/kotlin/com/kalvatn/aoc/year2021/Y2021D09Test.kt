@@ -27,6 +27,6 @@ internal class Y2021D09Test : BaseDayTest() {
 
   @Test
   override suspend fun solutionPartTwo() {
-    Y2021D09().partTwo() shouldBe ""
+    Y2021D09().partTwo() shouldBe "1134"
   }
 }
