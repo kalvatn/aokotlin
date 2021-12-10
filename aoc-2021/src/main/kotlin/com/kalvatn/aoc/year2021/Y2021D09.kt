@@ -38,8 +38,55 @@ class Y2021D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D0
     return "$risk"
   }
 
+  fun basin(start: Point): Set<Point> {
+    val queue = ArrayDeque<Point>()
+    val seen = mutableSetOf<Point>()
+    queue.add(start)
+    val basin = mutableSetOf<Point>()
+    basin.add(start)
+    while (queue.isNotEmpty()) {
+      val current = queue.removeFirst()
+      if (current in seen) {
+        continue
+      }
+      seen.add(current)
+      val h1 = height(current)
+      current.adj4().mapNotNull {
+          try {
+            grid[it.y][it.x]
+            it
+          } catch (e: Exception) {
+            null
+          }
+        }
+        .filter {
+        val h2 = height(it)
+        h2 in (h1 + 1)..8
+      }.map {
+        queue.add(it)
+        basin.add(it)
+      }
+    }
+
+    return basin
+  }
+
+  fun height(point: Point) = grid[point.y][point.x]
+
   override suspend fun partTwo(): String {
-    return ""
+    val lows = lowPoints()
+    val basins = lows.map {
+      basin(it)
+    }
+    basins.forEach {
+      println(it)
+    }
+    return basins.sortedBy { it.size }
+      .also { println("${it.size} $it") }
+      .takeLast(3)
+      .also { println(it) }
+      .map { it.size }
+      .reduce(Int::times).toString()
   }
 
   companion object {
