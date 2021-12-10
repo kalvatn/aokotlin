@@ -52,20 +52,20 @@ class Y2021D09(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D0
       seen.add(current)
       val h1 = height(current)
       current.adj4().mapNotNull {
-          try {
-            grid[it.y][it.x]
-            it
-          } catch (e: Exception) {
-            null
-          }
+        try {
+          grid[it.y][it.x]
+          it
+        } catch (e: Exception) {
+          null
         }
-        .filter {
-        val h2 = height(it)
-        h2 in (h1 + 1)..8
-      }.map {
-        queue.add(it)
-        basin.add(it)
       }
+        .filter {
+          val h2 = height(it)
+          h2 in (h1 + 1)..8
+        }.map {
+          queue.add(it)
+          basin.add(it)
+        }
     }
 
     return basin
