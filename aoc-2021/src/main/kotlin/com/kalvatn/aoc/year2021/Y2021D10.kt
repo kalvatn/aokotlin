@@ -3,6 +3,7 @@ package com.kalvatn.aoc.year2021
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2021
+import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import com.kalvatn.aoc.exceptions.Impossiburu
 import kotlinx.coroutines.runBlocking
@@ -33,6 +34,13 @@ class Y2021D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
     else -> throw Impossiburu()
   }
 
+  private fun score2(bracket: Char) = when (bracket) {
+    ')' -> 1
+    ']' -> 2
+    '}' -> 3
+    '>' -> 4
+    else -> throw Error("$bracket")
+  }
 
   override suspend fun partOne(): String {
     return lines.map {
@@ -56,13 +64,31 @@ class Y2021D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
   }
 
   override suspend fun partTwo(): String {
-    return ""
+    val scores = lines.map {
+      it to normalize(it)
+    }.filterNot { (_, normalized) ->
+      brackets.any { normalized.contains(it[1]) }
+    }.map { (original, normalized) ->
+      println("$original $normalized")
+      val rev = normalized.reversed().map {
+        brackets.first { b -> b.contains(it) }[1]
+      }.joinToString("")
+      println("$normalized - $rev")
+      rev
+    }
+      .map {
+        it.fold(0L) { acc, c ->
+          acc * 5 + score2(c)
+        }
+      }
+      .sorted()
+    return scores[scores.size / 2].toString()
   }
 
 }
 
 fun main() = runBlocking {
-//  val input = PuzzleInput.p1Test(Year.Y2021, Day.D10)
-//  PuzzleRunner.run(Y2021D10(input))
-  PuzzleRunner.run(Y2021D10())
+  val input = PuzzleInput.p1Test(Year.Y2021, Day.D10)
+  PuzzleRunner.run(Y2021D10(input))
+//  PuzzleRunner.run(Y2021D10())
 }
