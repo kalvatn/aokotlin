@@ -3,92 +3,58 @@ package com.kalvatn.aoc.year2021
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2021
-import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.core.runner.PuzzleRunner
-import com.kalvatn.aoc.exceptions.Impossiburu
 import kotlinx.coroutines.runBlocking
 
 class Y2021D10(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D10, input) {
 
-  private val lines by lazy { this.input.lines }
+  private val normalized by lazy { this.input.lines.map { normalize(it) } }
 
-  private val brackets = listOf(
-    "()", "[]", "{}", "<>"
-  )
+  companion object {
+    private val BRACKET_PAIRS = listOf("()", "[]", "{}", "<>")
+    private val SCORES_ILLEGAL = mapOf(')' to 3, ']' to 57, '}' to 1197, '>' to 25137)
+    private val SCORES_CLOSING = mapOf(')' to 1, ']' to 2, '}' to 3, '>' to 4)
+  }
 
   private tailrec fun normalize(line: String): String {
-    if (brackets.none { line.contains(it) }) {
+    if (BRACKET_PAIRS.none { line.contains(it) }) {
       return line
     }
-    val replaced = brackets.fold(line) { acc, bracket ->
-      acc.replace(bracket, "")
-    }
+    val replaced = BRACKET_PAIRS.fold(line) { acc, pair -> acc.replace(pair, "") }
     return normalize(replaced)
   }
 
-  private fun score(bracket: Char) = when (bracket) {
-    ')' -> 3
-    ']' -> 57
-    '}' -> 1197
-    '>' -> 25137
-    else -> throw Impossiburu()
-  }
-
-  private fun score2(bracket: Char) = when (bracket) {
-    ')' -> 1
-    ']' -> 2
-    '}' -> 3
-    '>' -> 4
-    else -> throw Error("$bracket")
-  }
+  private fun scoreIllegal(bracket: Char) = SCORES_ILLEGAL.getValue(bracket)
+  private fun scoreClosing(bracket: Char) = SCORES_CLOSING.getValue(bracket)
 
   override suspend fun partOne(): String {
-    return lines.map {
-      it to normalize(it)
-    }.filter { (_, normalized) ->
-      brackets.any { normalized.contains(it[1]) }
-    }.map { (original, normalized) ->
-      val i = brackets.filter {
-        val i = normalized.indexOf(it[1])
-        i > 0 && normalized[i.dec()] != it[0]
-      }.minOf {
-        normalized.indexOf(it[1])
-      }
-      val was = normalized[i]
-      val expected = brackets.first { it.contains(normalized[i.dec()]) }[1]
-      println("$original $normalized , expected '$expected' but found '$was' instead")
-      was
-    }.map {
-      score(it)
-    }.sumOf { it }.toString()
+    return normalized
+      .asSequence()
+      .filter { BRACKET_PAIRS.any { pair -> it.contains(pair[1]) } }
+      .map { corrupted ->
+        val firstIllegalIndex = BRACKET_PAIRS.filter { pair ->
+          val i = corrupted.indexOf(pair[1])
+          i > 0 && corrupted[i.dec()] != pair[0]
+        }.minOf { pair -> corrupted.indexOf(pair[1]) }
+        corrupted[firstIllegalIndex]
+      }.map { scoreIllegal(it) }
+      .sumOf { it }.toString()
   }
 
   override suspend fun partTwo(): String {
-    val scores = lines.map {
-      it to normalize(it)
-    }.filterNot { (_, normalized) ->
-      brackets.any { normalized.contains(it[1]) }
-    }.map { (original, normalized) ->
-      println("$original $normalized")
-      val rev = normalized.reversed().map {
-        brackets.first { b -> b.contains(it) }[1]
-      }.joinToString("")
-      println("$normalized - $rev")
-      rev
-    }
-      .map {
-        it.fold(0L) { acc, c ->
-          acc * 5 + score2(c)
-        }
-      }
-      .sorted()
+    val scores = normalized
+      .asSequence()
+      .filterNot { BRACKET_PAIRS.any { pair -> it.contains(pair[1]) } }
+      .map { incomplete ->
+        incomplete.reversed().map { BRACKET_PAIRS.first { pair -> pair.contains(it) }[1] }
+      }.map { completion ->
+        completion.fold(0L) { score, bracket -> score * 5 + scoreClosing(bracket) }
+      }.sorted()
+      .toList()
     return scores[scores.size / 2].toString()
   }
-
 }
 
 fun main() = runBlocking {
-  val input = PuzzleInput.p1Test(Year.Y2021, Day.D10)
-  PuzzleRunner.run(Y2021D10(input))
-//  PuzzleRunner.run(Y2021D10())
+  PuzzleRunner.run(Y2021D10())
 }
