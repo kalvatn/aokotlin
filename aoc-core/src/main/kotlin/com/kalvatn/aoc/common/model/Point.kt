@@ -11,20 +11,30 @@ data class Point(val x: Int, val y: Int) : Comparable<Point> {
     return this.y.compareTo(other.y)
   }
 
-  fun adj4(): Set<Point> {
-    return Direction.values().map {
+  fun adj4(bounds: Pair<IntRange, IntRange>? = null): Set<Point> {
+    val adj = Direction.values().map {
       this + it.toPointDiff()
     }.toSet()
+    return if (bounds == null) adj else {
+      adj.filter {
+        it.x in bounds.first && it.y in bounds.second
+      }.toSet()
+    }
   }
 
-  fun adj8(): Set<Point> {
-    return adj4() + adj4Diag()
+  fun adj8(bounds: Pair<IntRange, IntRange>? = null): Set<Point> {
+    return adj4(bounds) + adj4Diag(bounds)
   }
 
-  fun adj4Diag(): Set<Point> {
-    return DirectionDiag.values().map {
+  fun adj4Diag(bounds: Pair<IntRange, IntRange>? = null): Set<Point> {
+    val adj = DirectionDiag.values().map {
       this + it.toPointDiff()
     }.toSet()
+    return if (bounds == null) adj else {
+      adj.filter {
+        it.x in bounds.first && it.y in bounds.second
+      }.toSet()
+    }
   }
 
   operator fun plus(other: Point): Point {
