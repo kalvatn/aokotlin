@@ -4,109 +4,66 @@ import com.kalvatn.aoc.common.model.Point
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2021
-import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.core.runner.PuzzleRunner
-import com.kalvatn.aoc.exceptions.Impossiburu
 import kotlinx.coroutines.runBlocking
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 class Y2021D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D17, input) {
 
   private val lines by lazy { this.input.lines }
 
+  private val regex = "target area: x=(-?\\d+)..(-?\\d+), y=(-?\\d+)..(-?\\d+)".toRegex()
+  private val xy = regex.find(lines.first())!!.destructured.toList().map { it.toInt() }
 
+  private val targetX = (xy[0]..xy[1])
+  private val targetY = (xy[2]..xy[3])
 
-  fun newPosVel(pos: Point, velocity: Point): Pair<Point, Point> {
-    val newX = when {
+  /** https://www.reddit.com/r/adventofcode/comments/ri9kdq/2021_day_17_solutions/how2kzp/ */
+  private val velocityXRange = (sqrt((targetX.first * 2).toDouble()).roundToInt()..targetX.last)
+  private val velocityYRange = (targetY.first until -targetY.first)
+
+  private val velocities = velocityXRange.flatMap { x ->
+    velocityYRange.map { y ->
+      Point(x, y)
+    }
+  }.toSet()
+
+  private val trajectories = velocities.map { velocity ->
+    velocity to validTrajectoryPoints(velocity)
+  }.filter { it.second.isNotEmpty() }.toMap()
+
+  private fun updateVelocity(velocity: Point) = velocity.copy(
+    x = when {
       velocity.x > 0 -> velocity.x.dec()
       velocity.x < 0 -> velocity.x.inc()
       else -> 0
+    },
+    y = velocity.y.dec()
+  )
+
+  private fun validTrajectoryPoints(initialVelocity: Point) =
+    generateSequence(Pair(Point(0, 0), initialVelocity)) {
+      Pair(it.first + it.second, updateVelocity(it.second))
     }
-    return Pair(
-      Point(pos.x + velocity.x, pos.y + velocity.y),
-      Point(newX, velocity.y.dec())
-    )
-  }
+      .takeWhile { it.first.x <= targetX.last && it.first.y >= targetY.first }
+      .map { it.first }
+      .toList()
+      .dropLastWhile { it.x !in targetX || it.y !in targetY }
+      .toSet()
 
-  fun eval(initialVelocity: Point, targetX: IntRange, targetY: IntRange): Set<Point> {
-    var pos = Point(0, 0)
-    var vel = initialVelocity
-
-    val all = mutableListOf<Point>()
-
-    var within = false
-    var step = 0
-
-    while (step < 300) {
-      val new = newPosVel(pos, vel)
-      pos = new.first
-      vel = new.second
-      if (within && (pos.x !in targetX || pos.y !in targetY)) {
-        break
-      }
-      all.add(pos)
-      if (pos.x in targetX && pos.y in targetY) {
-        within = true
-      }
-      step++
-    }
-    return all.dropLastWhile { it.x !in targetX || it.y !in targetY }.toSet()
-  }
-
-  val velocities = (-200..200).flatMap { velX ->
-    (-200..200).map { velY ->
-      Point(velX, velY)
-    }
-  }.toSet()
   override suspend fun partOne(): String {
-//    target area: x=20..30, y=-10..-5
-//    target area: x=119..176, y=-141..-84
-
-//    val targetX = (20..30)
-//    val targetY = (-10..-5)
-    val targetX = (119..176)
-    val targetY = (-141..-84)
-
-//    val velocities = setOf(Point(7,2))
-//    val velocities = setOf(Point(6,9))
-//    val velocities = setOf(Point(17,-4))
-
-    val max = velocities.mapNotNull { velocity ->
-      val all = eval(velocity, targetX, targetY)
-      val max = all.maxByOrNull { it.y }
-      max
-    }.maxByOrNull { it.y } ?: throw Impossiburu()
-    return "${max.y}"
+    val maxY = trajectories.values.map { points ->
+      points.maxOf { it.y }
+    }.maxOf { it }
+    return "$maxY"
   }
 
   override suspend fun partTwo(): String {
-//    target area: x=20..30, y=-10..-5
-//    target area: x=119..176, y=-141..-84
-
-
-//    val targetX = (20..30)
-//    val targetY = (-10..-5)
-    val targetX = (119..176)
-    val targetY = (-141..-84)
-
-//    val velocities = setOf(Point(7,2))
-//    val velocities = setOf(Point(6,9))
-//    val velocities = setOf(Point(17,-4))
-
-    val max = velocities.mapNotNull { velocity ->
-      val all = eval(velocity, targetX, targetY)
-      if (all.isNotEmpty()) {
-        velocity
-      } else null
-    }.toSet()
-    return "${max.size}"
-  }
-
-  companion object {
+    return "${trajectories.keys.size}"
   }
 }
 
 fun main() = runBlocking {
-  val input = PuzzleInput.p1Test(Year.Y2021, Day.D17)
-  PuzzleRunner.run(Y2021D17(input))
   PuzzleRunner.run(Y2021D17())
 }
