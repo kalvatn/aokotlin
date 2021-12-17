@@ -46,3 +46,10 @@ fun <K, V> Collection<Map<K, V>>.groupMapsBySharedKeys(): Map<K, List<V>> =
 //        flatMap { it.entries }
 //                .groupBy({ it.key }, { it.value })
 //                .filter { it.value.size > 1 }
+
+fun <T> cartesianProduct(a: Iterable<T>, b: Iterable<T>, vararg collections: Iterable<T>): Set<List<T>> =
+  (listOf(a, b).plus(collections))
+    .fold(listOf(listOf<T>())) { acc, set ->
+      acc.flatMap { list -> set.map { element -> list + element } }
+    }
+    .toSet()
