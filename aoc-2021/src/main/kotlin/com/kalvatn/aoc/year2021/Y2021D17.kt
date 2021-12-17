@@ -13,6 +13,8 @@ class Y2021D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
 
   private val lines by lazy { this.input.lines }
 
+
+
   fun newPosVel(pos: Point, velocity: Point): Pair<Point, Point> {
     val newX = when {
       velocity.x > 0 -> velocity.x.dec()
@@ -34,7 +36,7 @@ class Y2021D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
     var within = false
     var step = 0
 
-    while (step < 1000) {
+    while (step < 300) {
       val new = newPosVel(pos, vel)
       pos = new.first
       vel = new.second
@@ -50,6 +52,11 @@ class Y2021D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
     return all.dropLastWhile { it.x !in targetX || it.y !in targetY }.toSet()
   }
 
+  val velocities = (-200..200).flatMap { velX ->
+    (-200..200).map { velY ->
+      Point(velX, velY)
+    }
+  }.toSet()
   override suspend fun partOne(): String {
 //    target area: x=20..30, y=-10..-5
 //    target area: x=119..176, y=-141..-84
@@ -59,11 +66,6 @@ class Y2021D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
     val targetX = (119..176)
     val targetY = (-141..-84)
 
-    val velocities = (-1000..1000).flatMap { velX ->
-      (-1000..1000).map { velY ->
-        Point(velX, velY)
-      }
-    }.toSet()
 //    val velocities = setOf(Point(7,2))
 //    val velocities = setOf(Point(6,9))
 //    val velocities = setOf(Point(17,-4))
@@ -77,7 +79,26 @@ class Y2021D17(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
   }
 
   override suspend fun partTwo(): String {
-    return ""
+//    target area: x=20..30, y=-10..-5
+//    target area: x=119..176, y=-141..-84
+
+
+//    val targetX = (20..30)
+//    val targetY = (-10..-5)
+    val targetX = (119..176)
+    val targetY = (-141..-84)
+
+//    val velocities = setOf(Point(7,2))
+//    val velocities = setOf(Point(6,9))
+//    val velocities = setOf(Point(17,-4))
+
+    val max = velocities.mapNotNull { velocity ->
+      val all = eval(velocity, targetX, targetY)
+      if (all.isNotEmpty()) {
+        velocity
+      } else null
+    }.toSet()
+    return "${max.size}"
   }
 
   companion object {
