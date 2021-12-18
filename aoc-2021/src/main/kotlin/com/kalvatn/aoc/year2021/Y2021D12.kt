@@ -3,7 +3,6 @@ package com.kalvatn.aoc.year2021
 import com.kalvatn.aoc.core.input.PuzzleInput
 import com.kalvatn.aoc.core.model.Day
 import com.kalvatn.aoc.core.model.GenericPuzzle2021
-import com.kalvatn.aoc.core.model.Year
 import com.kalvatn.aoc.core.runner.PuzzleRunner
 import kotlinx.coroutines.runBlocking
 
@@ -31,7 +30,6 @@ class Graph {
     override fun toString(): String {
       return "Node(name='$name', parent=${parent?.name})"
     }
-
   }
 
   fun pathsVisitAll(start: String, end: String): Set<List<String>> {
@@ -46,7 +44,6 @@ class Graph {
         continue
       }
       if (current.name == end || path.toSet().size == nodes.toSet().size) {
-        println(path)
         paths.add(path)
         continue
       }
@@ -60,7 +57,6 @@ class Graph {
     }
 
     return paths.toSet()
-
   }
   fun pathsVisitAll2(start: String, end: String): Set<List<String>> {
     val paths = mutableSetOf<List<String>>()
@@ -68,14 +64,10 @@ class Graph {
     val visited = mutableSetOf<Node>()
     queue.add(Node(start, null))
     while (queue.isNotEmpty()) {
-      val current = queue.removeFirst()
+      val current = queue.removeLast()
       val path = current.path()
 
       if (path in paths) {
-        continue
-      }
-      val countSmall = path.filter { it.first().isLowerCase() }.groupingBy { it }.eachCount()
-      if (countSmall.filter { it.value >= 2 }.count() > 1) {
         continue
       }
 
@@ -83,6 +75,7 @@ class Graph {
         paths.add(path)
         continue
       }
+      val countSmall = path.filter { it.first().isLowerCase() }.groupingBy { it }.eachCount()
       val smallVisits = countSmall.filter { it.value >= 1 }
       val connections = edges.getOrDefault(current.name, emptySet())
         .filter { name ->
@@ -93,13 +86,12 @@ class Graph {
         .map { Node(it, parent = current) }
         .filterNot { it in visited }
         .forEach {
-          queue.addLast(it)
+          queue.add(it)
         }
       visited.add(current)
     }
 
     return paths.toSet()
-
   }
 }
 
@@ -114,18 +106,7 @@ class Y2021D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
       graph.connect(a, b)
       graph.connect(b, a)
     }
-    println("nodes")
-    graph.nodes.forEach {
-      println(it)
-    }
-    println("edges")
-    graph.edges.forEach {
-      println(it)
-    }
     val paths = graph.pathsVisitAll("start", "end")
-    paths.forEach {
-      println(it.joinToString(","))
-    }
     return paths.size.toString()
   }
 
@@ -142,7 +123,5 @@ class Y2021D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
 }
 
 fun main() = runBlocking {
-  val input = PuzzleInput.p1Test(Year.Y2021, Day.D12)
-  PuzzleRunner.run(Y2021D12(input))
   PuzzleRunner.run(Y2021D12())
 }
