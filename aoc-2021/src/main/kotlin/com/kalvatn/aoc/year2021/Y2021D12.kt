@@ -62,6 +62,45 @@ class Graph {
     return paths.toSet()
 
   }
+  fun pathsVisitAll2(start: String, end: String): Set<List<String>> {
+    val paths = mutableSetOf<List<String>>()
+    val queue = ArrayDeque<Node>()
+    val visited = mutableSetOf<Node>()
+    queue.add(Node(start, null))
+    while (queue.isNotEmpty()) {
+      val current = queue.removeFirst()
+      val path = current.path()
+
+      if (path in paths) {
+        continue
+      }
+      val countSmall = path.filter { it.first().isLowerCase() }.groupingBy { it }.eachCount()
+      if (countSmall.filter { it.value >= 2 }.count() > 1) {
+        continue
+      }
+
+      if (current.name == end || path.toSet().size == nodes.toSet().size.inc()) {
+        paths.add(path)
+        continue
+      }
+      val smallVisits = countSmall.filter { it.value >= 1 }
+      val connections = edges.getOrDefault(current.name, emptySet())
+        .filter { name ->
+          name.first().isUpperCase() ||
+            smallVisits.isEmpty() || !smallVisits.containsKey(name) || smallVisits.none { it.value == 2 }
+        }
+      connections
+        .map { Node(it, parent = current) }
+        .filterNot { it in visited }
+        .forEach {
+          queue.addLast(it)
+        }
+      visited.add(current)
+    }
+
+    return paths.toSet()
+
+  }
 }
 
 class Y2021D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D12, input) {
@@ -91,7 +130,14 @@ class Y2021D12(input: PuzzleInput = PuzzleInput.NULL) : GenericPuzzle2021(Day.D1
   }
 
   override suspend fun partTwo(): String {
-    return ""
+    val graph = Graph()
+    lines.map {
+      val (a, b) = it.split("-")
+      graph.connect(a, b)
+      graph.connect(b, a)
+    }
+    val paths = graph.pathsVisitAll2("start", "end")
+    return paths.size.toString()
   }
 }
 
